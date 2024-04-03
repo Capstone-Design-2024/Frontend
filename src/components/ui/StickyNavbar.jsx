@@ -130,7 +130,7 @@ export default function StickyNavbar({ children }) {
                 variant="gradient"
                 size="md"
                 className="hidden lg:inline-block"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/signup")}
               >
                 <span>Sign Up</span>
               </Button>

@@ -9,8 +9,8 @@ const MainPage = () => {
         <div className="mx-auto w-full h-[500px] flex justify-center">
           <CarouselWithContent />
         </div>
-        <div className="mt-6 bg-red-500 mx-40 flex px-8">
-          <h1 className="text-9xl">
+        <div className="mt-6 bg-red-500 mx-40 flex px-4">
+          <h1 className="text-xl">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum
             placeat doloribus quasi nisi fugit deleniti nam aperiam est facilis
             nobis ipsam labore, in tempore quis ex. Reprehenderit quia dolores
