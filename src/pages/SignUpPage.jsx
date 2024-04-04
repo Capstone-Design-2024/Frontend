@@ -12,8 +12,11 @@ const SignUpPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    address: "",
     agreeTerm: false,
   });
+
+  console.log(form);
 
   const [formValidity, setFormValidity] = useState({
     firstName: undefined,
@@ -91,14 +94,41 @@ const SignUpPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isButtonActive) return;
+    try {
+      const response = await fetch("http://localhost:9001/member/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+          name: form.lastName + form.firstName,
+          address: form.address,
+        }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Success:", data);
+        navigate("/");
+      } else {
+        console.error("Error:", data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      // setIsLoading(false);
+    }
   };
 
   const navigate = useNavigate();
 
   return (
-    <MembershipBg type={"Sign Up"} padding={"lg:px-10"}>
+    <MembershipBg type={"Sign Up"}>
       <Card title={"Sign Up"} width={"w-500px"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex justify-between">
@@ -138,6 +168,12 @@ const SignUpPage = () => {
               }
             />
           ))}
+          <CustomInput
+            type="text"
+            placeholder="Address (Optional)"
+            value={form.address}
+            onChange={(e) => handleInputChange(e, "address")}
+          />
           <div className="flex items-center mt-2">
             <input
               type="checkbox"
@@ -153,16 +189,16 @@ const SignUpPage = () => {
           </div>
           <div>
             <button
-              type="submit"
+              type="button"
               className={`w-full flex justify-center ${
                 isButtonActive
                   ? "bg-purple-800  hover:bg-purple-700 text-gray-100"
                   : "bg-purple-300 text-gray-100"
               } p-3  rounded-lg tracking-wide font-semibold transition ease-in duration-500`}
-              onClick={() => isButtonActive && navigate("/")}
+              onClick={() => isButtonActive && navigate("/createwallet")}
               disabled={isButtonActive ? undefined : "disabled"}
             >
-              Sign Up
+              Go to create wallet
             </button>
           </div>
         </form>

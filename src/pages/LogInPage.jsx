@@ -11,7 +11,7 @@ const LogInPage = () => {
   ];
   const navigate = useNavigate();
   return (
-    <MembershipBg type={"Log In"} padding={"lg:px-14"}>
+    <MembershipBg type={"Log In"}>
       <Card title={"Log In"} width={"w-96"}>
         <form className="space-y-4">
           {requiredFields.map((field, index) => (

@@ -24,10 +24,9 @@ const Card = ({ title, width, children }) => {
           <span>
             {"Copyright © 2024 "}
             <a
-              href="https://codepen.io/uidesignhub"
+              href="/"
               rel=""
               target="_blank"
-              title="Codepen aji"
               className="text-purple-500 hover:text-purple-600 "
             >
               Itemize
