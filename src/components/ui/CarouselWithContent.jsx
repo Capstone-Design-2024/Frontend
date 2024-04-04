@@ -29,7 +29,11 @@ export default function CarouselWithContent() {
               and renews a weary spirit.
             </Typography>
             <div className="flex justify-center gap-2">
-              <Button size="lg" color="white">
+              <Button
+                size="lg"
+                color="white"
+                className="bg-purple-700 text-white"
+              >
                 Explore
               </Button>
               <Button size="lg" color="white" variant="text">
@@ -65,7 +69,11 @@ export default function CarouselWithContent() {
               and renews a weary spirit.
             </Typography>
             <div className="flex gap-2">
-              <Button size="lg" color="white">
+              <Button
+                size="lg"
+                color="white"
+                className="bg-purple-700 text-white"
+              >
                 Explore
               </Button>
               <Button size="lg" color="white" variant="text">
@@ -101,7 +109,11 @@ export default function CarouselWithContent() {
               and renews a weary spirit.
             </Typography>
             <div className="flex gap-2">
-              <Button size="lg" color="white">
+              <Button
+                size="lg"
+                color="white"
+                className="bg-purple-700 text-white"
+              >
                 Explore
               </Button>
               <Button size="lg" color="white" variant="text">
