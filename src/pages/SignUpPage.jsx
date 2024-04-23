@@ -4,6 +4,7 @@ import CustomInput from "../components/ui/CustomInput";
 import Card from "../components/ui/Card";
 import MembershipBg from "../components/ui/MembershipBg";
 import { validation, passwordValidation } from "./validation";
+import { API } from "../config.js";
 
 const SignUpPage = () => {
   const [form, setForm] = useState({
@@ -15,8 +16,6 @@ const SignUpPage = () => {
     address: "",
     agreeTerm: false,
   });
-
-  console.log(form);
 
   const [formValidity, setFormValidity] = useState({
     firstName: undefined,
@@ -98,7 +97,7 @@ const SignUpPage = () => {
     e.preventDefault();
     if (!isButtonActive) return;
     try {
-      const response = await fetch("http://localhost:9001/member/signup", {
+      const response = await fetch(`${API.SIGNUP}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -106,10 +105,12 @@ const SignUpPage = () => {
         body: JSON.stringify({
           email: form.email,
           password: form.password,
+          role: "USER",
           name: form.lastName + form.firstName,
           address: form.address,
         }),
       });
+      console.log(response);
       const data = await response.json();
 
       if (response.ok) {
@@ -189,13 +190,12 @@ const SignUpPage = () => {
           </div>
           <div>
             <button
-              type="button"
+              type="submit"
               className={`w-full flex justify-center ${
                 isButtonActive
                   ? "bg-purple-800  hover:bg-purple-700 text-gray-100"
                   : "bg-purple-300 text-gray-100"
               } p-3  rounded-lg tracking-wide font-semibold transition ease-in duration-500`}
-              onClick={() => isButtonActive && navigate("/createwallet")}
               disabled={isButtonActive ? undefined : "disabled"}
             >
               Go to create wallet

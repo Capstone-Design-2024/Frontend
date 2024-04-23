@@ -4,10 +4,10 @@ import CarouselWithContent from "../components/ui/CarouselWithContent";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import EcommerceCard from "../components/ui/EcommerceCard";
 
-const MainPage = () => {
+const MainPage = ({ isLoggedIn }) => {
   return (
     <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible  ">
-      <StickyNavbar>
+      <StickyNavbar isLoggedIn={isLoggedIn}>
         <div className="mx-auto w-full h-[500px] flex justify-center">
           <CarouselWithContent />
         </div>
