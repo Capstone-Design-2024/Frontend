@@ -9,6 +9,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import WalletModal from "../wallet/WalletModal";
+import mainlogo from "../../assets/logo-no-background.png";
 
 export default function StickyNavbar({ children }) {
   const [openNav, setOpenNav] = useState(false);
@@ -74,13 +75,14 @@ export default function StickyNavbar({ children }) {
       <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 ">
           <div className="flex">
-            <Typography
-              as="a"
-              href="#"
-              className="mr-4 cursor-pointer py-1.5 font-medium"
-            >
-              Material Tailwind
-            </Typography>
+            <a href="/">
+              <img
+                src={mainlogo}
+                alt="main-logo"
+                className="mx-5 min-w-20"
+                style={{ width: "100px" }}
+              />
+            </a>
             <div className="hidden items-center gap-x-2 lg:flex">
               <div className="relative flex w-full gap-2 md:w-max">
                 <Input

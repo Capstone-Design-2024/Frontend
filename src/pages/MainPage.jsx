@@ -1,6 +1,7 @@
 import React from "react";
 import StickyNavbar from "../components/ui/StickyNavbar";
 import CarouselWithContent from "../components/ui/CarouselWithContent";
+import FooterWithLogo from "../components/ui/FooterWithLogo";
 import EcommerceCard from "../components/ui/EcommerceCard";
 
 const MainPage = () => {
@@ -29,6 +30,7 @@ const MainPage = () => {
             <EcommerceCard />
             <EcommerceCard />
           </div>
+          <FooterWithLogo></FooterWithLogo>
         </div>
       </StickyNavbar>
     </div>
