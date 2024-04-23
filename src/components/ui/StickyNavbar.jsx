@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
   Navbar,
   Collapse,
@@ -10,13 +11,22 @@ import {
 } from "@material-tailwind/react";
 import WalletModal from "../wallet/WalletModal";
 import mainlogo from "../../assets/logo-no-background.png";
+import { useDispatch } from "react-redux";
+import { logoutSuccess } from "../../actions/authActions";
 
-export default function StickyNavbar({ children }) {
+export default function StickyNavbar({ children, isLoggedIn }) {
   const [openNav, setOpenNav] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpen = () => setOpenModal((cur) => !cur);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    dispatch(logoutSuccess());
+    navigate("/");
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -25,6 +35,7 @@ export default function StickyNavbar({ children }) {
     );
   }, []);
 
+  console.log("Navbar", isLoggedIn);
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -137,22 +148,35 @@ export default function StickyNavbar({ children }) {
               >
                 <span>Wallet</span>
               </Button>
-              <Button
-                variant="text"
-                size="md"
-                className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
-                onClick={() => navigate("/login")}
-              >
-                <span>Log In</span>
-              </Button>
-              <Button
-                variant="text"
-                size="md"
-                className="hidden lg:inline-block bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800"
-                onClick={() => navigate("/signup")}
-              >
-                <span>Sign Up</span>
-              </Button>
+              {isLoggedIn ? (
+                <Button
+                  variant="text"
+                  size="md"
+                  className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                  onClick={handleSignOut}
+                >
+                  <span>Sign Out</span>
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    onClick={() => navigate("/login")}
+                  >
+                    <span>Log In</span>
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="hidden lg:inline-block bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800"
+                    onClick={() => navigate("/signup")}
+                  >
+                    <span>Sign Up</span>
+                  </Button>
+                </>
+              )}
             </div>
             <IconButton
               variant="text"
