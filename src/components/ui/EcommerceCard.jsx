@@ -38,14 +38,14 @@ export default function EcommerceCard() {
       </CardBody>
       <CardFooter className="pt-0">
         <div className="mb-2 flex w-full h-4 overflow-hidden font-sans text-xs font-medium rounded-lg flex-start bg-blue-gray-50">
-          <div className="flex items-center justify-center w-1/2 h-full overflow-hidden text-white break-all bg-gray-900 rounded-lg">
+          <div className="flex items-center justify-center w-1/2 h-full overflow-hidden text-white break-all bg-purple-600 rounded-lg">
             50% Completed
           </div>
         </div>
         <Button
           ripple={false}
           fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none hover:bg-purple-600 hover:text-white focus:scale-105 focus:shadow-none active:scale-100"
         >
           Add to Cart
         </Button>
