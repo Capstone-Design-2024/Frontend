@@ -44,13 +44,14 @@ export default function AccordionCustomStyles() {
             open === 1 ? "text-deep-purple-400 hover:!text-deep-purple-700" : ""
           }`}
         >
-          What is Material Tailwind?
+          What is Mnemonic phrases?
         </AccordionHeader>
         <AccordionBody className="pt-0 text-base font-normal">
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
+          A mnemonic phrase is a sequence of random words used in cryptocurrency
+          wallets and other applications that deal with private keys or
+          sensitive data. The purpose of a mnemonic phrase is to provide a
+          human-readable way to backup and recover the private keys or seed that
+          controls access to cryptocurrency funds or other secured information.
         </AccordionBody>
       </Accordion>
       <Accordion
@@ -64,13 +65,12 @@ export default function AccordionCustomStyles() {
             open === 2 ? "text-deep-purple-400 hover:!text-deep-purple-700" : ""
           }`}
         >
-          How to use Material Tailwind?
+          Why should Mnemonic phrase be kept safe?
         </AccordionHeader>
         <AccordionBody className="pt-0 text-base  font-normal">
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
+          The mnemonic phrase (seed words) must be kept safe because it acts as
+          the master key to access and control the cryptocurrency funds stored
+          in the associated wallet.
         </AccordionBody>
       </Accordion>
       <Accordion
@@ -84,13 +84,15 @@ export default function AccordionCustomStyles() {
             open === 3 ? "text-deep-purple-400 hover:!text-deep-purple-700" : ""
           }`}
         >
-          What can I do with Material Tailwind?
+          How to keep mnemonic phrases safe?
         </AccordionHeader>
         <AccordionBody className="pt-0 text-base font-normal">
-          We&apos;re not always in the position that we want to be at.
-          We&apos;re constantly growing. We&apos;re constantly making mistakes.
-          We&apos;re constantly trying to express ourselves and actualize our
-          dreams.
+          Here are some recommended ways to securely keep and store your
+          mnemonic phrase:
+          <ol>
+            <li>1. Write it down manually</li>
+            <li>2. Memorize the phrase</li>
+          </ol>
         </AccordionBody>
       </Accordion>
     </>
