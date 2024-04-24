@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import {
   Navbar,
   Collapse,
@@ -13,14 +12,32 @@ import WalletModal from "../wallet/WalletModal";
 import mainlogo from "../../assets/logo-no-background.png";
 import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../../actions/authActions";
+import { API } from "../../config";
+import axios from "axios";
 
 export default function StickyNavbar({ children, isLoggedIn }) {
   const [openNav, setOpenNav] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [walletAddress, setWalletAddress] = useState();
 
-  const handleOpen = () => setOpenModal((cur) => !cur);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleOpen = async () => {
+    setOpenModal((cur) => !cur);
+    try {
+      const token = localStorage.getItem("token");
+      const walletAddress = await axios.get(`${API.GETWALLETADDRESS}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setWalletAddress(walletAddress.data.existingWallet.wallet_address);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
@@ -219,7 +236,11 @@ export default function StickyNavbar({ children, isLoggedIn }) {
       </Navbar>
 
       {children}
-      <WalletModal open={openModal} handleOpen={handleOpen} />
+      <WalletModal
+        open={openModal}
+        handleOpen={handleOpen}
+        address={walletAddress}
+      />
     </div>
   );
 }

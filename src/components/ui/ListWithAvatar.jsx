@@ -9,7 +9,7 @@ import {
 
 export default function ListWithAvatar() {
   return (
-    <Card className="w-96">
+    <Card className="w-full">
       <List>
         <ListItem>
           <ListItemPrefix>
