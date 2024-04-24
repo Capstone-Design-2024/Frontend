@@ -35,49 +35,23 @@ export default function StickyNavbar({ children, isLoggedIn }) {
     );
   }, []);
 
-  console.log("Navbar", isLoggedIn);
+  const navContent = ["Pages", "Account", "Blocks", "Docs"];
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Pages
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Account
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
-      </Typography>
+      {navContent.map((content, index) => (
+        <Typography
+          key={index}
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal hover:text-purple-600 focus:text-purple-600"
+        >
+          <a href="#" className="flex items-center">
+            {content}
+          </a>
+        </Typography>
+      ))}
     </ul>
   );
 

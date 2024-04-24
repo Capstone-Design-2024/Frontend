@@ -6,8 +6,8 @@ import {
   Dialog,
 } from "@material-tailwind/react";
 import AvatarDefault from "../ui/AvatarDefault";
-import copyIcon from "../../assets/copy.svg";
-import keyIcon from "../../assets/key.svg";
+import copyIcon from "../../assets/icons/copy.svg";
+import keyIcon from "../../assets/icons/key.svg";
 import ListWithAvatar from "../ui/ListWithAvatar";
 
 const WalletMain = ({ setPage }) => {
