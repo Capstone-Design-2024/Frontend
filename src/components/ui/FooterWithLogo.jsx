@@ -1,5 +1,5 @@
 import { Typography } from "@material-tailwind/react";
-import mainlogo from "../../assets/logo-no-background.png";
+import mainlogo from "../../assets/itemizeLogo.png";
 
 export default function FooterWithLogo() {
   const footerContents = ["About Us", "License", "Contribute", "Contact Us"];

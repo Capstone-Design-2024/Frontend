@@ -9,7 +9,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import WalletModal from "../wallet/WalletModal";
-import mainlogo from "../../assets/logo-no-background.png";
+import mainlogo from "../../assets/itemizeLogo.png";
 import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../../actions/authActions";
 import { API } from "../../config";
@@ -52,7 +52,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
     );
   }, []);
 
-  const navContent = ["Pages", "Account", "Blocks", "Docs"];
+  const navContent = ["Account", "Cart"];
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -140,14 +140,24 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                 <span>Wallet</span>
               </Button>
               {isLoggedIn ? (
-                <Button
-                  variant="text"
-                  size="md"
-                  className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
-                  onClick={handleSignOut}
-                >
-                  <span>Sign Out</span>
-                </Button>
+                <>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    onClick={() => navigate("/createProject")}
+                  >
+                    <span>Create</span>
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    onClick={handleSignOut}
+                  >
+                    <span>Sign Out</span>
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button

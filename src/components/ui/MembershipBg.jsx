@@ -1,5 +1,5 @@
 import React from "react";
-import mainlogo from "../../assets/logo-no-background.png";
+import mainlogo from "../../assets/itemizeLogo.png";
 
 const MembershipBg = ({ children, type, padding }) => {
   var sentence = "Welcome back";
