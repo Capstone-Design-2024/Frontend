@@ -50,10 +50,12 @@ const LogInPage = () => {
               Authorization: `Bearer ${token}`,
             },
           });
+          console.log(walletResponse);
           dispatch(loginSuccess());
           navigate("/");
         } catch (error) {
           navigate("/createwallet");
+          console.error("User doesn't have wallet", error);
         }
       } else {
         console.error("Sign in failed");
