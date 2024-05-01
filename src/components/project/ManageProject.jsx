@@ -33,7 +33,9 @@ export default function ManageProject() {
             <Button size="sm">Save</Button>
           </div>
         </div>
-        <CurrentState />
+        <div className="mt-5">
+          <CurrentState />
+        </div>
       </div>
     </div>
   );
