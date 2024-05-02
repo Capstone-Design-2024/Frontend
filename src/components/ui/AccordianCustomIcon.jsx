@@ -4,6 +4,8 @@ import {
   AccordionHeader,
   AccordionBody,
   Button,
+  List,
+  ListItem,
 } from "@material-tailwind/react";
 import category from "../project/projectCategory";
 
@@ -28,7 +30,7 @@ function Icon({ id, open }) {
   );
 }
 
-export default function AccordionCustomIcon() {
+export default function AccordionCustomIcon({ setCategory }) {
   const [open, setOpen] = useState(0);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
@@ -48,10 +50,19 @@ export default function AccordionCustomIcon() {
             {Object.keys(title)}
           </AccordionHeader>
           {Object.values(title).map((item, pos) => (
-            <AccordionBody className="px-4 bg-gray-100" key={pos}>
-              {item.map((cat, tmp) => (
-                <div key={tmp}>{cat}</div>
-              ))}
+            <AccordionBody className="px-4 bg-gray-50" key={pos}>
+              <List>
+                {item.map((cat, tmp) => (
+                  <ListItem
+                    key={tmp}
+                    onClick={() =>
+                      setCategory(`${Object.keys(title)} > ${cat}`)
+                    }
+                  >
+                    {cat}
+                  </ListItem>
+                ))}
+              </List>
             </AccordionBody>
           ))}
         </Accordion>

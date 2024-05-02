@@ -9,11 +9,27 @@ import CreaterInfo from "./CreaterInfo";
 
 export default function ManageProject() {
   const [current, setCurrent] = useState("Project Information");
+  const [projectForm, setProjectForm] = useState({
+    projectInfo: { category: "Please choose the category", targetFund: "" },
+    basicInfo: { projectName: "", projectImage: "" },
+    storyLine: "",
+    createrInfo: "",
+  });
   const CurrentState = () => {
     if (current === "Project Information") {
-      return <ProjectInfo></ProjectInfo>;
+      return (
+        <ProjectInfo
+          projectInfo={projectForm.projectInfo}
+          setProject={setProjectForm}
+        ></ProjectInfo>
+      );
     } else if (current === "Basic Information") {
-      return <BasicInfo></BasicInfo>;
+      return (
+        <BasicInfo
+          basicInfo={projectForm.basicInfo}
+          setProject={setProjectForm}
+        ></BasicInfo>
+      );
     } else if (current === "Story Line") {
       return <StoryLine></StoryLine>;
     } else if (current === "Creater Information") {
