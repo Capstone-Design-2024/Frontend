@@ -3,9 +3,7 @@ import {
   Typography,
   List,
   ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
+  Button,
 } from "@material-tailwind/react";
 import mainlogo from "../../assets/itemizeLogo.png";
 
@@ -32,6 +30,9 @@ export function DefaultSidebar({ setCurrent }) {
           Creater Information
         </ListItem>
       </List>
+      <Button className="border border-purple-700 bg-white text-purple-700 hover:bg-purple-700 hover:text-white">
+        Submit
+      </Button>
     </Card>
   );
 }

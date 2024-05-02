@@ -7,7 +7,7 @@ import {
 import React from "react";
 import AccordionCustomIcon from "../ui/AccordianCustomIcon";
 
-const ProjectCategory = ({ open, handler }) => {
+const ProjectCategory = ({ open, handler, setCategory }) => {
   return (
     <Dialog open={open} handler={handler} size="md">
       <DialogHeader className="justify-between">
@@ -34,7 +34,7 @@ const ProjectCategory = ({ open, handler }) => {
           </svg>
         </IconButton>
       </DialogHeader>
-      <AccordionCustomIcon />
+      <AccordionCustomIcon setCategory={setCategory} />
     </Dialog>
   );
 };
