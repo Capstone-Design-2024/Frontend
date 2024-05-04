@@ -10,7 +10,11 @@ import CreaterInfo from "./CreaterInfo";
 export default function ManageProject() {
   const [current, setCurrent] = useState("Project Information");
   const [projectForm, setProjectForm] = useState({
-    projectInfo: { category: "Please choose the category", targetFund: "" },
+    projectInfo: {
+      category: "Please choose the category",
+      targetFund: "",
+      dueDate: "",
+    },
     basicInfo: { projectName: "", projectImage: "" },
     storyLine: "",
     createrInfo: "",
@@ -36,6 +40,7 @@ export default function ManageProject() {
       return <CreaterInfo></CreaterInfo>;
     }
   };
+
   return (
     <div className="flex justify-start">
       <DefaultSidebar setCurrent={setCurrent} />

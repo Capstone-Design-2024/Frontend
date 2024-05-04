@@ -7,6 +7,7 @@ import WalletCreationPage from "./pages/WalletCreationPage";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./actions/authActions";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,10 @@ const Router = () => {
         <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route
+          path="/projects"
+          element={<ProjectsPage isLoggedIn={isLoggedIn} />}
+        />
         <Route path="/createProject" element={<CreateProjectPage />} />
         <Route path="/createwallet" element={<WalletCreationPage />} />
       </Routes>

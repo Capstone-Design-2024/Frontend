@@ -20,28 +20,17 @@ const BasicInfo = ({ basicInfo, setProject }) => {
       projectImage: file,
     }));
   };
-  const validateInput = () => {
-    if (basicInfoForm.projectName === "") {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        projectName: false,
-      }));
-    } else {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        projectName: true,
-      }));
-    }
-    if (basicInfoForm.projectImage === "") {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        projectImage: false,
-      }));
-    } else {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        projectImage: true,
-      }));
+  const validateAndSave = () => {
+    const isValidProjectName = basicInfoForm.projectName !== "";
+    const isValidProjectImage = basicInfoForm.projectImage !== "";
+
+    setInputValidity({
+      projectName: isValidProjectName,
+      projectImage: isValidProjectImage,
+    });
+
+    if (isValidProjectName && isValidProjectImage) {
+      handleSave();
     }
   };
   const handleSave = () => {
@@ -50,7 +39,6 @@ const BasicInfo = ({ basicInfo, setProject }) => {
       basicInfo: basicInfoForm,
     }));
   };
-  console.log(basicInfoForm);
   return (
     <>
       <p className="text-gray-600">
@@ -136,8 +124,7 @@ const BasicInfo = ({ basicInfo, setProject }) => {
           size="md"
           className="w-24"
           onClick={() => {
-            validateInput();
-            handleSave();
+            validateAndSave();
           }}
         >
           save
