@@ -24,10 +24,11 @@ const LogInPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+
       console.log(mnemonicResponse);
       setMnemonic(mnemonicResponse.data.mnemonic.split(" "));
       localStorage.setItem("private_key", mnemonicResponse.data.private_key);

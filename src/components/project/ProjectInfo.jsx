@@ -5,7 +5,11 @@ import chevron from "../../assets/icons/chevronDown.svg";
 import ProjectCategory from "./ProjectCategory";
 import DatePicker from "../ui/DatePicker";
 
-const ProjectInfo = ({ projectInfo, setProject }) => {
+const ProjectInfo = ({ projectInfo, setProject, setCurrent }) => {
+  const changeCurrent = () => {
+    setCurrent("Basic Information"); // current 값을 다음 가야할 페이지 명으로 변경해
+  };
+
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [projectInfoForm, setProjectInfoForm] = useState({
     category: projectInfo.category,
@@ -42,6 +46,7 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
       handleSave();
     }
   };
+
   const handleSave = () => {
     setProject((prevProject) => ({
       ...prevProject,
@@ -124,9 +129,10 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
           className="w-24"
           onClick={() => {
             validateAndSave();
+            changeCurrent(); // 클릭하면 이걸로 같이
           }}
         >
-          save
+          next
         </Button>
       </div>
     </>
