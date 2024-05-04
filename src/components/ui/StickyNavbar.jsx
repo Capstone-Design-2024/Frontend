@@ -74,7 +74,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
 
   return (
     <div className="-m-6 max-h-screen w-[calc(100%+48px)] overflow-scroll">
-      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
+      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
         <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 ">
           <div className="flex">
             <a href="/">
@@ -145,9 +145,9 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                     variant="text"
                     size="md"
                     className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
-                    onClick={() => navigate("/createProject")}
+                    onClick={() => navigate("/projects")}
                   >
-                    <span>Create</span>
+                    <span>My Projects</span>
                   </Button>
                   <Button
                     variant="text"

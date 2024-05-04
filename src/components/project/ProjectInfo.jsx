@@ -2,18 +2,20 @@ import { Button, Input, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { BsAsterisk } from "react-icons/bs";
 import chevron from "../../assets/icons/chevronDown.svg";
-import Card from "../ui/Card";
 import ProjectCategory from "./ProjectCategory";
+import DatePicker from "../ui/DatePicker";
 
 const ProjectInfo = ({ projectInfo, setProject }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [projectInfoForm, setProjectInfoForm] = useState({
     category: projectInfo.category,
     targetFund: projectInfo.targetFund,
+    dueDate: projectInfo.dueDate,
   });
   const [inputValidity, setInputValidity] = useState({
     category: true,
     targetFund: true,
+    dueDate: true,
   });
 
   const handleCategoryOpen = () => setIsCategoryOpen(!isCategoryOpen);
@@ -24,28 +26,20 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
       category: cat,
     }));
   };
-  const validateInput = () => {
-    if (projectInfoForm.category === "Please choose the category") {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        category: false,
-      }));
-    } else {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        category: true,
-      }));
-    }
-    if (projectInfoForm.targetFund === "") {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        targetFund: false,
-      }));
-    } else {
-      setInputValidity((prevValidity) => ({
-        ...prevValidity,
-        targetFund: true,
-      }));
+  const validateAndSave = () => {
+    const isValidCategory =
+      projectInfoForm.category !== "Please choose the category";
+    const isValidTargetFund = projectInfoForm.targetFund !== "";
+    const isValidDueDate = projectInfoForm.dueDate !== "";
+
+    setInputValidity({
+      category: isValidCategory,
+      targetFund: isValidTargetFund,
+      dueDate: isValidDueDate,
+    });
+
+    if (isValidCategory && isValidTargetFund && isValidDueDate) {
+      handleSave();
     }
   };
   const handleSave = () => {
@@ -108,13 +102,28 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
       {!inputValidity.targetFund && (
         <p className="mt-2 text-red-700">Please enter your target fund</p>
       )}
+      <div className="flex justify-start mt-4">
+        <Typography variant="h3">Due date</Typography>
+        <div className="pt-2">
+          <BsAsterisk color="red" fontSize={"0.7rem"} />
+        </div>
+      </div>
+      <p className="text-gray-600">
+        Please register the end date of the funding
+      </p>
+      <DatePicker
+        curDate={projectInfoForm.dueDate}
+        setCurDate={setProjectInfoForm}
+      ></DatePicker>
+      {!inputValidity.dueDate && (
+        <p className="mt-2 text-red-700">Please enter your due date</p>
+      )}
       <div className="mt-4">
         <Button
           size="md"
           className="w-24"
           onClick={() => {
-            validateInput();
-            handleSave();
+            validateAndSave();
           }}
         >
           save
