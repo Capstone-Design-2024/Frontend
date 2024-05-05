@@ -25,6 +25,7 @@ export default function ManageProject() {
         <ProjectInfo
           projectInfo={projectForm.projectInfo}
           setProject={setProjectForm}
+          setCurrent={setCurrent} // current 변경 함수를 제공해줘 다른 곳에도
         ></ProjectInfo>
       );
     } else if (current === "Basic Information") {
