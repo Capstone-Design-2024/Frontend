@@ -5,11 +5,12 @@ import chevron from "../../assets/icons/chevronDown.svg";
 import ProjectCategory from "./ProjectCategory";
 import DatePicker from "../ui/DatePicker";
 
-const ProjectInfo = ({ projectInfo, setProject, setCurrent }) => {
-  const changeCurrent = () => {
-    setCurrent("Basic Information"); // current 값을 다음 가야할 페이지 명으로 변경해
-  };
-
+const ProjectInfo = ({
+  projectInfo,
+  setProject,
+  setCurrent,
+  setAvailability,
+}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [projectInfoForm, setProjectInfoForm] = useState({
     category: projectInfo.category,
@@ -44,6 +45,11 @@ const ProjectInfo = ({ projectInfo, setProject, setCurrent }) => {
 
     if (isValidCategory && isValidTargetFund && isValidDueDate) {
       handleSave();
+      setCurrent("Basic Information");
+      setAvailability((prevAvailability) => ({
+        ...prevAvailability,
+        basicInfo: false,
+      }));
     }
   };
 
@@ -53,6 +59,7 @@ const ProjectInfo = ({ projectInfo, setProject, setCurrent }) => {
       projectInfo: projectInfoForm,
     }));
   };
+
   return (
     <>
       <div className="flex justify-start">

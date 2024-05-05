@@ -4,7 +4,7 @@ import { BsAsterisk } from "react-icons/bs";
 import "./styles.css";
 import imageIcon from "../../assets/icons/image.svg";
 
-const BasicInfo = ({ basicInfo, setProject }) => {
+const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
   const [basicInfoForm, setBasicInfoForm] = useState({
     projectName: basicInfo.projectName,
     projectImage: basicInfo.projectImage,
@@ -31,6 +31,11 @@ const BasicInfo = ({ basicInfo, setProject }) => {
 
     if (isValidProjectName && isValidProjectImage) {
       handleSave();
+      setCurrent("Story Line");
+      setAvailability((prevAvailability) => ({
+        ...prevAvailability,
+        storyLine: false,
+      }));
     }
   };
   const handleSave = () => {
@@ -39,6 +44,7 @@ const BasicInfo = ({ basicInfo, setProject }) => {
       basicInfo: basicInfoForm,
     }));
   };
+
   return (
     <>
       <p className="text-gray-600">
@@ -127,7 +133,7 @@ const BasicInfo = ({ basicInfo, setProject }) => {
             validateAndSave();
           }}
         >
-          save
+          next
         </Button>
       </div>
     </>
