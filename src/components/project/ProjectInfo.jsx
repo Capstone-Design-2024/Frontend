@@ -5,7 +5,12 @@ import chevron from "../../assets/icons/chevronDown.svg";
 import ProjectCategory from "./ProjectCategory";
 import DatePicker from "../ui/DatePicker";
 
-const ProjectInfo = ({ projectInfo, setProject }) => {
+const ProjectInfo = ({
+  projectInfo,
+  setProject,
+  setCurrent,
+  setAvailability,
+}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [projectInfoForm, setProjectInfoForm] = useState({
     category: projectInfo.category,
@@ -40,14 +45,21 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
 
     if (isValidCategory && isValidTargetFund && isValidDueDate) {
       handleSave();
+      setCurrent("Basic Information");
+      setAvailability((prevAvailability) => ({
+        ...prevAvailability,
+        basicInfo: false,
+      }));
     }
   };
+
   const handleSave = () => {
     setProject((prevProject) => ({
       ...prevProject,
       projectInfo: projectInfoForm,
     }));
   };
+
   return (
     <>
       <div className="flex justify-start">
@@ -126,7 +138,7 @@ const ProjectInfo = ({ projectInfo, setProject }) => {
             validateAndSave();
           }}
         >
-          save
+          next
         </Button>
       </div>
     </>

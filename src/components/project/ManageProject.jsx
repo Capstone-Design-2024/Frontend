@@ -16,15 +16,24 @@ export default function ManageProject() {
       dueDate: "",
     },
     basicInfo: { projectName: "", projectImage: "" },
-    storyLine: "",
-    createrInfo: "",
+    storyLine: { projectDescription: "" },
+    createrInfo: { createrName: "", createrEmail: "", createrPhoneNumber: "" },
   });
+  const [pageDisable, setPageDisable] = useState({
+    projectInfo: false,
+    basicInfo: true,
+    storyLine: true,
+    createrInfo: true,
+  });
+  const [buttonAvailability, setButtonAvailability] = useState(true);
   const CurrentState = () => {
     if (current === "Project Information") {
       return (
         <ProjectInfo
           projectInfo={projectForm.projectInfo}
           setProject={setProjectForm}
+          setCurrent={setCurrent}
+          setAvailability={setPageDisable}
         ></ProjectInfo>
       );
     } else if (current === "Basic Information") {
@@ -32,18 +41,38 @@ export default function ManageProject() {
         <BasicInfo
           basicInfo={projectForm.basicInfo}
           setProject={setProjectForm}
+          setCurrent={setCurrent}
+          setAvailability={setPageDisable}
         ></BasicInfo>
       );
     } else if (current === "Story Line") {
-      return <StoryLine></StoryLine>;
+      return (
+        <StoryLine
+          storyLine={projectForm.storyLine}
+          setProject={setProjectForm}
+          setCurrent={setCurrent}
+          setAvailability={setPageDisable}
+        ></StoryLine>
+      );
     } else if (current === "Creater Information") {
-      return <CreaterInfo></CreaterInfo>;
+      return (
+        <CreaterInfo
+          createrInfo={projectForm.createrInfo}
+          setProject={setProjectForm}
+          setCurrent={setCurrent}
+          setButtonAvailability={setButtonAvailability}
+        ></CreaterInfo>
+      );
     }
   };
 
   return (
     <div className="flex justify-start">
-      <DefaultSidebar setCurrent={setCurrent} />
+      <DefaultSidebar
+        setCurrent={setCurrent}
+        availability={pageDisable}
+        buttonAvailability={buttonAvailability}
+      />
       <div className="mx-auto mt-10 max-w-screen-xl w-full">
         <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
         <div className="flex justify-between">
