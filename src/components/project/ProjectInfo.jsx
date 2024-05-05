@@ -136,6 +136,7 @@ const ProjectInfo = ({
           className="w-24"
           onClick={() => {
             validateAndSave();
+            changeCurrent(); // 클릭하면 이걸로 같이
           }}
         >
           next
