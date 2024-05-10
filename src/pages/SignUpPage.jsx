@@ -115,7 +115,7 @@ const SignUpPage = () => {
 
       if (response.ok) {
         console.log("Success:", data);
-        navigate("/");
+        navigate("/signupsucceed");
       } else {
         console.error("Error:", data);
       }
@@ -198,7 +198,7 @@ const SignUpPage = () => {
               } p-3  rounded-lg tracking-wide font-semibold transition ease-in duration-500`}
               disabled={isButtonActive ? undefined : "disabled"}
             >
-              Go to create wallet
+              Continue to sign up
             </button>
           </div>
         </form>

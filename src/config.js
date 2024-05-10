@@ -1,8 +1,8 @@
-// const BASE_URL = "http://43.201.244.153:9001";
-// const BC_URL = "http://43.201.244.153:9002";
+const BASE_URL = "http://43.201.244.153:9001";
+const BC_URL = "http://43.201.244.153:9002";
 
-const BASE_URL = "http://itm.suitestudy.com";
-const BC_URL = "http://itm.suitestudy.com";
+// const BASE_URL = "http://itm.suitestudy.com";
+// const BC_URL = "http://itm.suitestudy.com";
 
 export const API = {
   SIGNUP: `${BASE_URL}/member/signup`,

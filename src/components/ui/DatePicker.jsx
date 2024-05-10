@@ -17,7 +17,7 @@ export default function DatePicker({ curDate, setCurDate }) {
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
-            label="Select a Date"
+            label="Date"
             onChange={(event) => {
               setCurDate((prevInfo) => ({
                 ...prevInfo,

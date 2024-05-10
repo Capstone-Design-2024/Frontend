@@ -78,6 +78,7 @@ const CreaterInfo = ({
       <div className="mt-2">
         <Input
           label="email"
+          type="email"
           size="md"
           value={createrInfoForm.createrEmail}
           onChange={(event) =>
