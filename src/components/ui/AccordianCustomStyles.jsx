@@ -49,9 +49,7 @@ export default function AccordionCustomStyles() {
         <AccordionBody className="pt-0 text-base font-normal">
           A mnemonic phrase is a sequence of random words used in cryptocurrency
           wallets and other applications that deal with private keys or
-          sensitive data. The purpose of a mnemonic phrase is to provide a
-          human-readable way to backup and recover the private keys or seed that
-          controls access to cryptocurrency funds or other secured information.
+          sensitive data.
         </AccordionBody>
       </Accordion>
       <Accordion

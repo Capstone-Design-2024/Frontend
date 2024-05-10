@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./actions/authActions";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import SignUpSucceedPage from "./pages/SignUpSucceedPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ const Router = () => {
         <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signupsucceed" element={<SignUpSucceedPage />} />
         <Route
           path="/projects"
           element={<ProjectsPage isLoggedIn={isLoggedIn} />}

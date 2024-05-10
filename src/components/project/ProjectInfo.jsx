@@ -26,6 +26,8 @@ const ProjectInfo = ({
   const handleCategoryOpen = () => setIsCategoryOpen(!isCategoryOpen);
   const handleCategory = (cat) => {
     handleCategoryOpen();
+    const parentAndChild = cat.split(" > ");
+    console.log(parentAndChild);
     setProjectInfoForm((prevProject) => ({
       ...prevProject,
       category: cat,
@@ -100,8 +102,9 @@ const ProjectInfo = ({
       <div className="mt-2">
         <Input
           size="lg"
-          label="Please enter your target fund"
+          label="Target fund"
           value={projectInfoForm.targetFund}
+          type="number"
           icon={<i>$</i>}
           onChange={(event) =>
             setProjectInfoForm((prevProject) => ({

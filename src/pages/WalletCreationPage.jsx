@@ -7,11 +7,14 @@ import { Button } from "@material-tailwind/react";
 import { API } from "../config";
 import axios from "axios";
 import seeIcon from "../assets/icons/see.svg";
+import { loginSuccess } from "../actions/authActions";
+import { useDispatch } from "react-redux";
 
 const LogInPage = () => {
   const [showMnemonic, setShowMnemonic] = useState(false);
-  const navigate = useNavigate();
   const [mnemonic, setMnemonic] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const mnemonicHandler = async (e) => {
     e.preventDefault();
@@ -45,6 +48,10 @@ const LogInPage = () => {
     element.click();
     document.body.removeChild(element);
   };
+  const goHome = () => {
+    navigate("/");
+    dispatch(loginSuccess());
+  };
 
   return (
     <MembershipBg type={"Create Wallet"} padding={"lg:px-14"}>
@@ -75,7 +82,7 @@ const LogInPage = () => {
                   ))}
                 </div>
                 <Button
-                  className="flex justify-center items-center gap-3 mt-2  bg-purple-600"
+                  className="flex justify-center items-center gap-3 mt-2  hover:bg-purple-600 bg-white border border-purple-600 text-purple-600 hover:text-white"
                   fullWidth
                   onClick={downloadMnemonic}
                 >
@@ -85,7 +92,7 @@ const LogInPage = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                   >
                     <path
                       strokeLinecap="round"
@@ -94,6 +101,13 @@ const LogInPage = () => {
                     />
                   </svg>
                   Download Mnemonic Phrases
+                </Button>
+                <Button
+                  onClick={goHome}
+                  className="mt-2 bg-purple-600"
+                  fullWidth
+                >
+                  Go home to use service
                 </Button>
               </div>
             </>
