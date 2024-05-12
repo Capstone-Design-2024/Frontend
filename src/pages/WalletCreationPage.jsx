@@ -32,7 +32,6 @@ const LogInPage = () => {
         }
       );
 
-      console.log(mnemonicResponse);
       setMnemonic(mnemonicResponse.data.mnemonic.split(" "));
       localStorage.setItem("private_key", mnemonicResponse.data.private_key);
     } catch (error) {
