@@ -11,6 +11,7 @@ export function DefaultSidebar({
   setCurrent,
   availability,
   buttonAvailability,
+  onSubmit,
 }) {
   return (
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
@@ -51,6 +52,7 @@ export function DefaultSidebar({
       <Button
         className="border border-purple-700 bg-white text-purple-700 hover:bg-purple-700 hover:text-white"
         disabled={buttonAvailability}
+        onClick={onSubmit}
       >
         Submit
       </Button>

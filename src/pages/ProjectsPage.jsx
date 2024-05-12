@@ -19,7 +19,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
         },
       })
       .then((response) => {
-        setProjects(response);
+        setProjects(response.data.data);
       })
       .catch((error) => {
         console.log("Error fetching projects", error);
@@ -38,8 +38,8 @@ const ProjectsPage = ({ isLoggedIn }) => {
           },
         }
       );
-      console.log(response);
-      navigate("/createproject");
+      const projectId = response.data.data;
+      navigate(`/createproject/${projectId}`);
     } catch (error) {
       console.log("Error Creating Project:", error);
     }
@@ -60,30 +60,23 @@ const ProjectsPage = ({ isLoggedIn }) => {
         <div className="mt-5 py-6 bg-gradient-to-bl from-gray-100 via-pink-200 to-purple-300 border border-gray-50 border-s-0 border-e-0">
           <div className="mx-48 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-              <EcommerceCard
-                title={"Project title"}
-                description={"In progress"}
-                instruction={"Continue create project"}
-                onClick={() => navigate("/createproject")}
-              />
-              <EcommerceCard
-                title={"Project title"}
-                description={"In progress"}
-                instruction={"Continue create project"}
-                onClick={() => navigate("/createproject")}
-              />
-              <EcommerceCard
-                title={"Project title"}
-                description={"In progress"}
-                instruction={"Continue create project"}
-                onClick={() => navigate("/createproject")}
-              />
-              <EcommerceCard
-                title={"Project title"}
-                description={"In progress"}
-                instruction={"Continue create project"}
-                onClick={() => navigate("/createproject")}
-              />
+              {projects.map((project, idx) => {
+                const today = new Date();
+                const projectTimeLine = new Date(project.deadLine);
+
+                return (
+                  <EcommerceCard
+                    key={idx}
+                    title={project.title}
+                    description={
+                      today > projectTimeLine ? "Funding on progress" : "Closed"
+                    }
+                    instruction={today > projectTimeLine}
+                    thumbnail={project.thumbnail}
+                    onClick={() => navigate("/createproject")}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

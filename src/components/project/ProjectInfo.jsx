@@ -13,7 +13,7 @@ const ProjectInfo = ({
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [projectInfoForm, setProjectInfoForm] = useState({
-    category: projectInfo.category,
+    category: projectInfo.mainCategory + projectInfo.subCategory,
     targetFund: projectInfo.targetFund,
     dueDate: projectInfo.dueDate,
   });
@@ -26,8 +26,7 @@ const ProjectInfo = ({
   const handleCategoryOpen = () => setIsCategoryOpen(!isCategoryOpen);
   const handleCategory = (cat) => {
     handleCategoryOpen();
-    const parentAndChild = cat.split(" > ");
-    console.log(parentAndChild);
+
     setProjectInfoForm((prevProject) => ({
       ...prevProject,
       category: cat,
@@ -56,9 +55,15 @@ const ProjectInfo = ({
   };
 
   const handleSave = () => {
+    const parentAndChild = projectInfoForm.category.split(" > ");
     setProject((prevProject) => ({
       ...prevProject,
-      projectInfo: projectInfoForm,
+      projectInfo: {
+        mainCategory: parentAndChild[0],
+        subCategory: parentAndChild[1],
+        targetFund: projectInfoForm.targetFund,
+        dueDate: projectInfoForm.dueDate,
+      },
     }));
   };
 
@@ -139,7 +144,6 @@ const ProjectInfo = ({
           className="w-24"
           onClick={() => {
             validateAndSave();
-            changeCurrent(); // 클릭하면 이걸로 같이
           }}
         >
           next

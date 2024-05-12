@@ -6,16 +6,21 @@ import ProjectInfo from "./ProjectInfo";
 import BasicInfo from "./BasicInfo";
 import StoryLine from "./StoryLine";
 import CreaterInfo from "./CreaterInfo";
+import { API } from "../../config";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function ManageProject() {
+  const { projectId } = useParams();
   const [current, setCurrent] = useState("Project Information");
   const [projectForm, setProjectForm] = useState({
     projectInfo: {
-      category: "Please choose the category",
+      mainCategory: "Please choose the category",
+      subCategory: "",
       targetFund: "",
       dueDate: "",
     },
-    basicInfo: { projectName: "", projectImage: "" },
+    basicInfo: { projectName: "", projectImage: "", projectPrice: "" },
     storyLine: { projectDescription: "" },
     createrInfo: { createrName: "", createrEmail: "", createrPhoneNumber: "" },
   });
@@ -26,6 +31,69 @@ export default function ManageProject() {
     createrInfo: true,
   });
   const [buttonAvailability, setButtonAvailability] = useState(true);
+  const [submitSuccess, setSubmitSuccess] = useState({
+    info: false,
+    img: false,
+  });
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const submitInfoHandler = async () => {
+    try {
+      const response = await axios.post(
+        `${API.REGISTERPROJECT}`,
+        {
+          projectId: projectId,
+          title: projectForm.basicInfo.projectName,
+          description: projectForm.storyLine.projectDescription,
+          category: projectForm.projectInfo.mainCategory,
+          goalAmount: projectForm.projectInfo.targetFund,
+          deadLine: projectForm.projectInfo.dueDate,
+          contactPhone: projectForm.createrInfo.createrPhoneNumber,
+          contactEmail: projectForm.createrInfo.createrEmail,
+          price: projectForm.basicInfo.projectPrice,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSubmitSuccess((prev) => ({ ...prev, info: true }));
+    } catch (error) {
+      console.log("Error Creating Project:", error);
+      setSubmitSuccess((prev) => ({ ...prev, info: false }));
+    }
+  };
+  const uploadImageHandler = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      console.log(formData);
+      const response = await axios.post(
+        `${API.UPLOADIMAGE}/${projectId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Image uploaded successfully:", response);
+      setSubmitSuccess((prev) => ({ ...prev, img: true }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setSubmitSuccess((prev) => ({ ...prev, img: false }));
+    }
+  };
+
+  const submitHandler = () => {
+    submitInfoHandler();
+    uploadImageHandler(projectForm.basicInfo.projectImage);
+    if (submitSuccess.img && submitSuccess.info) {
+      navigate("/createproject");
+    }
+  };
   const CurrentState = () => {
     if (current === "Project Information") {
       return (
@@ -67,26 +135,29 @@ export default function ManageProject() {
   };
 
   return (
-    <div className="flex justify-start">
-      <DefaultSidebar
-        setCurrent={setCurrent}
-        availability={pageDisable}
-        buttonAvailability={buttonAvailability}
-      />
-      <div className="mx-auto mt-10 max-w-screen-xl w-full">
-        <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
-        <div className="flex justify-between">
-          <Typography variant="h2" className="mt-2">
-            {current}
-          </Typography>
-          <div className="place-content-center">
-            <Button size="sm">Save</Button>
+    <>
+      <div className="flex justify-start">
+        <DefaultSidebar
+          setCurrent={setCurrent}
+          availability={pageDisable}
+          buttonAvailability={buttonAvailability}
+          onSubmit={submitHandler}
+        />
+        <div className="mx-auto mt-10 max-w-screen-xl w-full">
+          <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
+          <div className="flex justify-between">
+            <Typography variant="h2" className="mt-2">
+              {current}
+            </Typography>
+            <div className="place-content-center">
+              <Button size="sm">Save</Button>
+            </div>
+          </div>
+          <div className="mt-5">
+            <CurrentState />
           </div>
         </div>
-        <div className="mt-5">
-          <CurrentState />
-        </div>
       </div>
-    </div>
+    </>
   );
 }
