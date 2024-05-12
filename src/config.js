@@ -11,4 +11,6 @@ export const API = {
   WALLETGENERATE: `${BASE_URL}/contract/wallet/create`,
   READPROJECT: `${BASE_URL}/project/own`,
   INITPROJECT: `${BASE_URL}/project/init`,
+  REGISTERPROJECT: `${BASE_URL}/project/registration`,
+  UPLOADIMAGE: `${BASE_URL}/project/thumbnail`,
 };

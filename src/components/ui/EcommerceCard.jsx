@@ -7,24 +7,22 @@ import {
   Button,
 } from "@material-tailwind/react";
 
+import mainlogo from "../../assets/itemizeLogo.png";
+
 export default function EcommerceCard({
   title,
   price,
   description,
   status,
   instruction,
-  imageUrl,
+  thumbnail,
   onClick,
 }) {
   return (
     <Card className="xl:w-63 m-3 min-w-[211px]">
       <CardHeader shadow={false} floated={false} className="h-60">
         <img
-          src={
-            imageUrl
-              ? imageUrl
-              : "https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80"
-          }
+          src={thumbnail ? thumbnail : mainlogo}
           alt="card-image"
           className="h-full w-full object-cover"
         />
@@ -62,8 +60,9 @@ export default function EcommerceCard({
           ripple={false}
           fullWidth={true}
           className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none hover:bg-purple-600 hover:text-white focus:scale-105 focus:shadow-none active:scale-100"
+          disabled={instruction}
         >
-          {instruction}
+          {instruction ? "Closed" : "Modify project"}
         </Button>
       </CardFooter>
     </Card>

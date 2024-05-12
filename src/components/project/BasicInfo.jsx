@@ -8,10 +8,12 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
   const [basicInfoForm, setBasicInfoForm] = useState({
     projectName: basicInfo.projectName,
     projectImage: basicInfo.projectImage,
+    projectPrice: basicInfo.projectPrice,
   });
   const [inputValidity, setInputValidity] = useState({
     projectName: true,
     projectImage: true,
+    projectPrice: true,
   });
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -23,13 +25,14 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
   const validateAndSave = () => {
     const isValidProjectName = basicInfoForm.projectName !== "";
     const isValidProjectImage = basicInfoForm.projectImage !== "";
-
+    const isValidProjectPrice = basicInfoForm.projectPrice !== "";
     setInputValidity({
       projectName: isValidProjectName,
       projectImage: isValidProjectImage,
+      projectPrice: isValidProjectPrice,
     });
 
-    if (isValidProjectName && isValidProjectImage) {
+    if (isValidProjectName && isValidProjectImage && isValidProjectPrice) {
       handleSave();
       setCurrent("Story Line");
       setAvailability((prevAvailability) => ({
@@ -72,6 +75,33 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
           <p className="text-red-600 mt-2">Please enter project name</p>
         )}
       </div>
+      <div className="flex justify-start mt-5">
+        <Typography variant="h3">Project Price</Typography>
+        <div className="pt-2">
+          <BsAsterisk color="red" fontSize={"0.7rem"} />
+        </div>
+      </div>
+      <p className="text-gray-600 mt-2">
+        Please set your target funds between $500 to $1M.
+      </p>
+      <div className="mt-2">
+        <Input
+          size="lg"
+          label="Target fund"
+          value={basicInfoForm.projectPrice}
+          type="number"
+          icon={<i>$</i>}
+          onChange={(event) =>
+            setBasicInfoForm((prevProject) => ({
+              ...prevProject,
+              projectPrice: event.target.value,
+            }))
+          }
+        ></Input>
+      </div>
+      {!inputValidity.projectPrice && (
+        <p className="text-red-600 mt-2">Please enter project price</p>
+      )}
       <div className="flex justify-start mt-4">
         <Typography variant="h3">Representative Image</Typography>
         <div className="pt-2">
