@@ -29,11 +29,15 @@ const ProjectsPage = ({ isLoggedIn }) => {
   const createProjectHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API.INITPROJECT}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${API.INITPROJECT}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response);
       navigate("/createproject");
     } catch (error) {
