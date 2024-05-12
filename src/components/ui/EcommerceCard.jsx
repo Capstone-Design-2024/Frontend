@@ -29,9 +29,11 @@ export default function EcommerceCard({
           <Typography color="blue-gray" className="font-medium">
             {title}
           </Typography>
-          <Typography color="blue-gray" className="font-medium">
-            {price}
-          </Typography>
+          {price && (
+            <Typography color="blue-gray" className="font-medium">
+              {price}
+            </Typography>
+          )}
         </div>
 
         <Typography

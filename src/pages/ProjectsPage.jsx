@@ -1,18 +1,58 @@
 import { Button, Typography } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import StickyNavbar from "../components/ui/StickyNavbar";
 import EcommerceCard from "../components/ui/EcommerceCard";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
+import { API } from "../config";
 
 const ProjectsPage = ({ isLoggedIn }) => {
   const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .get(API.READPROJECT, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setProjects(response);
+      })
+      .catch((error) => {
+        console.log("Error fetching projects", error);
+      });
+  }, []);
+
+  const createProjectHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${API.INITPROJECT}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      navigate("/createproject");
+    } catch (error) {
+      console.log("Error Creating Project:", error);
+    }
+  };
+
   return (
     <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <Typography variant="h2">
-          <div className="mt-16 mx-48 px-4">My Projects</div>
-        </Typography>
+        <div className="mt-16 mx-48 px-4 flex justify-start">
+          <Typography variant="h2">My Projects</Typography>
+          <Button
+            className="ml-4 bg-white border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
+            onClick={createProjectHandler}
+          >
+            Create Project
+          </Button>
+        </div>
         <div className="mt-5 py-6 bg-gradient-to-bl from-gray-100 via-pink-200 to-purple-300 border border-gray-50 border-s-0 border-e-0">
           <div className="mx-48 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
