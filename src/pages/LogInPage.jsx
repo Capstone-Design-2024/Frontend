@@ -44,7 +44,7 @@ const LogInPage = () => {
         const token = response.data.data.accessToken;
         localStorage.setItem("token", token);
         localStorage.setItem("pw", form.password);
-        console.log(localStorage.getItem("pw"));
+
         try {
           const walletResponse = await axios.get(`${API.GETWALLETADDRESS}`, {
             headers: {
@@ -52,6 +52,7 @@ const LogInPage = () => {
               Authorization: `Bearer ${token}`,
             },
           });
+          console.log(walletResponse);
           dispatch(loginSuccess());
           navigate("/");
         } catch (error) {
