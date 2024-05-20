@@ -24,7 +24,6 @@ export default function StickyNavbar({ children, isLoggedIn }) {
   const dispatch = useDispatch();
 
   const handleOpen = async () => {
-    setOpenModal((cur) => !cur);
     try {
       const token = localStorage.getItem("token");
       const walletAddress = await axios.get(`${API.GETWALLETADDRESS}`, {
@@ -34,6 +33,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
         },
       });
       setWalletAddress(walletAddress.data.existingWallet.wallet_address);
+      setOpenModal((cur) => !cur);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

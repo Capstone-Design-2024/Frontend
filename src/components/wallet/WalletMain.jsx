@@ -7,6 +7,7 @@ import {
   IconButton,
   Tooltip,
   Input,
+  Spinner,
 } from "@material-tailwind/react";
 import AvatarDefault from "../ui/AvatarDefault";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -16,7 +17,6 @@ import { API } from "../../config";
 import ERC20Contract from "../../contract/ERC20Contract";
 import axios from "axios";
 
-const jwt = localStorage.getItem("token");
 const WalletMain = ({ setPage, address }) => {
   const [dialogState, setDialogState] = useState({
     open: false,
@@ -28,9 +28,13 @@ const WalletMain = ({ setPage, address }) => {
   const [passwordError, setPasswordError] = useState("");
   const [balance, setBalance] = useState("Click the get balance button");
   const [token, setToken] = useState("Click the contract button");
+  const [loading, setLoading] = useState(false);
+  const [freeChargeLeft, setFreeChargeLeft] = useState(2);
 
   const prKey = useMemo(() => localStorage.getItem("private_key"), []);
   const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
+
+  const jwt = localStorage.getItem("token");
 
   const handleDialogToggle = useCallback(
     (key) => setDialogState((prev) => ({ ...prev, [key]: !prev[key] })),
@@ -67,26 +71,39 @@ const WalletMain = ({ setPage, address }) => {
     console.log(result);
   };
 
-  const getBalance = async () => {
-    const erc20Contract = await ERC20Contract.getInstance();
-    const result = await erc20Contract.balanceOf(address);
-    console.log(result);
-    setBalance(result);
-    handleDialogToggle("balanceOpen");
-  };
+  const getBalance = useCallback(async () => {
+    try {
+      const erc20Contract = await ERC20Contract.getInstance();
+      const result = await erc20Contract.balanceOf(address);
+      console.log(result);
+      setBalance(result);
+      handleDialogToggle("balanceOpen");
+    } catch (error) {
+      console.error("Failed to get balance:", error);
+    }
+  }, [address, handleDialogToggle]);
 
   const chargeBalance = async () => {
     console.log("PPT 발행을 시작합니다. 응답이 오기 전까지 기다려주세요.");
-    const response = await axios.post(
-      `${API.CHARGEPNPTOKEN}`,
-      { wallet_address: address },
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      }
-    );
-    console.log(response);
+    setLoading(true); // Start loading
+    try {
+      const response = await axios.post(
+        `${API.CHARGEPNPTOKEN}`,
+        { wallet_address: address },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Failed to charge balance:", error);
+    } finally {
+      setLoading(false); // End loading
+      getBalance();
+      setFreeChargeLeft((cur) => cur - 1);
+    }
     return;
   };
 
@@ -191,20 +208,34 @@ const WalletMain = ({ setPage, address }) => {
         </DialogHeader>
         <div className="flex justify-center">
           <DialogBody className="p-2">
-            <p className="justify-center px-2">Free charge left: 2</p>
-            <div className="flex space-x-2">
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={() => chargeBalance()}
-              >
-                Yes
-              </button>
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={() => handleDialogToggle("open")}
-              >
-                Cancel
-              </button>
+            <p className="justify-center px-2">
+              Free charge left: {freeChargeLeft}
+            </p>
+            <div className="flex space-x-2 justify-center">
+              {loading ? (
+                <div className="mt-2">
+                  <Spinner
+                    color="purple"
+                    loading={loading}
+                    className="h-10 w-10"
+                  />
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+                    onClick={chargeBalance}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+                    onClick={() => handleDialogToggle("open")}
+                  >
+                    Cancel
+                  </button>
+                </>
+              )}
             </div>
           </DialogBody>
         </div>
