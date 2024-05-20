@@ -13,4 +13,6 @@ export const API = {
   INITPROJECT: `${BASE_URL}/project/init`,
   REGISTERPROJECT: `${BASE_URL}/project/registration`,
   UPLOADIMAGE: `${BASE_URL}/project/thumbnail`,
+  GETCONTRACTMETAINFO: `${BASE_URL}/contract/wallet/contract`,
+  CHARGEPNPTOKEN: `${BASE_URL}/contract/wallet/mint/`,
 };

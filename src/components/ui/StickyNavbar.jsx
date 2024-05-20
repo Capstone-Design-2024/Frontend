@@ -81,8 +81,8 @@ export default function StickyNavbar({ children, isLoggedIn }) {
               <img
                 src={mainlogo}
                 alt="main-logo"
-                className="mx-5 min-w-20"
-                style={{ width: "100px" }}
+                className="mx-5 min-w-10"
+                style={{ width: "10px" }}
               />
             </a>
             <div className="hidden items-center gap-x-2 lg:flex">

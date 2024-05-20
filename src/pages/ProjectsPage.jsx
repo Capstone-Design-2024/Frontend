@@ -1,7 +1,8 @@
-import { Button, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
+import { Button, Typography } from "@material-tailwind/react";
 import StickyNavbar from "../components/ui/StickyNavbar";
 import EcommerceCard from "../components/ui/EcommerceCard";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
@@ -11,6 +12,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const token = localStorage.getItem("token");
+
   useEffect(() => {
     axios
       .get(API.READPROJECT, {
@@ -24,10 +26,11 @@ const ProjectsPage = ({ isLoggedIn }) => {
       .catch((error) => {
         console.log("Error fetching projects", error);
       });
-  }, []);
+  }, [token]);
 
   const createProjectHandler = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
         `${API.INITPROJECT}`,
@@ -57,23 +60,28 @@ const ProjectsPage = ({ isLoggedIn }) => {
             Create Project
           </Button>
         </div>
-        <div className="mt-5 py-6 bg-gradient-to-bl from-gray-100 via-pink-200 to-purple-300 border border-gray-50 border-s-0 border-e-0">
+        <div className="mt-5 py-6 bg-gradient-to-bl from-gray-100 via-pink-200 to-purple-300 border border-gray-50 border-s-0 border-e-0 min-h-96">
           <div className="mx-48 px-4">
+            {projects.length === 0 && (
+              <Typography variant="h3">Your project is empty</Typography>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {projects.map((project, idx) => {
                 const today = new Date();
                 const projectTimeLine = new Date(project.deadLine);
-
                 return (
                   <EcommerceCard
                     key={idx}
                     title={project.title}
+                    project={project}
                     description={
-                      today > projectTimeLine ? "Funding on progress" : "Closed"
+                      today > projectTimeLine ? "Closed" : "Funding on progress"
                     }
                     instruction={today > projectTimeLine}
                     thumbnail={project.thumbnail}
-                    onClick={() => navigate("/createproject")}
+                    onClick={() =>
+                      navigate(`/createproject/${project.projectId}`)
+                    }
                   />
                 );
               })}
