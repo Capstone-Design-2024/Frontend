@@ -12,8 +12,11 @@ const ProjectInfo = ({
   setAvailability,
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const subCategory = projectInfo.subCategory
+    ? " > " + projectInfo.subCategory
+    : "";
   const [projectInfoForm, setProjectInfoForm] = useState({
-    category: projectInfo.mainCategory + projectInfo.subCategory,
+    category: projectInfo.mainCategory + subCategory,
     targetFund: projectInfo.targetFund,
     dueDate: projectInfo.dueDate,
   });

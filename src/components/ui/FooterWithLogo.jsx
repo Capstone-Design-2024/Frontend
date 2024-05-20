@@ -7,7 +7,7 @@ export default function FooterWithLogo() {
     <footer className="w-full bg-white  p-8">
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12  bg-white text-center md:justify-between">
         <a href="/">
-          <img src={mainlogo} alt="main-logo" className="w-24" />
+          <img src={mainlogo} alt="main-logo" className="w-12" />
         </a>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
           {footerContents.map((content, index) => (

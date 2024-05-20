@@ -12,7 +12,11 @@ import AvatarDefault from "../ui/AvatarDefault";
 import copyIcon from "../../assets/icons/copy.svg";
 import keyIcon from "../../assets/icons/key.svg";
 import ListWithAvatar from "../ui/ListWithAvatar";
+import { API } from "../../config";
+import ERC20Contract from "../../contract/ERC20Contract";
+import axios from "axios";
 
+const jwt = localStorage.getItem("token");
 const WalletMain = ({ setPage, address }) => {
   const [dialogState, setDialogState] = useState({
     open: false,
@@ -22,6 +26,8 @@ const WalletMain = ({ setPage, address }) => {
   const [password, setPassword] = useState("");
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [balance, setBalance] = useState("Click the get balance button");
+  const [token, setToken] = useState("Click the contract button");
 
   const prKey = useMemo(() => localStorage.getItem("private_key"), []);
   const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
@@ -52,6 +58,37 @@ const WalletMain = ({ setPage, address }) => {
       setPasswordError("Incorrect password");
     }
   }, [password, storedPassword]);
+
+  const getInitialSupplyAmount = async () => {
+    const erc20Contract = await ERC20Contract.getInstance();
+    const result = await erc20Contract.initialSupply();
+
+    setToken("ERC20 PPT initial supply amount is: " + result);
+    console.log(result);
+  };
+
+  const getBalance = async () => {
+    const erc20Contract = await ERC20Contract.getInstance();
+    const result = await erc20Contract.balanceOf(address);
+    console.log(result);
+    setBalance(result);
+    handleDialogToggle("balanceOpen");
+  };
+
+  const chargeBalance = async () => {
+    console.log("PPT 발행을 시작합니다. 응답이 오기 전까지 기다려주세요.");
+    const response = await axios.post(
+      `${API.CHARGEPNPTOKEN}`,
+      { wallet_address: address },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+    console.log(response);
+    return;
+  };
 
   return (
     <>
@@ -100,16 +137,16 @@ const WalletMain = ({ setPage, address }) => {
           <Typography
             variant="paragraph"
             color="white"
-            className="font-bold text-2xl"
+            className="font-bold text-m"
           >
-            $16543.12
+            {balance !== null ? "$" + balance : "Click the get balance btn"}
           </Typography>
           <div className="flex space-x-2">
             <button
               className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
               onClick={() => handleDialogToggle("open")}
             >
-              Buy
+              Charge
             </button>
             <button
               className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
@@ -117,8 +154,27 @@ const WalletMain = ({ setPage, address }) => {
             >
               Swap
             </button>
+            <button
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+              onClick={() => getInitialSupplyAmount()}
+            >
+              Contract
+            </button>
+            <button
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+              onClick={() => getBalance()}
+            >
+              Get Balance
+            </button>
           </div>
         </div>
+        <Typography
+          variant="paragraph"
+          color="white"
+          className="font-bold text-m"
+        >
+          {token !== null ? token : "Click the contract button"}
+        </Typography>
         <hr className="bg-gray-300 mt-3" />
       </DialogBody>
       <DialogBody className="overflow-y-scroll w-full">
@@ -137,7 +193,10 @@ const WalletMain = ({ setPage, address }) => {
           <DialogBody className="p-2">
             <p className="justify-center px-2">Free charge left: 2</p>
             <div className="flex space-x-2">
-              <button className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10">
+              <button
+                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+                onClick={() => chargeBalance()}
+              >
                 Yes
               </button>
               <button

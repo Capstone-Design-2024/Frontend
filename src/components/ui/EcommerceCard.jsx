@@ -6,47 +6,54 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-
+import { useNavigate } from "react-router-dom";
 import mainlogo from "../../assets/itemizeLogo.png";
 
 export default function EcommerceCard({
   title,
   price,
+  project,
   description,
   status,
   instruction,
   thumbnail,
+  toDetail,
   onClick,
 }) {
+  const navigate = useNavigate();
+  const viewProjectDetails = (project) => {
+    navigate(`/detail/${project.projectId}`, { state: { project } });
+  };
   return (
     <Card className="xl:w-63 m-3 min-w-[211px]">
-      <CardHeader shadow={false} floated={false} className="h-60">
-        <img
-          src={thumbnail ? thumbnail : mainlogo}
-          alt="card-image"
-          className="h-full w-full object-cover"
-        />
-      </CardHeader>
-      <CardBody>
-        <div className="mb-1 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
-            {title}
-          </Typography>
-          {price && (
+      <button onClick={() => viewProjectDetails(project)}>
+        <CardHeader shadow={false} floated={false} className="h-60">
+          <img
+            src={thumbnail ? thumbnail : mainlogo}
+            alt="card-image"
+            className="h-full w-full object-cover"
+          />
+        </CardHeader>
+        <CardBody>
+          <div className="mb-1 flex items-center justify-between">
             <Typography color="blue-gray" className="font-medium">
-              {price}
+              {title}
             </Typography>
-          )}
-        </div>
-
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal opacity-75"
-        >
-          {description}
-        </Typography>
-      </CardBody>
+            {price && (
+              <Typography color="blue-gray" className="font-medium">
+                {price}
+              </Typography>
+            )}
+          </div>
+          <Typography
+            variant="small"
+            color="gray"
+            className="font-normal opacity-75 flex justify-start"
+          >
+            {description}
+          </Typography>
+        </CardBody>
+      </button>
       <CardFooter className="pt-0">
         {status && (
           <div className="mb-2 flex w-full h-4 overflow-hidden font-sans text-xs font-medium rounded-lg flex-start bg-blue-gray-50">

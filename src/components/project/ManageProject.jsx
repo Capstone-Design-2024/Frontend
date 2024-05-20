@@ -58,6 +58,7 @@ export default function ManageProject() {
           },
         }
       );
+      console.log("Success:", response);
       setSubmitSuccess((prev) => ({ ...prev, info: true }));
     } catch (error) {
       console.log("Error Creating Project:", error);
@@ -68,7 +69,6 @@ export default function ManageProject() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      console.log(formData);
       const response = await axios.post(
         `${API.UPLOADIMAGE}/${projectId}`,
         formData,
@@ -91,7 +91,7 @@ export default function ManageProject() {
     submitInfoHandler();
     uploadImageHandler(projectForm.basicInfo.projectImage);
     if (submitSuccess.img && submitSuccess.info) {
-      navigate("/createproject");
+      navigate("/projects");
     }
   };
   const CurrentState = () => {
