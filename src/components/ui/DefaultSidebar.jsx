@@ -17,7 +17,7 @@ export function DefaultSidebar({
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <a href="/">
-          <img src={mainlogo} alt="Itemize Logo" className="w-24 mb-6 ml-1" />
+          <img src={mainlogo} alt="Itemize Logo" className="w-10 mb-6 ml-1" />
         </a>
         <Typography variant="h5" color="blue-gray">
           Project Management

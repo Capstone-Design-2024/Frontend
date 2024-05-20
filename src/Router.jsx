@@ -42,7 +42,10 @@ const Router = () => {
         />
         <Route path="/createproject/:projectId" element={<ManageProject />} />
         <Route path="/createwallet" element={<WalletCreationPage />} />
-        <Route path="/detail/:projectId" element={<ProjectDetailPage />} />
+        <Route
+          path="/detail/:projectId"
+          element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
+        />
       </Routes>
     </BrowserRouter>
   );

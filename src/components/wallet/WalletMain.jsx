@@ -8,6 +8,7 @@ import {
   Tooltip,
   Input,
   Spinner,
+  Button,
 } from "@material-tailwind/react";
 import AvatarDefault from "../ui/AvatarDefault";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -17,7 +18,7 @@ import { API } from "../../config";
 import ERC20Contract from "../../contract/ERC20Contract";
 import axios from "axios";
 
-const WalletMain = ({ setPage, address }) => {
+const WalletMain = ({ setPage, address, initialBalance }) => {
   const [dialogState, setDialogState] = useState({
     open: false,
     pkOpen: false,
@@ -26,7 +27,7 @@ const WalletMain = ({ setPage, address }) => {
   const [password, setPassword] = useState("");
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [balance, setBalance] = useState("Click the get balance button");
+  const [balance, setBalance] = useState(initialBalance);
   const [token, setToken] = useState("Click the contract button");
   const [loading, setLoading] = useState(false);
   const [freeChargeLeft, setFreeChargeLeft] = useState(2);
@@ -85,7 +86,7 @@ const WalletMain = ({ setPage, address }) => {
 
   const chargeBalance = async () => {
     console.log("PPT 발행을 시작합니다. 응답이 오기 전까지 기다려주세요.");
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await axios.post(
         `${API.CHARGEPNPTOKEN}`,
@@ -100,9 +101,10 @@ const WalletMain = ({ setPage, address }) => {
     } catch (error) {
       console.error("Failed to charge balance:", error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
       getBalance();
       setFreeChargeLeft((cur) => cur - 1);
+      handleDialogToggle("open");
     }
     return;
   };
@@ -159,30 +161,34 @@ const WalletMain = ({ setPage, address }) => {
             {balance !== null ? "$" + balance : "Click the get balance btn"}
           </Typography>
           <div className="flex space-x-2">
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+            <Button
+              size="xs"
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
               onClick={() => handleDialogToggle("open")}
             >
               Charge
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+            </Button>
+            <Button
+              size="xs"
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
               onClick={() => setPage(1)}
             >
               Swap
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+            </Button>
+            <Button
+              size="xs"
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
               onClick={() => getInitialSupplyAmount()}
             >
               Contract
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+            </Button>
+            <Button
+              size="xs"
+              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
               onClick={() => getBalance()}
             >
               Get Balance
-            </button>
+            </Button>
           </div>
         </div>
         <Typography
@@ -209,16 +215,12 @@ const WalletMain = ({ setPage, address }) => {
         <div className="flex justify-center">
           <DialogBody className="p-2">
             <p className="justify-center px-2">
-              Free charge left: {freeChargeLeft}
+              {loading ? "Charging..." : `Free charge left: ${freeChargeLeft}`}
             </p>
             <div className="flex space-x-2 justify-center">
               {loading ? (
                 <div className="mt-2">
-                  <Spinner
-                    color="purple"
-                    loading={loading}
-                    className="h-10 w-10"
-                  />
+                  <Spinner color="purple" className="h-10 w-10" />
                 </div>
               ) : (
                 <>

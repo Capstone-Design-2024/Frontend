@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Navbar,
@@ -10,15 +10,18 @@ import {
 } from "@material-tailwind/react";
 import WalletModal from "../wallet/WalletModal";
 import mainlogo from "../../assets/itemizeLogo.png";
+import logoWithName from "../../assets/LogoWithName.png";
 import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../../actions/authActions";
 import { API } from "../../config";
 import axios from "axios";
+import ERC20Contract from "../../contract/ERC20Contract";
 
 export default function StickyNavbar({ children, isLoggedIn }) {
   const [openNav, setOpenNav] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [walletAddress, setWalletAddress] = useState();
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [balance, setBalance] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,16 +29,20 @@ export default function StickyNavbar({ children, isLoggedIn }) {
   const handleOpen = async () => {
     try {
       const token = localStorage.getItem("token");
-      const walletAddress = await axios.get(`${API.GETWALLETADDRESS}`, {
+      const response = await axios.get(`${API.GETWALLETADDRESS}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      setWalletAddress(walletAddress.data.existingWallet.wallet_address);
+      const address = response.data.existingWallet.wallet_address;
+      setWalletAddress(address);
+      await getBalance(address);
       setOpenModal((cur) => !cur);
     } catch (error) {
       console.error("Error fetching data:", error);
+      navigate("/login");
+    } finally {
     }
   };
 
@@ -50,6 +57,20 @@ export default function StickyNavbar({ children, isLoggedIn }) {
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
+  }, []);
+
+  const getBalance = useCallback(async (address) => {
+    if (!address) {
+      console.error("Invalid wallet address");
+      return;
+    }
+    try {
+      const erc20Contract = await ERC20Contract.getInstance();
+      const result = await erc20Contract.balanceOf(address);
+      setBalance(result.toString());
+    } catch (error) {
+      console.error("Failed to get balance:", error);
+    }
   }, []);
 
   const navContent = ["Account", "Cart"];
@@ -74,7 +95,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
 
   return (
     <div className="-m-6 max-h-screen w-[calc(100%+48px)] overflow-scroll">
-      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
+      <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
         <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 ">
           <div className="flex">
             <a href="/">
@@ -122,7 +143,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
               </div>
               <Button
                 size="md"
-                className="rounded-lg bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800"
+                className="rounded-lg bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800 !normal-case "
               >
                 Search
               </Button>
@@ -134,7 +155,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
               <Button
                 variant="text"
                 size="md"
-                className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                className="!normal-case hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
                 onClick={handleOpen}
               >
                 <span>Wallet</span>
@@ -144,7 +165,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                   <Button
                     variant="text"
                     size="md"
-                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    className="hidden !normal-case lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
                     onClick={() => navigate("/projects")}
                   >
                     <span>My Projects</span>
@@ -152,7 +173,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                   <Button
                     variant="text"
                     size="md"
-                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    className="hidden !normal-case lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
                     onClick={handleSignOut}
                   >
                     <span>Sign Out</span>
@@ -163,7 +184,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                   <Button
                     variant="text"
                     size="md"
-                    className="hidden lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
+                    className="hidden !normal-case lg:inline-block border border-purple-800 hover:bg-purple-700 text-purple-800 hover:text-white"
                     onClick={() => navigate("/login")}
                   >
                     <span>Log In</span>
@@ -171,7 +192,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
                   <Button
                     variant="text"
                     size="md"
-                    className="hidden lg:inline-block bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800"
+                    className="hidden !normal-case lg:inline-block bg-purple-700 text-white hover:text-purple-800 hover:bg-transparent border border-purple-800"
                     onClick={() => navigate("/signup")}
                   >
                     <span>Sign Up</span>
@@ -227,7 +248,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
               fullWidth
               variant="text"
               size="sm"
-              className=""
+              className="!normal-case"
               onClick={() => navigate("/login")}
             >
               <span>Log In</span>
@@ -236,7 +257,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
               fullWidth
               variant="gradient"
               size="sm"
-              className=""
+              className="!normal-case"
               onClick={() => navigate("/signup")}
             >
               <span>Sign Up</span>
@@ -250,6 +271,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
         open={openModal}
         handleOpen={handleOpen}
         address={walletAddress}
+        initialBalance={balance}
       />
     </div>
   );

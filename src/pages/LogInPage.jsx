@@ -7,6 +7,7 @@ import Card from "../components/ui/Card";
 import MembershipBg from "../components/ui/MembershipBg";
 import axios from "axios";
 import { API } from "../config";
+import { Button } from "@material-tailwind/react";
 
 const LogInPage = () => {
   const [form, setForm] = useState({
@@ -87,12 +88,13 @@ const LogInPage = () => {
             </div>
           </div>
           <div>
-            <button
+            <Button
+              variant="text"
               type="submit"
-              className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+              className="!normal-case w-full flex justify-center bg-purple-700  hover:bg-purple-600 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500 text-md"
             >
               Log In
-            </button>
+            </Button>
           </div>
         </form>
       </Card>
