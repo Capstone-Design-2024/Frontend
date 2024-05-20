@@ -87,9 +87,9 @@ export default function ManageProject() {
     }
   };
 
-  const submitHandler = () => {
-    submitInfoHandler();
-    uploadImageHandler(projectForm.basicInfo.projectImage);
+  const submitHandler = async () => {
+    await submitInfoHandler();
+    await uploadImageHandler(projectForm.basicInfo.projectImage);
     if (submitSuccess.img && submitSuccess.info) {
       navigate("/projects");
     }

@@ -35,11 +35,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-purple-700 text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>
@@ -75,11 +80,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-purple-700 text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>
@@ -115,11 +125,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-purple-700 text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>

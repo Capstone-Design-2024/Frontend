@@ -66,7 +66,7 @@ export default function EcommerceCard({
           onClick={onClick}
           ripple={false}
           fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none hover:bg-purple-600 hover:text-white focus:scale-105 focus:shadow-none active:scale-100"
+          className=" !normal-case bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none hover:bg-purple-600 hover:text-white focus:scale-105 focus:shadow-none active:scale-100"
           disabled={instruction}
         >
           {instruction ? "Closed" : "Modify project"}
