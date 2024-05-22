@@ -7,6 +7,7 @@ import { Typography } from "@material-tailwind/react";
 import { CategoryBar } from "../components/ui/CategoryBar";
 import bgBlur from "../assets/bg-blur.png";
 import bgBlur2 from "../assets/bg-blur2.png";
+import FeatureBlock from "../components/ui/FeatureBlock";
 
 const MainPage = ({ isLoggedIn }) => {
   const products = [
@@ -32,16 +33,15 @@ const MainPage = ({ isLoggedIn }) => {
         <div className="mx-auto w-full h-[500px] flex justify-center">
           <CarouselWithContent />
         </div>
-
         <div
           style={{
             backgroundImage: `url(${bgBlur}), url(${bgBlur2})`,
             backgroundOrigin: "border-box",
             backgroundSize: "contain, contain",
             backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "-100% 70%, 140% 100%",
+            backgroundPosition: "-100% 70%, 130% 100%",
           }}
-          className="py-8"
+          className="py-8 h-[680px]"
         >
           <div className="mx-40 px-4">
             <div className="flex justify-between">
@@ -75,9 +75,20 @@ const MainPage = ({ isLoggedIn }) => {
               </div>
             </div>
           </div>
-          <div className="mx-40">
-            <FooterWithLogo />
-          </div>
+        </div>
+        <div
+          style={{
+            backgroundImage: `url(${bgBlur2})`,
+            backgroundOrigin: "border-box",
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "40% 100%",
+          }}
+        >
+          <FeatureBlock />
+        </div>
+        <div className="mx-40">
+          <FooterWithLogo />
         </div>
       </StickyNavbar>
     </div>
