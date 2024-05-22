@@ -35,7 +35,7 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white !normal-case"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900  text-white !normal-case"
               >
                 Explore
               </Button>
@@ -80,7 +80,7 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white !normal-case"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900 text-white !normal-case"
               >
                 Explore
               </Button>
@@ -125,7 +125,7 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white !normal-case"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900 text-white !normal-case"
               >
                 Explore
               </Button>
