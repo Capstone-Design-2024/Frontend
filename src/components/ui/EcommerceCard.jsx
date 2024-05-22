@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import mainlogo from "../../assets/itemizeLogo.png";
+import "./statusBar.css";
 
 export default function EcommerceCard({
   title,
@@ -31,13 +32,26 @@ export default function EcommerceCard({
       className={`xl:w-63 min-w-${width} bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
     >
       <button onClick={() => viewProjectDetails(project)}>
-        <CardHeader shadow={false} floated={false} className="h-60">
+        <CardHeader
+          shadow={false}
+          floated={false}
+          className="mt-0 mx-0 overflow-hidden"
+        >
           <img
             src={thumbnail ? thumbnail : mainlogo}
             alt="card-image"
-            className="h-full w-full object-scale-down"
+            className="h-60 w-full object-scale-down"
           />
+          {status && (
+            <div className="flex w-full mt-2 h-5 overflow-hidden font-sans text-xs font-medium flex-start bg-white">
+              <div
+                className="flex items-center h-full overflow-hidden bg-gradient-to-r from-pink-400 via-purple-600 to-deep-purple-700 rounded-b-lg animate-gradient-x"
+                style={{ width: `${status}%` }}
+              ></div>
+            </div>
+          )}
         </CardHeader>
+
         <CardBody>
           <div className="mb-1 flex items-center justify-between">
             <Typography color="black" variant="h5" className="font-medium">
@@ -82,15 +96,6 @@ export default function EcommerceCard({
         </CardBody>
       </button>
       <CardFooter className="pt-0">
-        {status && (
-          <div className="mb-2 flex w-full h-5 overflow-hidden font-sans text-xs font-medium rounded-lg flex-start bg-blue-gray-50">
-            <div
-              className={`flex items-center justify-center w-[${status}%] h-full overflow-hidden text-white break-all bg-purple-600 rounded-lg`}
-            >
-              {status}% Completed
-            </div>
-          </div>
-        )}
         <Button
           onClick={onClick}
           ripple={false}

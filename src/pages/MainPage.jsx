@@ -44,7 +44,7 @@ const MainPage = ({ isLoggedIn }) => {
           className="py-8"
         >
           <div className="mx-40 px-4">
-            <div className="flex justify-between ">
+            <div className="flex justify-between">
               <div className="w-7/12">
                 <Typography variant="h5" className="mb-5 ml-3 text-gray-700">
                   Featured Project
@@ -56,8 +56,8 @@ const MainPage = ({ isLoggedIn }) => {
                   status={70}
                 />
               </div>
-              <div>
-                <Typography variant="h5" className="mb-5 ml-3 text-gray-700">
+              <div className="w-5/12 ml-5">
+                <Typography variant="h5" className="mb-5 ml-1 text-gray-700">
                   Recommended for you
                 </Typography>
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-2 gap-4">

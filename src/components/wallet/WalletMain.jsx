@@ -111,99 +111,95 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
 
   return (
     <>
-      <DialogHeader className="justify-between p-3">
-        <div className="space-x-4 flex items-center justify-between">
-          <AvatarDefault />
-          <div>
-            <Typography variant="h5" color="purple">
-              Wallet Address
-            </Typography>
-            <Typography variant="small" color="white">
-              {`${address}`}
-            </Typography>
+      <div className=" bg-white/35 rounded-t-lg p-4 shadow-xl">
+        <DialogHeader className="justify-between">
+          <div className="space-x-4 flex items-center justify-between">
+            <div>
+              <Typography variant="h5" color="black">
+                Wallet Address
+              </Typography>
+              <Typography variant="h6" className="text-gray-700 font-medium">
+                {`${address}`}
+              </Typography>
+              <Typography variant="h6" className="font-medium text-gray-700">
+                {balance !== null
+                  ? "Balance: $" + balance
+                  : "Click the get balance btn"}
+              </Typography>
+              <Typography variant="h6" className="font-medium text-gray-700">
+                {token !== null ? token : "Click the contract button"}
+              </Typography>
+            </div>
           </div>
-        </div>
+          <div className="flex justify-center space-x-2">
+            <Tooltip
+              content={isCopied ? "Copied" : "Copy address"}
+              className="z-[10000] bg-white text-gray-700"
+            >
+              <IconButton
+                variant="text"
+                color="black"
+                onClick={() => copyToClipboard(address)}
+                onMouseLeave={() => setIsCopied(false)}
+              >
+                <img src={copyIcon} alt="copy" className="w-5 h-5" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              content={"Show private key"}
+              className="z-[10000] bg-white text-black"
+            >
+              <IconButton
+                color="white"
+                variant="text"
+                onClick={() => handleDialogToggle("pkOpen")}
+              >
+                <img src={keyIcon} alt="key" className="w-5 h-5" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </DialogHeader>
         <div className="flex justify-center space-x-2">
-          <Tooltip
-            content={isCopied ? "Copied" : "Copy address"}
-            className="z-[10000] bg-purple-700"
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => handleDialogToggle("open")}
           >
-            <IconButton
-              variant="text"
-              color="white"
-              onClick={() => copyToClipboard(address)}
-              onMouseLeave={() => setIsCopied(false)}
-            >
-              <img src={copyIcon} alt="copy" className="w-5 h-5" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            content={"Show private key"}
-            className="z-[10000] bg-purple-700"
+            Charge
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => setPage(1)}
           >
-            <IconButton
-              color="white"
-              variant="text"
-              onClick={() => handleDialogToggle("pkOpen")}
-            >
-              <img src={keyIcon} alt="key" className="w-5 h-5" />
-            </IconButton>
-          </Tooltip>
+            Swap
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => getInitialSupplyAmount()}
+          >
+            Contract
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => getBalance()}
+          >
+            Get Balance
+          </Button>
         </div>
-      </DialogHeader>
-      <DialogBody className="overflow-y-scroll px-3 pb-0 ">
-        <div className="flex justify-between items-center">
-          <Typography
-            variant="paragraph"
-            color="white"
-            className="font-bold text-m"
-          >
-            {balance !== null ? "$" + balance : "Click the get balance btn"}
-          </Typography>
-          <div className="flex space-x-2">
-            <Button
-              size="xs"
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
-              onClick={() => handleDialogToggle("open")}
-            >
-              Charge
-            </Button>
-            <Button
-              size="xs"
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
-              onClick={() => setPage(1)}
-            >
-              Swap
-            </Button>
-            <Button
-              size="xs"
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
-              onClick={() => getInitialSupplyAmount()}
-            >
-              Contract
-            </Button>
-            <Button
-              size="xs"
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white !normal-case"
-              onClick={() => getBalance()}
-            >
-              Get Balance
-            </Button>
-          </div>
-        </div>
-        <Typography
-          variant="paragraph"
-          color="white"
-          className="font-bold text-m"
-        >
-          {token !== null ? token : "Click the contract button"}
-        </Typography>
-        <hr className="bg-gray-300 mt-3" />
-      </DialogBody>
-      <DialogBody className="overflow-y-scroll w-full">
-        <p className="text-xl text-white font-bold mb-2">Tickets</p>
-        <ListWithAvatar />
-      </DialogBody>
+      </div>
+
+      <div className="px-4">
+        <DialogBody>
+          <ListWithAvatar />
+        </DialogBody>
+      </div>
       <Dialog
         open={dialogState.open}
         handler={() => handleDialogToggle("open")}
