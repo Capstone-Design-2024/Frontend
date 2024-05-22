@@ -8,7 +8,7 @@ const ExceptionCheck = ({ text, validity }) => {
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth="1.5"
-        stroke={validity ? "#8B00FF" : "#C0C0C0"}
+        stroke={validity ? "#8B00FF" : "#6B6B6B"}
         className="w-5 h-5"
       >
         <path
