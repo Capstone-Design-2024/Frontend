@@ -180,7 +180,7 @@ const SignUpPage = () => {
               type="checkbox"
               id="terms"
               name="terms"
-              className="h-4 w-4 text-purple-600 focus:ring-purple-400 border-gray-300 rounded"
+              className="h-4 w-4 text-purple-600 focus:ring-purple-400 border-gray-700 rounded"
               checked={form.agreeTerm}
               onChange={handleCheckboxChange}
             />

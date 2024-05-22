@@ -2,10 +2,6 @@ import React from "react";
 import mainlogo from "../../assets/itemizeLogo.png";
 
 const MembershipBg = ({ children, type, padding }) => {
-  var sentence = "Welcome back";
-  if (type !== "Log In") {
-    sentence = "Get your account free";
-  }
   return (
     <>
       <div className="bg-purple-900 top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-100vh w-full overflow-hidden ">
