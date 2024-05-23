@@ -1,17 +1,31 @@
-
-FROM node:18
+# Step 1: Build the React application
+FROM node:14 AS build
 
 WORKDIR /app
 
-COPY package.json .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application code
 COPY . .
 
-# 5174번 포트 노출
-EXPOSE 5173
+# Build the React application
+RUN npm run build
 
-# npm start 스크립트 실행
-CMD ["npm", "run", "dev"]
+# Step 2: Serve the application using Nginx
+FROM nginx:alpine
 
+# Copy the built React application from the previous stage
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy custom Nginx configuration (optional)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose the port the app runs on
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
