@@ -31,8 +31,8 @@ const ProjectsPage = ({ isLoggedIn }) => {
   }, [token]);
 
   const createProjectHandler = async (e) => {
-    e.preventDefault();
     const token = localStorage.getItem("token");
+    e.preventDefault();
     try {
       const response = await axios.post(
         `${API.INITPROJECT}`,
@@ -43,8 +43,9 @@ const ProjectsPage = ({ isLoggedIn }) => {
           },
         }
       );
-      const projectId = response.data.data;
-      navigate(`/createproject/${projectId}`);
+      console.log(response);
+
+      navigate("/createproject");
     } catch (error) {
       console.log("Error Creating Project:", error);
     }

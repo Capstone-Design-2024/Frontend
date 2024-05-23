@@ -10,11 +10,12 @@ import {
   Spinner,
   Button,
 } from "@material-tailwind/react";
+import { API } from "../../config";
 import AvatarDefault from "../ui/AvatarDefault";
 import copyIcon from "../../assets/icons/copy.svg";
 import keyIcon from "../../assets/icons/key.svg";
 import ListWithAvatar from "../ui/ListWithAvatar";
-import { API } from "../../config";
+
 import ERC20Contract from "../../contract/ERC20Contract";
 import axios from "axios";
 
@@ -297,6 +298,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
             )}
           </div>
         </div>
+
         <div className="flex justify-center">
           <DialogBody className="p-2">
             <div className="flex space-x-2">

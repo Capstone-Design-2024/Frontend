@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 config.js
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0e9e91f48b01e436f59bd4a1301e71795d0df241
 .env

@@ -42,6 +42,7 @@ class ERC20Contract {
     if (!ERC20Contract.instance) {
       ERC20Contract.instance = new ERC20Contract();
     }
+
     await ERC20Contract.instance.ready;
     return ERC20Contract.instance;
   }
