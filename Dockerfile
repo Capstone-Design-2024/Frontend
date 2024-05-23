@@ -21,8 +21,6 @@ FROM nginx:alpine
 # Copy the built React application from the previous stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-
-
 # Expose the port the app runs on
 EXPOSE 80
 
