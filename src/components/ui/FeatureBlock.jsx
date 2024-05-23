@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardBody, Typography, Avatar } from "@material-tailwind/react";
-import feature1 from "../../assets/feature1.png";
+import feature1 from "../../assets/feature1.webp";
 import feature2 from "../../assets/feature2.png";
-import feature3 from "../../assets/feature3.png";
-import feature4 from "../../assets/feature4.png";
+import feature3 from "../../assets/feature3.webp";
+import feature4 from "../../assets/feature4.webp";
 
 export default function FeatureBlock() {
   return (

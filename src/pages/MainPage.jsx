@@ -1,41 +1,46 @@
-import React from "react";
-import StickyNavbar from "../components/ui/StickyNavbar";
-import CarouselWithContent from "../components/ui/CarouselWithContent";
-import FooterWithLogo from "../components/ui/FooterWithLogo";
-import EcommerceCard from "../components/ui/EcommerceCard";
+import React, { useMemo, lazy, Suspense } from "react";
 import { Typography } from "@material-tailwind/react";
-import { CategoryBar } from "../components/ui/CategoryBar";
-import bgBlur from "../assets/bg-blur.png";
-import bgBlur2 from "../assets/bg-blur2.png";
-import FeatureBlock from "../components/ui/FeatureBlock";
+import bgBlurWebP from "../assets/bg-blur1.webp";
+import bgBlur2WebP from "../assets/bg-blur2.webp";
+
+const StickyNavbar = lazy(() => import("../components/ui/StickyNavbar"));
+const CarouselWithContent = lazy(() =>
+  import("../components/ui/CarouselWithContent")
+);
+const FooterWithLogo = lazy(() => import("../components/ui/FooterWithLogo"));
+const EcommerceCard = lazy(() => import("../components/ui/EcommerceCard"));
+const FeatureBlock = lazy(() => import("../components/ui/FeatureBlock"));
 
 const MainPage = ({ isLoggedIn }) => {
-  const products = [
-    {
-      title: "Airpods Pro",
-      price: "$299.99",
-      description: "good earphone",
-      status: 50,
-      instruction: "Add to Cart",
-    },
-    {
-      title: "Airpods Pro",
-      price: "$299.99",
-      description: "good earphone",
-      status: 50,
-      instruction: "Add to Cart",
-    },
-  ];
+  const products = useMemo(
+    () => [
+      {
+        title: "Airpods Pro",
+        price: "$299.99",
+        description: "good earphone",
+        status: 50,
+        instruction: "Add to Cart",
+      },
+      {
+        title: "Airpods Pro",
+        price: "$299.99",
+        description: "good earphone",
+        status: 50,
+        instruction: "Add to Cart",
+      },
+    ],
+    []
+  );
+
   return (
-    <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible  ">
+    <Suspense fallback={<div>loading...</div>}>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <CategoryBar />
         <div className="mx-auto w-full h-[500px] flex justify-center">
           <CarouselWithContent />
         </div>
         <div
           style={{
-            backgroundImage: `url(${bgBlur}), url(${bgBlur2})`,
+            backgroundImage: `url(${bgBlurWebP}), url(${bgBlur2WebP})`,
             backgroundOrigin: "border-box",
             backgroundSize: "contain, contain",
             backgroundRepeat: "no-repeat, no-repeat",
@@ -78,7 +83,7 @@ const MainPage = ({ isLoggedIn }) => {
         </div>
         <div
           style={{
-            backgroundImage: `url(${bgBlur2})`,
+            backgroundImage: `url(${bgBlur2WebP})`,
             backgroundOrigin: "border-box",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
@@ -91,7 +96,7 @@ const MainPage = ({ isLoggedIn }) => {
           <FooterWithLogo />
         </div>
       </StickyNavbar>
-    </div>
+    </Suspense>
   );
 };
 
