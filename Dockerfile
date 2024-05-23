@@ -13,5 +13,5 @@ COPY . .
 EXPOSE 5173
 
 # npm start 스크립트 실행
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
