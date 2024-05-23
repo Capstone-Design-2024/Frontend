@@ -9,6 +9,9 @@ import { loginSuccess, logoutSuccess } from "./actions/authActions";
 import ProjectsPage from "./pages/ProjectsPage";
 import SignUpSucceedPage from "./pages/SignUpSucceedPage";
 import ManageProject from "./components/project/ManageProject";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import BillingPage from "./pages/BillingPage";
+import CartPage from "./pages/CartPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -41,6 +44,12 @@ const Router = () => {
         />
         <Route path="/createproject/:projectId" element={<ManageProject />} />
         <Route path="/createwallet" element={<WalletCreationPage />} />
+        <Route
+          path="/detail/:projectId"
+          element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
+        />
+        <Route path="/billing" element={<BillingPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </BrowserRouter>
   );

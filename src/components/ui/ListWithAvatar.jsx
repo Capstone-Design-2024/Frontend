@@ -9,8 +9,9 @@ import {
 
 export default function ListWithAvatar() {
   return (
-    <Card className="w-full">
+    <Card className="w-full p-2 bg-white/35 shadow-2xl">
       <List>
+        <p className="text-xl text-gray-800 font-medium pl-4 mt-2">Tickets</p>
         <ListItem>
           <ListItemPrefix>
             <Avatar

@@ -9,6 +9,8 @@ import CreaterInfo from "./CreaterInfo";
 import { API } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import bgBlur1 from "../../assets/bg-blur1.webp";
+import bgBlur2 from "../../assets/bg-blur2.webp";
 
 export default function ManageProject() {
   const { projectId } = useParams();
@@ -58,6 +60,7 @@ export default function ManageProject() {
           },
         }
       );
+      console.log("Success:", response);
       setSubmitSuccess((prev) => ({ ...prev, info: true }));
     } catch (error) {
       console.log("Error Creating Project:", error);
@@ -68,7 +71,6 @@ export default function ManageProject() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      console.log(formData);
       const response = await axios.post(
         `${API.UPLOADIMAGE}/${projectId}`,
         formData,
@@ -87,11 +89,11 @@ export default function ManageProject() {
     }
   };
 
-  const submitHandler = () => {
-    submitInfoHandler();
-    uploadImageHandler(projectForm.basicInfo.projectImage);
+  const submitHandler = async () => {
+    await submitInfoHandler();
+    await uploadImageHandler(projectForm.basicInfo.projectImage);
     if (submitSuccess.img && submitSuccess.info) {
-      navigate("/createproject");
+      navigate("/projects");
     }
   };
   const CurrentState = () => {
@@ -143,15 +145,13 @@ export default function ManageProject() {
           buttonAvailability={buttonAvailability}
           onSubmit={submitHandler}
         />
+
         <div className="mx-auto mt-10 max-w-screen-xl w-full">
           <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
           <div className="flex justify-between">
             <Typography variant="h2" className="mt-2">
               {current}
             </Typography>
-            <div className="place-content-center">
-              <Button size="sm">Save</Button>
-            </div>
           </div>
           <div className="mt-5">
             <CurrentState />

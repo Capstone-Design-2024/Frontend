@@ -1,11 +1,14 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
+import carousel1 from "../../assets/carousel1.webp";
+import carousel2 from "../../assets/carousel2.webp";
+import carousel3 from "../../assets/carousel3.webp";
 
 export default function CarouselWithContent() {
   return (
     <Carousel>
       <div className="relative h-full w-full">
         <img
-          src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+          src={carousel1}
           alt="image 1"
           className="h-full w-full object-cover"
         />
@@ -32,11 +35,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900  text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>
@@ -45,7 +53,7 @@ export default function CarouselWithContent() {
       </div>
       <div className="relative h-full w-full">
         <img
-          src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
+          src={carousel2}
           alt="image 2"
           className="h-full w-full object-cover"
         />
@@ -72,11 +80,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900 text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>
@@ -85,7 +98,7 @@ export default function CarouselWithContent() {
       </div>
       <div className="relative h-full w-full">
         <img
-          src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
+          src={carousel3}
           alt="image 3"
           className="h-full w-full object-cover"
         />
@@ -112,11 +125,16 @@ export default function CarouselWithContent() {
               <Button
                 size="lg"
                 color="white"
-                className="bg-purple-700 text-white"
+                className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900 text-white !normal-case"
               >
                 Explore
               </Button>
-              <Button size="lg" color="white" variant="text">
+              <Button
+                size="lg"
+                color="white"
+                variant="text"
+                className="!normal-case"
+              >
                 Gallery
               </Button>
             </div>

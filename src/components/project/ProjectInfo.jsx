@@ -12,8 +12,11 @@ const ProjectInfo = ({
   setAvailability,
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const subCategory = projectInfo.subCategory
+    ? " > " + projectInfo.subCategory
+    : "";
   const [projectInfoForm, setProjectInfoForm] = useState({
-    category: projectInfo.mainCategory + projectInfo.subCategory,
+    category: projectInfo.mainCategory + subCategory,
     targetFund: projectInfo.targetFund,
     dueDate: projectInfo.dueDate,
   });
@@ -140,8 +143,9 @@ const ProjectInfo = ({
       )}
       <div className="mt-4">
         <Button
+          variant="text"
           size="md"
-          className="w-24"
+          className="w-24 !normal-case text-sm mt-1 bg-white text-gray-700 border border-gray-200 shadow-lg shadow-gray-900/5"
           onClick={() => {
             validateAndSave();
           }}

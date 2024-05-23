@@ -7,18 +7,19 @@ import {
   IconButton,
   Tooltip,
   Input,
+  Spinner,
+  Button,
 } from "@material-tailwind/react";
 import { API } from "../../config";
 import AvatarDefault from "../ui/AvatarDefault";
 import copyIcon from "../../assets/icons/copy.svg";
 import keyIcon from "../../assets/icons/key.svg";
 import ListWithAvatar from "../ui/ListWithAvatar";
+
 import ERC20Contract from "../../contract/ERC20Contract";
 import axios from "axios";
 
-const jwt = localStorage.getItem("token");
-
-const WalletMain = ({ setPage, address }) => {
+const WalletMain = ({ setPage, address, initialBalance }) => {
   const [dialogState, setDialogState] = useState({
     open: false,
     pkOpen: false,
@@ -27,12 +28,15 @@ const WalletMain = ({ setPage, address }) => {
   const [password, setPassword] = useState("");
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-
-  const [balance, setBalance] = useState("Click the get balance button");
+  const [balance, setBalance] = useState(initialBalance);
   const [token, setToken] = useState("Click the contract button");
+  const [loading, setLoading] = useState(false);
+  const [freeChargeLeft, setFreeChargeLeft] = useState(2);
 
   const prKey = useMemo(() => localStorage.getItem("private_key"), []);
   const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
+
+  const jwt = localStorage.getItem("token");
 
   const handleDialogToggle = useCallback(
     (key) => setDialogState((prev) => ({ ...prev, [key]: !prev[key] })),
@@ -69,121 +73,134 @@ const WalletMain = ({ setPage, address }) => {
     console.log(result);
   };
 
-  const getBalance = async () => {
-    // console.log(prKey); # access to the private key of user
-    const erc20Contract = await ERC20Contract.getInstance();
-    const result = await erc20Contract.balanceOf(address);
-    console.log(result);
-    setBalance(result);
-    handleDialogToggle("balanceOpen");
-  };
+  const getBalance = useCallback(async () => {
+    try {
+      const erc20Contract = await ERC20Contract.getInstance();
+      const result = await erc20Contract.balanceOf(address);
+      console.log(result);
+      setBalance(result);
+      handleDialogToggle("balanceOpen");
+    } catch (error) {
+      console.error("Failed to get balance:", error);
+    }
+  }, [address, handleDialogToggle]);
 
   const chargeBalance = async () => {
     console.log("PPT 발행을 시작합니다. 응답이 오기 전까지 기다려주세요.");
-    const response = await axios.post(
-      `${API.CHARGEPNPTOKEN}`,
-      { wallet_address: address },
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      }
-    );
-    console.log(response);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${API.CHARGEPNPTOKEN}`,
+        { wallet_address: address },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error("Failed to charge balance:", error);
+    } finally {
+      setLoading(false);
+      getBalance();
+      setFreeChargeLeft((cur) => cur - 1);
+      handleDialogToggle("open");
+    }
     return;
   };
 
   return (
     <>
-      <DialogHeader className="justify-between p-3">
-        <div className="space-x-4 flex items-center justify-between">
-          <AvatarDefault />
-          <div>
-            <Typography variant="h5" color="purple">
-              Wallet Address
-            </Typography>
-            <Typography variant="small" color="white">
-              {`${address}`}
-            </Typography>
+      <div className=" bg-white/35 rounded-t-lg p-4 shadow-xl">
+        <DialogHeader className="justify-between">
+          <div className="space-x-4 flex items-center justify-between">
+            <div>
+              <Typography variant="h5" color="black">
+                Wallet Address
+              </Typography>
+              <Typography variant="h6" className="text-gray-700 font-medium">
+                {`${address}`}
+              </Typography>
+              <Typography variant="h6" className="font-medium text-gray-700">
+                {balance !== null
+                  ? "Balance: $" + balance
+                  : "Click the get balance btn"}
+              </Typography>
+              <Typography variant="h6" className="font-medium text-gray-700">
+                {token !== null ? token : "Click the contract button"}
+              </Typography>
+            </div>
           </div>
-        </div>
+          <div className="flex justify-center space-x-2">
+            <Tooltip
+              content={isCopied ? "Copied" : "Copy address"}
+              className="z-[10000] bg-white text-gray-700"
+            >
+              <IconButton
+                variant="text"
+                color="black"
+                onClick={() => copyToClipboard(address)}
+                onMouseLeave={() => setIsCopied(false)}
+              >
+                <img src={copyIcon} alt="copy" className="w-5 h-5" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              content={"Show private key"}
+              className="z-[10000] bg-white text-black"
+            >
+              <IconButton
+                color="white"
+                variant="text"
+                onClick={() => handleDialogToggle("pkOpen")}
+              >
+                <img src={keyIcon} alt="key" className="w-5 h-5" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </DialogHeader>
         <div className="flex justify-center space-x-2">
-          <Tooltip
-            content={isCopied ? "Copied" : "Copy address"}
-            className="z-[10000] bg-purple-700"
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => handleDialogToggle("open")}
           >
-            <IconButton
-              variant="text"
-              color="white"
-              onClick={() => copyToClipboard(address)}
-              onMouseLeave={() => setIsCopied(false)}
-            >
-              <img src={copyIcon} alt="copy" className="w-5 h-5" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            content={"Show private key"}
-            className="z-[10000] bg-purple-700"
+            Charge
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => setPage(1)}
           >
-            <IconButton
-              color="white"
-              variant="text"
-              onClick={() => handleDialogToggle("pkOpen")}
-            >
-              <img src={keyIcon} alt="key" className="w-5 h-5" />
-            </IconButton>
-          </Tooltip>
+            Swap
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => getInitialSupplyAmount()}
+          >
+            Contract
+          </Button>
+          <Button
+            variant="text"
+            size="xs"
+            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
+            onClick={() => getBalance()}
+          >
+            Get Balance
+          </Button>
         </div>
-      </DialogHeader>
-      <DialogBody className="overflow-y-scroll px-3 pb-0 ">
-        <div className="flex justify-between items-center">
-          <Typography
-            variant="paragraph"
-            color="white"
-            className="font-bold text-m"
-          >
-            {balance !== null ? "$" + balance : "Click the get balance btn"}
-          </Typography>
-          <div className="flex space-x-2">
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-              onClick={() => handleDialogToggle("open")}
-            >
-              Charge
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-              onClick={() => setPage(1)}
-            >
-              Swap
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-              onClick={() => getInitialSupplyAmount()}
-            >
-              Contract
-            </button>
-            <button
-              className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-              onClick={() => getBalance()}
-            >
-              Get Balance
-            </button>
-          </div>
-        </div>
-        <Typography
-          variant="paragraph"
-          color="white"
-          className="font-bold text-m"
-        >
-          {token !== null ? token : "Click the contract button"}
-        </Typography>
-        <hr className="bg-gray-300 mt-3" />
-      </DialogBody>
-      <DialogBody className="overflow-y-scroll w-full">
-        <p className="text-xl text-white font-bold mb-2">Tickets</p>
-        <ListWithAvatar />
-      </DialogBody>
+      </div>
+
+      <div className="px-4">
+        <DialogBody>
+          <ListWithAvatar />
+        </DialogBody>
+      </div>
       <Dialog
         open={dialogState.open}
         handler={() => handleDialogToggle("open")}
@@ -194,20 +211,30 @@ const WalletMain = ({ setPage, address }) => {
         </DialogHeader>
         <div className="flex justify-center">
           <DialogBody className="p-2">
-            <p className="justify-center px-2">Free charge left: 2</p>
-            <div className="flex space-x-2">
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={() => chargeBalance()}
-              >
-                Yes
-              </button>
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={() => handleDialogToggle("open")}
-              >
-                Cancel
-              </button>
+            <p className="justify-center px-2">
+              {loading ? "Charging..." : `Free charge left: ${freeChargeLeft}`}
+            </p>
+            <div className="flex space-x-2 justify-center">
+              {loading ? (
+                <div className="mt-2">
+                  <Spinner color="purple" className="h-10 w-10" />
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+                    onClick={chargeBalance}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+                    onClick={() => handleDialogToggle("open")}
+                  >
+                    Cancel
+                  </button>
+                </>
+              )}
             </div>
           </DialogBody>
         </div>
