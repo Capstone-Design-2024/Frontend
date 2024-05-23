@@ -157,8 +157,9 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
       )}
       <div className="mt-4">
         <Button
+          variant="text"
           size="md"
-          className="w-24"
+          className="w-24 !normal-case text-sm mt-1 bg-white text-gray-700 border border-gray-200 shadow-lg shadow-gray-900/5"
           onClick={() => {
             validateAndSave();
           }}

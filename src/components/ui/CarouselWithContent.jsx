@@ -1,7 +1,7 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import carousel1 from "../../assets/carousel1.avif";
-import carousel2 from "../../assets/carousel2.jpeg";
-import carousel3 from "../../assets/carousel3.jpeg";
+import carousel1 from "../../assets/carousel1.webp";
+import carousel2 from "../../assets/carousel2.webp";
+import carousel3 from "../../assets/carousel3.webp";
 
 export default function CarouselWithContent() {
   return (
