@@ -13,7 +13,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const token = localStorage.getItem("token");
-  console.log(projects);
+  console.log("Projects Page:", token);
 
   useEffect(() => {
     axios
