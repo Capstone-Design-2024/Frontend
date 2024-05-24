@@ -3,8 +3,8 @@ import { Input } from "@material-tailwind/react";
 
 export default function SearchBar() {
   return (
-    <div className="items-center gap-x-2 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px]">
-      <div className="relative flex gap-2 ">
+    <div className="items-center gap-x-2 w-full xs:hidden sm:visible sm:max-w-[300px] md:max-w-[400px] lg:max-w-[400px] xl:max-w-[550px]">
+      <div className="relative ">
         <Input
           type="search"
           placeholder="Search projects, creators and categories"
