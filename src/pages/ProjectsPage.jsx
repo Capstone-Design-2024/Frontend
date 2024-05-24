@@ -17,18 +17,18 @@ const ProjectsPage = ({ isLoggedIn }) => {
 
   useEffect(() => {
     console.log(`Bearer ${token}`);
-    axios
-      .get(API.READPROJECT, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setProjects(response.data.data);
-      })
-      .catch((error) => {
-        console.log("Error fetching projects", error);
-      });
+    // axios
+    //   .get(API.READPROJECT, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setProjects(response.data.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error fetching projects", error);
+    //   });
   }, [token]);
 
   const createProjectHandler = async (e) => {
