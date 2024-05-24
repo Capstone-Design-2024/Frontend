@@ -44,9 +44,9 @@ const ProjectsPage = ({ isLoggedIn }) => {
           },
         }
       );
-      console.log(response);
+      console.log(response.data.data);
 
-      navigate("/fe/createproject");
+      navigate(`/fe/createproject/${response.data.data}`);
     } catch (error) {
       console.log("Error Creating Project:", error);
     }
