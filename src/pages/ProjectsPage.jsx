@@ -16,6 +16,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
   console.log("Projects Page:", token);
 
   useEffect(() => {
+    console.log(`Bearer ${token}`);
     axios
       .get(API.READPROJECT, {
         headers: {
