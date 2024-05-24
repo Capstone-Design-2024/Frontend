@@ -48,7 +48,7 @@ const LogInPage = () => {
     document.body.removeChild(element);
   };
   const goHome = () => {
-    navigate("/");
+    navigate("/fe/");
     dispatch(loginSuccess());
   };
 
@@ -81,7 +81,7 @@ const LogInPage = () => {
                   ))}
                 </div>
                 <Button
-                  className="flex justify-center items-center gap-3 mt-2  hover:bg-purple-600 bg-white border border-purple-600 text-purple-600 hover:text-white"
+                  className="!normal-case flex justify-center items-center gap-3 mt-2  hover:bg-purple-600 bg-white border border-purple-600 text-purple-600 hover:text-white"
                   fullWidth
                   onClick={downloadMnemonic}
                 >
@@ -103,7 +103,7 @@ const LogInPage = () => {
                 </Button>
                 <Button
                   onClick={goHome}
-                  className="mt-2 bg-purple-600"
+                  className="!normal-case mt-2 bg-purple-600"
                   fullWidth
                 >
                   Go home to use service

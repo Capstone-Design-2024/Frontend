@@ -14,7 +14,7 @@ export function CategoryBar() {
   return (
     <div className="flex flex-wrap gap-4 justify-center">
       {category.map((item, index) => (
-        <Menu key={item} allowHover>
+        <Menu key={index} allowHover>
           <MenuHandler>
             <Button
               variant="text"

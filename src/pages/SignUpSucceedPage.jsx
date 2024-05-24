@@ -11,8 +11,8 @@ const SignUpSucceedPage = () => {
       <Card title={"Sign up succeed!"} width={"w-500px"}>
         <Button
           fullWidth
-          className="mt-2 bg-purple-600"
-          onClick={() => navigate("/login")}
+          className="mt-2 bg-purple-600 !normal-case"
+          onClick={() => navigate("/fe/login")}
         >
           Click to log in
         </Button>

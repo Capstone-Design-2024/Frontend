@@ -23,7 +23,7 @@ export default function WalletModal({
         size="sm"
         open={open}
         handler={handleOpen}
-        className="h-3/5 w-[500px] bg-white/70 backdrop-blur-lg z-40 shadow-lg"
+        className="h-4/6 w-[500px] bg-white/70 backdrop-blur-lg z-40 shadow-lg"
       >
         {page === 0 && (
           <WalletMain

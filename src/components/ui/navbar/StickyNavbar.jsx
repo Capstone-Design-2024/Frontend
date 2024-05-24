@@ -34,14 +34,14 @@ export default function StickyNavbar({ children, isLoggedIn }) {
       setOpenModal((cur) => !cur);
     } catch (error) {
       console.error("Error fetching data:", error);
-      navigate("/login");
+      navigate("/fe/login");
     }
   }, [navigate]);
 
   const handleSignOut = useCallback(() => {
     localStorage.removeItem("token");
     dispatch(logoutSuccess());
-    navigate("/");
+    navigate("/fe/");
   }, [dispatch, navigate]);
 
   useEffect(() => {
