@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Typography, Button, List } from "@material-tailwind/react";
 import CartItem from "../components/cart/CartItem";
-import StickyNavbar from "../components/ui/StickyNavbar";
+import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 
 export default function CartPage() {
   const initialItems = [

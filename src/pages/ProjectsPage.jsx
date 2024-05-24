@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Typography, Card } from "@material-tailwind/react";
-import StickyNavbar from "../components/ui/StickyNavbar";
+import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import EcommerceCard from "../components/ui/EcommerceCard";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import { API } from "../config";

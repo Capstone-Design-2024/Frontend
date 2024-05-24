@@ -25,7 +25,7 @@ export default function FeatureBlock() {
       </div>
       <div className="mb-8 container mx-auto grid lg:gap-x-8 gap-y-8 grid-cols-1 lg:grid-cols-3">
         <Card
-          className="col-span-1 bg-gray-100/50 overflow-hidden"
+          className="col-span-1 bg-gray-200/30 overflow-hidden"
           shadow={false}
         >
           <CardBody className="text-center">
@@ -50,7 +50,7 @@ export default function FeatureBlock() {
           </CardBody>
         </Card>
         <Card
-          className="col-span-2 bg-gray-100/50 overflow-hidden"
+          className="col-span-2 bg-gray-200/30 overflow-hidden"
           shadow={false}
         >
           <CardBody className="text-center">
@@ -75,7 +75,7 @@ export default function FeatureBlock() {
       </div>
       <div className="container mx-auto grid lg:gap-x-8 gap-y-8 grid-cols-1 lg:grid-cols-3">
         <Card
-          className="col-span-2 bg-gray-100/50 overflow-hidden"
+          className="col-span-2 bg-gray-200/30 overflow-hidden"
           shadow={false}
         >
           <CardBody className="text-center">
@@ -99,7 +99,7 @@ export default function FeatureBlock() {
             </div>
           </CardBody>
         </Card>
-        <Card className="col-span-1 bg-gray-100/50" shadow={false}>
+        <Card className="col-span-1 bg-gray-200/30" shadow={false}>
           <CardBody className="text-center">
             <Typography
               variant="h4"
