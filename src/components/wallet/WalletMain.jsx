@@ -164,7 +164,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
         <div className="flex justify-center space-x-2">
           <Button
             variant="text"
-            size="xs"
+            size="sm"
             className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
             onClick={() => handleDialogToggle("open")}
           >
@@ -172,7 +172,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           </Button>
           <Button
             variant="text"
-            size="xs"
+            size="sm"
             className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
             onClick={() => setPage(1)}
           >
@@ -180,7 +180,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           </Button>
           <Button
             variant="text"
-            size="xs"
+            size="sm"
             className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
             onClick={() => getInitialSupplyAmount()}
           >
@@ -188,7 +188,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           </Button>
           <Button
             variant="text"
-            size="xs"
+            size="sm"
             className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
             onClick={() => getBalance()}
           >
