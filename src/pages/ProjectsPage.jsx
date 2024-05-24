@@ -70,13 +70,13 @@ const ProjectsPage = ({ isLoggedIn }) => {
               My Projects
             </Typography>
           </div>
-          <div className="mt-5 py-6 border-e-0 min-h-96">
-            <div className="mx-48 px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <div className="mt-1 py-1 border-e-0 min-h-96">
+            <div className="mx-44 px-4">
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 p-4">
                 <Card className="xl:w-[265px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600">
                   <Button
                     onClick={createProjectHandler}
-                    className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center  bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
+                    className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
                   >
                     <div className="flex flex-col items-center space-y-2">
                       <svg
@@ -108,13 +108,14 @@ const ProjectsPage = ({ isLoggedIn }) => {
                       description={
                         today > projectTimeLine
                           ? "Closed"
-                          : "Funding on progress"
+                          : "Funding in progress"
                       }
                       instruction={today > projectTimeLine}
                       thumbnail={project.thumbnail}
                       onClick={() =>
                         navigate(`/fe/createproject/${project.projectId}`)
                       }
+                      className="xl:w-[265px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600"
                     />
                   );
                 })}

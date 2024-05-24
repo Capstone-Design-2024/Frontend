@@ -79,7 +79,7 @@ export default function ProjectDetailPage({ isLoggedIn }) {
           <img
             src={project.thumbnail}
             alt="Product"
-            className="w-8/12 rounded-lg shadow-lg"
+            className="w-8/12 h-96 rounded-lg shadow-lg object-scale-down"
           />
           <div className="">
             <Typography variant="h2" color="blue-gray">
@@ -114,7 +114,7 @@ export default function ProjectDetailPage({ isLoggedIn }) {
                 variant="text"
                 size="md"
                 className="flex justify-center space-x-2 !normal-case bg-purple-700 text-white hover:bg-purple-600"
-                onClick={() => navigate("/billing")}
+                onClick={() => navigate("/fe/billing")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
