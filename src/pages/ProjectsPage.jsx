@@ -46,7 +46,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
       );
       console.log(response);
 
-      navigate("/createproject");
+      navigate("/fe/createproject");
     } catch (error) {
       console.log("Error Creating Project:", error);
     }
@@ -113,7 +113,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
                       instruction={today > projectTimeLine}
                       thumbnail={project.thumbnail}
                       onClick={() =>
-                        navigate(`/createproject/${project.projectId}`)
+                        navigate(`/fe/createproject/${project.projectId}`)
                       }
                     />
                   );

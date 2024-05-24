@@ -54,9 +54,9 @@ const LogInPage = () => {
           });
           console.log(walletResponse);
           dispatch(loginSuccess());
-          navigate("/");
+          navigate("/fe/");
         } catch (error) {
-          navigate("/createwallet");
+          navigate("/fe/createwallet");
           console.error("User doesn't have wallet", error);
         }
       } else {

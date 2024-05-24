@@ -45,7 +45,7 @@ export default function AuthButtons({
             className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 flex justify-center ${
               isMobile ? "w-full" : "hidden"
             }`}
-            onClick={() => debouncedNavigate("/login")}
+            onClick={() => debouncedNavigate("/fe/login")}
           >
             <span>Log In</span>
           </Button>
@@ -55,7 +55,7 @@ export default function AuthButtons({
             className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 ${
               isMobile ? "w-full" : "hidden"
             }`}
-            onClick={() => debouncedNavigate("/signup")}
+            onClick={() => debouncedNavigate("/fe/signup")}
           >
             <span>Sign Up</span>
           </Button>

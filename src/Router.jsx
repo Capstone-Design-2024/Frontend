@@ -34,22 +34,25 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} />} />
-        <Route path="/login" element={<LogInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signupsucceed" element={<SignUpSucceedPage />} />
+        <Route path="/fe/" element={<MainPage isLoggedIn={isLoggedIn} />} />
+        <Route path="/fe/login" element={<LogInPage />} />
+        <Route path="/fe/signup" element={<SignUpPage />} />
+        <Route path="/fe/signupsucceed" element={<SignUpSucceedPage />} />
         <Route
-          path="/myprojects"
+          path="/fe/myprojects"
           element={<ProjectsPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/createproject/:projectId" element={<ManageProject />} />
-        <Route path="/createwallet" element={<WalletCreationPage />} />
         <Route
-          path="/detail/"
+          path="/fe/createproject/:projectId"
+          element={<ManageProject />}
+        />
+        <Route path="/fe/createwallet" element={<WalletCreationPage />} />
+        <Route
+          path="/fe/detail"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/billing" element={<BillingPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/fe/billing" element={<BillingPage />} />
+        <Route path="/fe/cart" element={<CartPage />} />
       </Routes>
     </BrowserRouter>
   );
