@@ -5,8 +5,8 @@ export default function SearchBar({ visibility }) {
   return (
     <div
       className={`items-center gap-x-2 ${
-        visibility ? "" : "invisible"
-      } sm:visible sm:w-[400px]`}
+        visibility ? "flex" : "hidden"
+      } w-full sm:block sm:w-[400px]`}
     >
       <div className="relative ">
         <Input
