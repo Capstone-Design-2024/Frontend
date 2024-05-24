@@ -76,6 +76,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   const getBalance = useCallback(async () => {
     try {
       const erc20Contract = await ERC20Contract.getInstance();
+      console.log(address);
       const result = await erc20Contract.balanceOf(address);
       console.log(result);
       setBalance(result);
