@@ -20,7 +20,7 @@ FROM nginx:alpine
 
 RUN apk add curl
 
-COPY ./build/ /usr/share/nginx/html/ 
+COPY ./dist/ /usr/share/nginx/html/ 
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
 
