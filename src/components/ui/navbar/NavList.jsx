@@ -23,7 +23,7 @@ export default function NavList() {
             color="blue-gray"
             className="p-1 font-normal transition-colors hover:text-purple-600 focus:text-purple-600 text-gray-600 sm:flex sm:justify-center xs:flex xs:justify-center"
           >
-            <a href={value} className="flex items-center ">
+            <a href={value} className="flex items-center">
               {key}
             </a>
           </Typography>
