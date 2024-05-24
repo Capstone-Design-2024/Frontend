@@ -42,7 +42,7 @@ export default function AuthButtons({
           <Button
             variant="text"
             size="md"
-            className={`shadow-lg shadow-gray-900/5 lg:inline-block border ${
+            className={`lg:inline-block border shadow-lg shadow-gray-900/5 flex justify-center ${
               isMobile ? "w-full" : "hidden"
             }`}
             onClick={() => debouncedNavigate("/login")}
