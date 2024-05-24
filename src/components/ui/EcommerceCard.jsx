@@ -29,7 +29,7 @@ export default function EcommerceCard({
   const width = !cardWidth && "2llpx";
   return (
     <Card
-      className={`xl:w-63 min-w-${width} bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
+      className={`min-w-${width} bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
     >
       <button onClick={() => viewProjectDetails(project)}>
         <CardHeader

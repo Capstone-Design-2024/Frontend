@@ -63,11 +63,11 @@ const MainPage = ({ isLoggedIn }) => {
                   status={70}
                 />
               </div>
-              <div className="w-full xl:w-5/12 xl:ml-5 mt-4 xl:mt-0">
+              <div className="w-full xl:w-5/12 xl:ml-5 mt-4 lg:mt-0">
                 <Typography variant="h5" className="mb-5 ml-1 text-gray-700">
                   Recommended for you
                 </Typography>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {products.map((product, index) => (
                     <EcommerceCard
                       key={index}

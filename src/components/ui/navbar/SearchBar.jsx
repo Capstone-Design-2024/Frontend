@@ -1,16 +1,17 @@
 import React from "react";
 import { Input } from "@material-tailwind/react";
 
-export default function SearchBar() {
+export default function SearchBar({ visibility }) {
   return (
-    <div className="items-center gap-x-2 w-full xs:hidden sm:visible sm:max-w-[300px] md:max-w-[400px] lg:max-w-[400px] xl:max-w-[550px]">
+    <div
+      className={`items-center gap-x-2 ${
+        visibility ? "" : "invisible"
+      } sm:visible sm:w-[400px]`}
+    >
       <div className="relative ">
         <Input
           type="search"
           placeholder="Search projects, creators and categories"
-          containerProps={{
-            className: "",
-          }}
           className=" pl-9 !border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 placeholder:opacity-100 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
         />
 

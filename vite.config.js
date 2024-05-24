@@ -6,5 +6,6 @@ export default defineConfig({
   optimizeDeps: {
     include: ["redux-thunk"],
   },
+
   plugins: [react()],
 });
