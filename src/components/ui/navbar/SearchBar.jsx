@@ -5,7 +5,7 @@ export default function SearchBar({ visibility }) {
   return (
     <div
       className={`items-center gap-x-2 ${
-        visibility ? "flex" : "hidden"
+        visibility ? "" : "hidden"
       } w-full sm:block sm:w-[400px]`}
     >
       <div className="relative ">
