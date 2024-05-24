@@ -6,7 +6,7 @@ export default function NavList() {
     () => [
       { Account: "account" },
       { Cart: "cart" },
-      { "My Projects": "projects" },
+      { "My Projects": "myprojects" },
     ],
     []
   );
