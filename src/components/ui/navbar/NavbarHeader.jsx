@@ -77,6 +77,9 @@ export default function NavbarHeader({
         </div>
       </div>
       <Collapse open={openNav}>
+        <div className="mt-4">
+          <SearchBar visibility={true} />
+        </div>
         <div className="flex justify-center">
           <NavList />
         </div>

@@ -21,7 +21,7 @@ export default function NavList() {
             as="li"
             variant="small"
             color="blue-gray"
-            className="p-1 font-normal transition-colors hover:text-purple-600 focus:text-purple-600 text-gray-600 sm:flex sm:justify-center xs:flex xs:justify-center"
+            className="p-1 font-normal transition-colors hover:text-purple-600 focus:text-purple-600 text-gray-600 flex justify-center"
           >
             <a href={value} className="flex items-center">
               {key}
