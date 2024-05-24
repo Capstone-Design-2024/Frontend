@@ -7,7 +7,7 @@ export default function FooterWithLogo() {
   return (
     <footer className="w-full  p-8">
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between">
-        <a href="/">
+        <a href="/fe/">
           <img src={logoWithName} alt="main-logo" className="w-[150px]" />
         </a>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">

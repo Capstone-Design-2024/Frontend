@@ -1,5 +1,5 @@
-import { Button, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import { Typography } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 import BreadcrumbsDefault from "../ui/BreadcrumbsDefault";
 import { DefaultSidebar } from "../ui/DefaultSidebar";
 import ProjectInfo from "./ProjectInfo";
@@ -9,8 +9,6 @@ import CreaterInfo from "./CreaterInfo";
 import { API } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import bgBlur1 from "../../assets/bg-blur1.webp";
-import bgBlur2 from "../../assets/bg-blur2.webp";
 
 export default function ManageProject() {
   const { projectId } = useParams();
@@ -67,6 +65,7 @@ export default function ManageProject() {
       setSubmitSuccess((prev) => ({ ...prev, info: false }));
     }
   };
+
   const uploadImageHandler = async (file) => {
     try {
       const formData = new FormData();
@@ -92,10 +91,13 @@ export default function ManageProject() {
   const submitHandler = async () => {
     await submitInfoHandler();
     await uploadImageHandler(projectForm.basicInfo.projectImage);
-    if (submitSuccess.img && submitSuccess.info) {
-      navigate("/projects");
-    }
   };
+
+  useEffect(() => {
+    if (submitSuccess.img && submitSuccess.info) {
+      navigate("/fe/myprojects");
+    }
+  }, [submitSuccess, navigate]);
   const CurrentState = () => {
     if (current === "Project Information") {
       return (
@@ -145,7 +147,6 @@ export default function ManageProject() {
           buttonAvailability={buttonAvailability}
           onSubmit={submitHandler}
         />
-
         <div className="mx-auto mt-10 max-w-screen-xl w-full">
           <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
           <div className="flex justify-between">

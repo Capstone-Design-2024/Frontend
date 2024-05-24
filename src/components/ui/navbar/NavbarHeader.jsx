@@ -17,7 +17,7 @@ export default function NavbarHeader({
     <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
       <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 ">
         <div className="flex">
-          <a href="/">
+          <a href="/fe/">
             <img
               src={logoWithName}
               alt="main-logo"
