@@ -4,7 +4,7 @@ import PersonalInformationForm from "../components/billing/PersonalInformationFo
 import PaymentMethodForm from "../components/billing/PaymentMethodForm";
 import OrderSummary from "../components/billing/OrderSummary";
 import ConfirmationDialog from "../components/billing/ConfirmationDialog";
-import StickyNavbar from "../components/ui/StickyNavbar";
+import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 
 export default function BillingPage() {
   const [openDialog, setOpenDialog] = useState(false);

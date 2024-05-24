@@ -21,7 +21,7 @@ import {
   BellIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
-import StickyNavbar from "../components/ui/StickyNavbar";
+import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 
 function formatPrice(price) {
