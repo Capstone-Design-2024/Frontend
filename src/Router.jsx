@@ -39,7 +39,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signupsucceed" element={<SignUpSucceedPage />} />
         <Route
-          path="/projects"
+          path="/myprojects"
           element={<ProjectsPage isLoggedIn={isLoggedIn} />}
         />
         <Route path="/createproject/:projectId" element={<ManageProject />} />
