@@ -5,7 +5,7 @@ const Card = ({ title, width, children }) => {
     <p className="text-gray-700">
       Don't have an account?{" "}
       <a
-        href="/signup"
+        href="/fe/signup"
         className="text-sm text-purple-700 hover:text-purple-700"
       >
         Sign Up
@@ -26,8 +26,7 @@ const Card = ({ title, width, children }) => {
           <span>
             {"Copyright © 2024 "}
             <a
-              href="/"
-              rel=""
+              href="/fe/"
               target="_blank"
               className="text-purple-700 hover:text-purple-600 "
             >
