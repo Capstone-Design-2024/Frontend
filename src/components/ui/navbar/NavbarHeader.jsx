@@ -26,7 +26,7 @@ export default function NavbarHeader({
             />
           </a>
         </div>
-        <SearchBar />
+        <SearchBar visibility={false} />
         <div className="flex items-center gap-4">
           <div className="hidden lg:block">
             <NavList />
