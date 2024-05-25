@@ -2,6 +2,7 @@ import React, { useMemo, lazy, Suspense } from "react";
 import { Typography } from "@material-tailwind/react";
 import bgBlurWebP from "../assets/bg-blur1.webp";
 import bgBlur2WebP from "../assets/bg-blur2.webp";
+import Loading from "../components/ui/loading/Loading";
 
 const StickyNavbar = lazy(() => import("../components/ui/navbar/StickyNavbar"));
 const CarouselWithContent = lazy(() =>
@@ -35,7 +36,7 @@ const MainPage = ({ isLoggedIn }) => {
   );
 
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <StickyNavbar isLoggedIn={isLoggedIn}>
         <div className="mx-auto w-full h-[500px] flex justify-center">
           <CarouselWithContent />
