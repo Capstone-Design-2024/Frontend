@@ -9,16 +9,14 @@ import { API } from "../config";
 import bgBlur1 from "../assets/bg-blur1.webp";
 import bgBlur2 from "../assets/bg-blur2.webp";
 
-const ProjectsPage = ({ isLoggedIn }) => {
+const MyProjectsPage = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const token = localStorage.getItem("token");
-  console.log("Projects Page:", token);
 
   useEffect(() => {
-    console.log(`Bearer ${token}`);
     axios
-      .get(API.READPROJECT, {
+      .get(API.READMYPROJECT, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,7 +51,7 @@ const ProjectsPage = ({ isLoggedIn }) => {
   };
 
   return (
-    <div>
+    <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
         <div
           style={{
@@ -65,15 +63,15 @@ const ProjectsPage = ({ isLoggedIn }) => {
           }}
           className="py-8"
         >
-          <div className="mt-10 mx-48 px-4 flex justify-start">
+          <div className="mt-10 mx-60 px-4 flex justify-start">
             <Typography variant="h5" className="text-gray-700">
               My Projects
             </Typography>
           </div>
           <div className="mt-1 py-1 border-e-0 min-h-96">
-            <div className="mx-44 px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 p-4">
-                <Card className="xl:w-[265px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600">
+            <div className="mx-60 px-4">
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+                <Card className="xl:w-[300px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600">
                   <Button
                     onClick={createProjectHandler}
                     className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
@@ -123,12 +121,12 @@ const ProjectsPage = ({ isLoggedIn }) => {
             </div>
           </div>
         </div>
+        <div className="mt-6 mx-40 px-4 ">
+          <FooterWithLogo />
+        </div>
       </StickyNavbar>
-      <div className="mt-6 mx-40 px-4 ">
-        <FooterWithLogo />
-      </div>
-    </div>
+    </>
   );
 };
 
-export default ProjectsPage;
+export default MyProjectsPage;

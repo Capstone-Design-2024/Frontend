@@ -6,7 +6,7 @@ import {
   List,
   ListItem,
 } from "@material-tailwind/react";
-import category from "../project/projectCategory";
+import category from "../createProject/projectCategory";
 
 function Icon({ id, open }) {
   return (

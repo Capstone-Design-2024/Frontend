@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import category from "../project/projectCategory.js";
+import category from "../createProject/projectCategory.js";
 
 export function CategoryBar() {
   return (
