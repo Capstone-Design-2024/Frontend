@@ -38,7 +38,7 @@ const MainPage = ({ isLoggedIn }) => {
   return (
     <Suspense fallback={<Loading />}>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div className="mx-auto w-full h-[500px] flex justify-center">
+        <div className="mx-auto w-full flex justify-center">
           <CarouselWithContent />
         </div>
         <div
@@ -82,6 +82,26 @@ const MainPage = ({ isLoggedIn }) => {
                 </div>
               </div>
             </div>
+            <a
+              href="/fe/projectslist"
+              className="flex justify-end mt-5 items-center place-content-start"
+            >
+              <Typography className="text-purple-700 font-medium">
+                See all projects &nbsp;
+              </Typography>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="#7e22ce"
+                className="size-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </a>
           </div>
         </div>
         <div

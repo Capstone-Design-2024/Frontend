@@ -6,13 +6,13 @@ import OrderSummary from "../components/billing/OrderSummary";
 import ConfirmationDialog from "../components/billing/ConfirmationDialog";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 
-export default function BillingPage() {
+export default function BillingPage({ isLoggedIn }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(!openDialog);
 
   return (
-    <StickyNavbar>
+    <StickyNavbar isLoggedIn={isLoggedIn}>
       <div className="container mx-auto p-4 ">
         <Typography variant="h2" color="blue-gray" className="mb-6 mt-2">
           Billing Information

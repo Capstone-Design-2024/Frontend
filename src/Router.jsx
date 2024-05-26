@@ -6,12 +6,13 @@ import SignUpPage from "./pages/SignUpPage";
 import WalletCreationPage from "./pages/WalletCreationPage";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./actions/authActions";
-import ProjectsPage from "./pages/ProjectsPage";
+import MyProjectsPage from "./pages/MyProjectsPage";
 import SignUpSucceedPage from "./pages/SignUpSucceedPage";
-import ManageProject from "./components/project/ManageProject";
+import ManageProject from "./components/createProject/ManageProject";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import BillingPage from "./pages/BillingPage";
 import CartPage from "./pages/CartPage";
+import ProjectsListPage from "./pages/ProjectsListPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,7 @@ const Router = () => {
         <Route path="/fe/signupsucceed" element={<SignUpSucceedPage />} />
         <Route
           path="/fe/myprojects"
-          element={<ProjectsPage isLoggedIn={isLoggedIn} />}
+          element={<MyProjectsPage isLoggedIn={isLoggedIn} />}
         />
         <Route
           path="/fe/createproject/:projectId"
@@ -51,8 +52,15 @@ const Router = () => {
           path="/fe/detail/:projectId"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/fe/billing" element={<BillingPage />} />
-        <Route path="/fe/cart" element={<CartPage />} />
+        <Route
+          path="/fe/billing"
+          element={<BillingPage isLoggedIn={isLoggedIn} />}
+        />
+        <Route path="/fe/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
+        <Route
+          path="/fe/projectslist"
+          element={<ProjectsListPage isLoggedIn={isLoggedIn} />}
+        />
       </Routes>
     </BrowserRouter>
   );

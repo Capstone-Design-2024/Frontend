@@ -26,10 +26,10 @@ export default function EcommerceCard({
   const viewProjectDetails = (project) => {
     navigate(`/fe/detail/${project.projectId}`, { state: { project } });
   };
-  const width = !cardWidth && "2llpx";
+  const width = !cardWidth && "300px";
   return (
     <Card
-      className={`min-w-${width} bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
+      className={`w-${width}  bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
     >
       <button onClick={() => viewProjectDetails(project)}>
         <CardHeader

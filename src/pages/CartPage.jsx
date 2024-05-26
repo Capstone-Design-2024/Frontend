@@ -3,7 +3,7 @@ import { Card, Typography, Button, List } from "@material-tailwind/react";
 import CartItem from "../components/cart/CartItem";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 
-export default function CartPage() {
+export default function CartPage({ isLoggedIn }) {
   const initialItems = [
     {
       id: 1,
@@ -43,7 +43,7 @@ export default function CartPage() {
   );
 
   return (
-    <StickyNavbar>
+    <StickyNavbar isLoggedIn={isLoggedIn}>
       <div className="container mx-auto p-4">
         <Typography variant="h2" color="blue-gray" className="mb-6 mt-2">
           Your Cart
