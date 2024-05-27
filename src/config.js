@@ -9,7 +9,7 @@ export const API = {
   SIGNIN: `${BASE_URL}/member/signin`,
   GETWALLETADDRESS: `${BASE_URL}/contract/wallet/`,
   WALLETGENERATE: `${BASE_URL}/contract/wallet/create`,
-  READMYPROJECT: `${BASE_URL}/project/own`,
+  READMYPROJECT: `${BASE_URL}/project/p/other-project`,
   READPROJECTS: `${BASE_URL}/project/`,
   INITPROJECT: `${BASE_URL}/project/init`,
   REGISTERPROJECT: `${BASE_URL}/project/registration`,

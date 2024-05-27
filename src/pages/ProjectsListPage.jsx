@@ -17,7 +17,7 @@ const ProjectsListPage = ({ isLoggedIn }) => {
 
   useEffect(() => {
     axios
-      .get(API.READMYPROJECT, {
+      .get(API.READPROJECTS, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
