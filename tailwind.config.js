@@ -13,5 +13,11 @@ module.exports = withMT({
     },
     extend: {},
   },
+  variants: {
+    extend: {
+      rotate: ["group-hover"],
+      transform: ["group-hover"],
+    },
+  },
   plugins: [require("flowbite/plugin")],
 });

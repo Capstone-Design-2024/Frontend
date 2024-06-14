@@ -54,13 +54,6 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
     }
   }, [password, storedPassword]);
 
-  const getInitialSupplyAmount = async () => {
-    const erc20Contract = await ERC20Contract.getInstance();
-    const result = await erc20Contract.initialSupply();
-    setToken("ERC20 PPT initial supply amount is: " + result);
-    console.log(result);
-  };
-
   const getBalance = useCallback(async () => {
     try {
       const erc20Contract = await ERC20Contract.getInstance();
@@ -128,14 +121,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           >
             Swap
           </Button>
-          <Button
-            variant="text"
-            size="sm"
-            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
-            onClick={() => getInitialSupplyAmount()}
-          >
-            Contract
-          </Button>
+
           <Button
             variant="text"
             size="sm"

@@ -55,9 +55,6 @@ const WalletHeader = ({
             ? "Balance: $" + balance
             : "Click the get balance btn"}
         </Typography>
-        <Typography variant="h6" className="font-medium text-gray-700">
-          {token !== null ? token : "Click the contract button"}
-        </Typography>
       </div>
     </div>
   </div>

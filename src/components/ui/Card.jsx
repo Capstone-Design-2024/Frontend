@@ -15,7 +15,7 @@ const Card = ({ title, width, children }) => {
   return (
     <div className="flex justify-center self-center z-10 ">
       <div
-        className={`p-12 mx-auto rounded-3xl ${width} mx-auto bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg`}
+        className={`p-12 mx-auto rounded-3xl ${width}  bg-white/80 backdrop-blur-lg border border-white/10 shadow-lg`}
       >
         <div className="mb-7">
           <h3 className="font-semibold text-2xl text-gray-800">{title}</h3>
