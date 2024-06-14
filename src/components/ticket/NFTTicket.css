@@ -1,0 +1,56 @@
+.text-glow {
+  text-shadow: rgba(122, 41, 176, 0.9) 0px 0px 39px;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 400px;
+  height: 500px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5%;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.ticket-bg {
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    160deg,
+    rgba(131, 58, 180, 0.8309917717086834) 44%,
+    rgba(253, 29, 29, 0.7805716036414566) 82%,
+    rgba(252, 176, 69, 0.7945772058823529) 100%
+  );
+  border-radius: 10px;
+}
+
+.ticket-bg-meteor {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1012%26quot%3b)' fill='none'%3e%3cpath d='M527 488L316 277' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M400 168L247 15' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M1261 355L1039 133' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M317 180L521 384' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M756 327L500 71' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M415 204L617 406' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M482 396L294 208' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M757 392L458 93' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M289 24L18 -247' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M228 12L-122 -338' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1172 515L844 187' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M860 393L645 178' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M757 227L1012 482' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M278 520L89 331' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M570 25L386 -159' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1424 55L1781 412' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1187 514L1327 654' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M358 3L82 -273' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M204 376L513 685' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1279 370L920 11' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M410 419L730 739' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M1178 476L1349 647' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M109 227L462 580' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M291 288L481 478' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M790 71L400 -319' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M136 10L-61 -187' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M37 305L-367 -99' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M502 173L121 -208' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M852 340L1025 513' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M660 241L1002 583' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1311 455L1705 849' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M597 351L992 746' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1345 31L1714 400' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M338 306L27 -5' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1274 94L1037 -143' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M1291 422L1637 768' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M1178 56L768 -354' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1014%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M580 558L790 768' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M259 394L84 219' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1013%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1012'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1013'%3e%3cstop stop-color='rgba(57%2c 7%2c 97%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(57%2c 7%2c 97%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1014'%3e%3cstop stop-color='rgba(57%2c 7%2c 97%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(57%2c 7%2c 97%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+}

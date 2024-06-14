@@ -71,7 +71,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
           <div className="mt-1 py-1 border-e-0 min-h-96">
             <div className="mx-60 px-4">
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                <Card className="xl:w-[300px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600">
+                <EcommerceCard type={"create"}>
                   <Button
                     onClick={createProjectHandler}
                     className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
@@ -94,7 +94,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
                       <span>Click to create project</span>
                     </div>
                   </Button>
-                </Card>
+                </EcommerceCard>
                 {projects.map((project, idx) => {
                   const today = new Date();
                   const projectTimeLine = new Date(project.deadLine);
