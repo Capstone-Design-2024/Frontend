@@ -23,7 +23,6 @@ export default function EcommerceCard({
   dayLeft,
   type,
   children,
-  className,
 }) {
   const navigate = useNavigate();
   const viewProjectDetails = (project) => {

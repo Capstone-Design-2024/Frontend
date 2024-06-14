@@ -9,6 +9,7 @@ import CreaterInfo from "./CreaterInfo";
 import { API } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import SuccessDialog from "./SuccessDialog";
 
 export default function ManageProject() {
   const { projectId } = useParams();
@@ -35,6 +36,8 @@ export default function ManageProject() {
     info: false,
     img: false,
   });
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const handleSuccessDialogOpen = () => setIsSuccessDialogOpen((cur) => !cur);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const submitInfoHandler = async () => {
@@ -95,7 +98,8 @@ export default function ManageProject() {
 
   useEffect(() => {
     if (submitSuccess.img && submitSuccess.info) {
-      navigate("/fe/myprojects");
+      handleSuccessDialogOpen();
+      // navigate("/fe/myprojects");
     }
   }, [submitSuccess, navigate]);
   const CurrentState = () => {
@@ -138,6 +142,8 @@ export default function ManageProject() {
     }
   };
 
+  console.log(projectForm.basicInfo.projectImage);
+
   return (
     <>
       <div className="flex justify-start">
@@ -159,6 +165,18 @@ export default function ManageProject() {
           </div>
         </div>
       </div>
+      {isSuccessDialogOpen && (
+        <SuccessDialog
+          isOpen={isSuccessDialogOpen}
+          handler={handleSuccessDialogOpen}
+          project={{
+            title: projectForm.basicInfo.projectName,
+            description: projectForm.storyLine.projectDescription,
+            thumbnail: projectForm.basicInfo.projectImage,
+            contactEmail: projectForm.createrInfo.createrEmail,
+          }}
+        />
+      )}
     </>
   );
 }
