@@ -16,15 +16,15 @@ COPY . .
 RUN npm run build
 
 # Step 2: Serve the application using Nginx
-FROM nginx:alpine
+FROM nginx:latest
 
 RUN apk add curl
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
