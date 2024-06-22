@@ -35,27 +35,30 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} />} />
-        <Route path="/login" element={<LogInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signupsucceed" element={<SignUpSucceedPage />} />
+        <Route path="/fe/" element={<MainPage isLoggedIn={isLoggedIn} />} />
+        <Route path="/fe/login" element={<LogInPage />} />
+        <Route path="/fe/signup" element={<SignUpPage />} />
+        <Route path="/fe/signupsucceed" element={<SignUpSucceedPage />} />
         <Route
-          path="/myprojects"
+          path="/fe/myprojects"
           element={<MyProjectsPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/createproject/:projectId" element={<ManageProject />} />
-        <Route path="/createwallet" element={<WalletCreationPage />} />
         <Route
-          path="/detail/:projectId"
+          path="/fe/createproject/:projectId"
+          element={<ManageProject />}
+        />
+        <Route path="/fe/createwallet" element={<WalletCreationPage />} />
+        <Route
+          path="/fe/detail/:projectId"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
         <Route
-          path="/billing"
+          path="/fe/billing"
           element={<BillingPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
+        <Route path="/fe/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
         <Route
-          path="/projectslist"
+          path="/fe/projectslist"
           element={<ProjectsListPage isLoggedIn={isLoggedIn} />}
         />
       </Routes>
