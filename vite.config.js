@@ -7,6 +7,6 @@ export default defineConfig({
     include: ["redux-thunk"],
   },
 
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths(), tailwindcss()],
   base: "./",
 });
