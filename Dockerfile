@@ -15,7 +15,7 @@ COPY . .
 # Build the React application
 RUN npm run build
 
-RUN ls
+
 # Step 2: Serve the application using Nginx
 # FROM nginx:latest
 
@@ -29,6 +29,10 @@ FROM nginx:latest
 RUN rm /etc/nginx/conf.d/default.conf
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+
+RUN ls
+
 
 COPY ./app/dist /usr/share/nginx/html 
 
