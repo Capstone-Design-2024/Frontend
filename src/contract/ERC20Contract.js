@@ -32,6 +32,7 @@ class ERC20Contract {
         },
       }
     );
+    console.log(response);
     return {
       address: response.data.contractMetaInfo[0].address,
       abi: response.data.contractMetaInfo[0].abi,
