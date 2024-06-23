@@ -83,7 +83,7 @@ const MainPage = ({ isLoggedIn }) => {
               </div>
             </div>
             <a
-              href="/fe/projectslist"
+              href="/projectslist"
               className="flex justify-end mt-5 items-center place-content-start"
             >
               <Typography className="text-purple-700 font-medium">

@@ -8,7 +8,7 @@ const MembershipBg = ({ children, type, padding }) => {
         <div>
           <div className="items-center relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent rounded-3xl shadow-xl">
             <div>
-              <a className="flex justify-center" href="/fe/">
+              <a className="flex justify-center" href="/">
                 <img src={mainlogo} alt="home logo" className="w-20 mb-8" />
               </a>
               <div
