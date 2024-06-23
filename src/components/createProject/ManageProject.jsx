@@ -45,7 +45,6 @@ export default function ManageProject() {
 
   const submitInfoHandler = async () => {
     try {
-      console.log("hello");
       const response = await axios.post(
         `${API.REGISTERPROJECT}`,
         {
