@@ -176,7 +176,7 @@ export default function ManageProject() {
           project={{
             title: projectForm.basicInfo.projectName,
             description: projectForm.storyLine.projectDescription,
-            thumbnail: projectForm.basicInfo.projectImage,
+            thumbnail: URL.createObjectURL(projectForm.basicInfo.projectImage),
             contactEmail: projectForm.createrInfo.createrEmail,
           }}
           isLoading={isLoading}
