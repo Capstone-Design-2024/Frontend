@@ -42,8 +42,10 @@ export default function ManageProject() {
   const navigate = useNavigate();
   const submitInfoHandler = async () => {
     try {
+      console.log("hello");
       const response = await axios.post(
-        `${API.REGISTERPROJECT}`,
+        // `${API.REGISTERPROJECT}`,
+        "http://127.0.0.1:9002/project/registration",
         {
           projectId: projectId,
           title: projectForm.basicInfo.projectName,
@@ -73,8 +75,10 @@ export default function ManageProject() {
     try {
       const formData = new FormData();
       formData.append("image", file);
+      console.log("hello fuck");
       const response = await axios.post(
-        `${API.UPLOADIMAGE}/${projectId}`,
+        // `${API.UPLOADIMAGE}/${projectId}`,
+        `http://127.0.0.1:9002/project/thumbnail/${projectId}`,
         formData,
         {
           headers: {
