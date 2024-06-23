@@ -16,7 +16,7 @@ export function DefaultSidebar({
   return (
     <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
-        <a href="/fe/">
+        <a href="/">
           <img
             src={logoWithName}
             alt="Itemize Logo"

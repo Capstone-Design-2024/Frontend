@@ -37,9 +37,12 @@ export default function ManageProject() {
     img: false,
   });
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSuccessDialogOpen = () => setIsSuccessDialogOpen((cur) => !cur);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+
   const submitInfoHandler = async () => {
     try {
       const response = await axios.post(
@@ -64,7 +67,7 @@ export default function ManageProject() {
       console.log("Success:", response);
       setSubmitSuccess((prev) => ({ ...prev, info: true }));
     } catch (error) {
-      console.log("Error Creating Project:", error);
+      console.log("Error Creating Project:", error.response);
       setSubmitSuccess((prev) => ({ ...prev, info: false }));
     }
   };
@@ -86,14 +89,16 @@ export default function ManageProject() {
       console.log("Image uploaded successfully:", response);
       setSubmitSuccess((prev) => ({ ...prev, img: true }));
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading image:", error.response);
       setSubmitSuccess((prev) => ({ ...prev, img: false }));
     }
   };
 
   const submitHandler = async () => {
+    setIsLoading(true);
     await submitInfoHandler();
     await uploadImageHandler(projectForm.basicInfo.projectImage);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -102,6 +107,7 @@ export default function ManageProject() {
       // navigate("/fe/myprojects");
     }
   }, [submitSuccess, navigate]);
+
   const CurrentState = () => {
     if (current === "Project Information") {
       return (
@@ -142,8 +148,6 @@ export default function ManageProject() {
     }
   };
 
-  console.log(projectForm.basicInfo.projectImage);
-
   return (
     <>
       <div className="flex justify-start">
@@ -175,6 +179,7 @@ export default function ManageProject() {
             thumbnail: projectForm.basicInfo.projectImage,
             contactEmail: projectForm.createrInfo.createrEmail,
           }}
+          isLoading={isLoading}
         />
       )}
     </>
