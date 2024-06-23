@@ -57,7 +57,7 @@ export default function ProjectDetailPage({ isLoggedIn }) {
                 variant="text"
                 size="md"
                 className="flex justify-center space-x-2 !normal-case bg-purple-700 text-white hover:bg-purple-600"
-                onClick={() => navigate("/fe/billing")}
+                onClick={() => navigate("/billing")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -115,7 +115,7 @@ const SignUpPage = () => {
 
       if (response.ok) {
         console.log("Success:", data);
-        navigate("/fe/signupsucceed");
+        navigate("/signupsucceed");
       } else {
         console.error("Error:", data);
       }

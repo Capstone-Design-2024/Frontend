@@ -44,7 +44,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
       );
       console.log(response.data.data);
 
-      navigate(`/fe/createproject/${response.data.data}`);
+      navigate(`/createproject/${response.data.data}`);
     } catch (error) {
       console.log("Error Creating Project:", error);
     }
@@ -111,7 +111,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
                       instruction={today > projectTimeLine}
                       thumbnail={project.thumbnail}
                       onClick={() =>
-                        navigate(`/fe/createproject/${project.projectId}`)
+                        navigate(`/createproject/${project.projectId}`)
                       }
                       className="xl:w-[265px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600"
                     />

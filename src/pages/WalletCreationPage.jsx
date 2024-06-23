@@ -48,7 +48,7 @@ const LogInPage = () => {
     document.body.removeChild(element);
   };
   const goHome = () => {
-    navigate("/fe/");
+    navigate("/");
     dispatch(loginSuccess());
   };
 
