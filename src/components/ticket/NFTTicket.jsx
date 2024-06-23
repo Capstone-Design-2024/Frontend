@@ -6,49 +6,48 @@ import html2canvas from "html2canvas";
 const NFTTicket = ({ project }) => {
   const [frontImageUrl, setFrontImageUrl] = useState("");
   const [backImageUrl, setBackImageUrl] = useState("");
-  const [thumbnailBase64, setThumbnailBase64] = useState("");
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
-  console.log(project.thumbnail);
 
   useEffect(() => {
-    const toDataURL = (url) => {
-      return fetch(url)
-        .then((response) => {
-          return response.blob();
-        })
-        .then((blob) => {
-          return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-        });
+    const loadImage = () => {
+      const img = new Image();
+      img.src =
+        typeof project.thumbnail === "string"
+          ? project.thumbnail
+          : URL.createObjectURL(project.thumbnail);
+      img.onload = () => {
+        setThumbnailLoaded(true);
+      };
     };
 
-    const captureAsJpg = async () => {
-      const frontCanvas = await html2canvas(frontCardRef.current, {
-        logging: true,
-        letterRendering: 1,
-        allowTaint: false,
-        useCORS: true,
-      });
-      const backCanvas = await html2canvas(backCardRef.current);
-      const frontImgData = frontCanvas.toDataURL("image/jpeg");
-      const backImgData = backCanvas.toDataURL("image/jpeg");
-      setFrontImageUrl(frontImgData);
-      setBackImageUrl(backImgData);
-    };
-
-    const loadImage = async () => {
-      const base64Image = await toDataURL(project.thumbnail);
-      setThumbnailBase64(base64Image);
-      captureAsJpg();
-    };
-
-    loadImage();
+    if (project.thumbnail) {
+      loadImage();
+    }
   }, [project.thumbnail]);
+
+  useEffect(() => {
+    const captureAsJpg = async () => {
+      if (thumbnailLoaded) {
+        const frontCanvas = await html2canvas(frontCardRef.current, {
+          logging: true,
+          letterRendering: 1,
+          allowTaint: false,
+          useCORS: true,
+        });
+        const backCanvas = await html2canvas(backCardRef.current);
+        const frontImgData = frontCanvas.toDataURL("image/jpeg");
+        const backImgData = backCanvas.toDataURL("image/jpeg");
+        setFrontImageUrl(frontImgData);
+        setBackImageUrl(backImgData);
+      }
+    };
+
+    captureAsJpg();
+  }, []);
+
+  console.log(frontImageUrl);
 
   return (
     <div className="flip-card my-6">
@@ -63,15 +62,22 @@ const NFTTicket = ({ project }) => {
               ref={frontCardRef}
               className="w-full h-full flex items-center justify-center text-white ticket-bg"
             >
-              <div className="w-full h-full ticket-bg-meteor">
+              <div className="w-full h-full ticket-bg-meteor flex flex-col items-center p-4">
                 <img
-                  src={thumbnailBase64}
+                  src={
+                    typeof project.thumbnail === "string"
+                      ? project.thumbnail
+                      : URL.createObjectURL(project.thumbnail)
+                  }
                   alt="project image"
-                  className="w-140px z-50"
+                  className="w-full h-96 z-50 mb-3 object-cover rounded-lg"
+                  onLoad={() => setThumbnailLoaded(true)}
                 />
-                <Typography variant="h4" className="text-glow">
-                  {project.title}
-                </Typography>
+                <div className="w-full flex flex-col items-center justify-center mt-auto  bg-white/50 p-4 rounded-lg text-black">
+                  <Typography variant="h4" className="text-glow">
+                    {project.title}
+                  </Typography>
+                </div>
               </div>
             </div>
           )}
