@@ -6,16 +6,33 @@ import html2canvas from "html2canvas";
 const NFTTicket = ({ project }) => {
   const [frontImageUrl, setFrontImageUrl] = useState("");
   const [backImageUrl, setBackImageUrl] = useState("");
+  const [thumbnailBase64, setThumbnailBase64] = useState("");
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
+  console.log(project.thumbnail);
 
   useEffect(() => {
+    const toDataURL = (url) => {
+      return fetch(url)
+        .then((response) => {
+          return response.blob();
+        })
+        .then((blob) => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        });
+    };
+
     const captureAsJpg = async () => {
       const frontCanvas = await html2canvas(frontCardRef.current, {
         logging: true,
         letterRendering: 1,
         allowTaint: false,
-        useCORS: false,
+        useCORS: true,
       });
       const backCanvas = await html2canvas(backCardRef.current);
       const frontImgData = frontCanvas.toDataURL("image/jpeg");
@@ -23,11 +40,18 @@ const NFTTicket = ({ project }) => {
       setFrontImageUrl(frontImgData);
       setBackImageUrl(backImgData);
     };
-    captureAsJpg();
-  }, []);
+
+    const loadImage = async () => {
+      const base64Image = await toDataURL(project.thumbnail);
+      setThumbnailBase64(base64Image);
+      captureAsJpg();
+    };
+
+    loadImage();
+  }, [project.thumbnail]);
 
   return (
-    <div className="flip-card my-12">
+    <div className="flip-card my-6">
       <div className="flip-card-inner ">
         <div className="flip-card-front ">
           {frontImageUrl ? (
@@ -41,7 +65,7 @@ const NFTTicket = ({ project }) => {
             >
               <div className="w-full h-full ticket-bg-meteor">
                 <img
-                  src={project.thumbnail}
+                  src={thumbnailBase64}
                   alt="project image"
                   className="w-140px z-50"
                 />
@@ -58,7 +82,7 @@ const NFTTicket = ({ project }) => {
           </div>
         ) : (
           <div ref={backCardRef} className="flip-card-back ">
-            <div className="w-full h-full flex items-center justify-center  text-white ticket-bg">
+            <div className="w-full h-full flex items-center justify-center text-white ticket-bg">
               <div className="ticket-bg-meteor w-full h-full place-content-center">
                 <div>
                   <Typography variant="h6" className="text-glow">
@@ -68,7 +92,7 @@ const NFTTicket = ({ project }) => {
                     Description: {project.description}
                   </Typography>
                   <Typography variant="h6" className="text-glow">
-                    Creater: {project.contactEmail}
+                    Creator: {project.contactEmail}
                   </Typography>
                 </div>
               </div>
