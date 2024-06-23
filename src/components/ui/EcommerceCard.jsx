@@ -26,7 +26,7 @@ export default function EcommerceCard({
 }) {
   const navigate = useNavigate();
   const viewProjectDetails = (project) => {
-    navigate(`/fe/detail/${project.projectId}`, { state: { project } });
+    navigate(`/detail/${project.projectId}`, { state: { project } });
   };
   const width = !cardWidth && "300px";
   return (

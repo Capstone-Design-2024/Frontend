@@ -12,7 +12,7 @@ const SignUpSucceedPage = () => {
         <Button
           fullWidth
           className="mt-2 bg-purple-600 !normal-case"
-          onClick={() => navigate("/fe/login")}
+          onClick={() => navigate("/login")}
         >
           Click to log in
         </Button>
