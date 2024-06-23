@@ -47,8 +47,7 @@ export default function ManageProject() {
     try {
       console.log("hello");
       const response = await axios.post(
-        // `${API.REGISTERPROJECT}`,
-        "http://127.0.0.1:9002/project/registration",
+        `${API.REGISTERPROJECT}`,
         {
           projectId: projectId,
           title: projectForm.basicInfo.projectName,
@@ -78,10 +77,8 @@ export default function ManageProject() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      console.log("hello fuck");
       const response = await axios.post(
-        // `${API.UPLOADIMAGE}/${projectId}`,
-        `http://127.0.0.1:9002/project/thumbnail/${projectId}`,
+        `${API.UPLOADIMAGE}/${projectId}`,
         formData,
         {
           headers: {
