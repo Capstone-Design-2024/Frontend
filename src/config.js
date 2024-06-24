@@ -14,4 +14,5 @@ export const API = {
   CHARGEPNPTOKEN: `${BASE_URL}/contract/wallet/mint/`,
   NFTREGISTRY: `${BASE_URL}/project/nft/registration`,
   GETPROJECT: `${BASE_URL}/contract/project/meta`,
+  S3IMAGEPROXY: `${BASE_URL}/project/s3-proxy`,
 };
