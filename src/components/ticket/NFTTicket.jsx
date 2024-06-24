@@ -10,29 +10,57 @@ const NFTTicket = ({ project, fromManageProject }) => {
   const [backImageUrl, setBackImageUrl] = useState("");
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [nftInfo, setNftInfo] = useState({ makerAddress: "" });
+  const [thumbnailFromProject, setThumbnailFromProject] = useState("");
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    const loadImage = () => {
+    const loadImage = async () => {
+      const data = { s3_url: project.thumbnail };
+      try {
+        const response = await axios.post(
+          `http://itm.suitestudy.com/project/s3-proxy`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            responseType: "blob",
+          }
+        );
+        const thumbnailUrl = URL.createObjectURL(response.data);
+        setThumbnailFromProject(thumbnailUrl);
+        setThumbnailLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!fromManageProject) {
+      loadImage();
+      console.log("load");
+    } else {
       const img = new Image();
       img.src =
         typeof project.thumbnail === "string"
           ? project.thumbnail
           : URL.createObjectURL(project.thumbnail);
       img.onload = () => {
+        console.log("load");
         setThumbnailLoaded(true);
       };
-    };
-
-    if (project.thumbnail) {
-      loadImage();
+      img.onerror = () => {
+        console.error("Error loading image");
+        setThumbnailLoaded(false);
+      };
+      setThumbnailFromProject(img.src);
     }
-  }, [project.thumbnail]);
+  }, [project.thumbnail, fromManageProject, token]);
 
   useEffect(() => {
     const fetchNftInfo = async () => {
-      const token = localStorage.getItem("token");
       const data = { project_id: project.projectId };
       try {
         const response = await axios.post(`${API.GETPROJECT}`, data, {
@@ -42,12 +70,14 @@ const NFTTicket = ({ project, fromManageProject }) => {
         });
         const makerAddress = response.data.project_meta_info.makerAddress;
         setNftInfo({ makerAddress });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
-    if (!fromManageProject) {
+    if (fromManageProject !== false) {
       fetchNftInfo();
     }
-  }, [fromManageProject, project.projectId]);
+  }, [fromManageProject, project.projectId, token]);
 
   useEffect(() => {
     const captureAsJpg = async () => {
@@ -65,6 +95,7 @@ const NFTTicket = ({ project, fromManageProject }) => {
         setBackImageUrl(backImgData);
       }
     };
+    console.log("capture");
     captureAsJpg();
   }, [thumbnailLoaded, nftInfo]);
 
@@ -111,8 +142,8 @@ const NFTTicket = ({ project, fromManageProject }) => {
 
   return (
     <div className="flip-card my-6">
-      <div className="flip-card-inner ">
-        <div className="flip-card-front ">
+      <div className="flip-card-inner">
+        <div className="flip-card-front">
           {frontImageUrl ? (
             <Card>
               <img src={frontImageUrl} alt="Captured Content" />
@@ -124,20 +155,17 @@ const NFTTicket = ({ project, fromManageProject }) => {
             >
               <div className="w-full h-full ticket-bg-meteor flex flex-col items-center p-4">
                 <img
-                  src={
-                    typeof project.thumbnail === "string"
-                      ? project.thumbnail
-                      : URL.createObjectURL(project.thumbnail)
-                  }
+                  src={thumbnailFromProject}
                   alt="project image"
                   className="w-full h-96 z-50 mb-3 object-cover rounded-lg"
                   onLoad={() => setThumbnailLoaded(true)}
+                  onError={() => setThumbnailLoaded(false)}
                 />
                 <div className="w-full flex flex-col items-center mt-auto bg-white/50 p-4 rounded-lg text-black">
                   <Typography variant="h4" className="text-glow">
                     {project.title}
                   </Typography>
-                  <Typography variant="small" className="text-glow ">
+                  <Typography variant="small" className="text-glow">
                     {nftInfo.makerAddress}
                   </Typography>
                 </div>
@@ -150,7 +178,7 @@ const NFTTicket = ({ project, fromManageProject }) => {
             <img src={backImageUrl} alt="Captured Content" />
           </div>
         ) : (
-          <div ref={backCardRef} className="flip-card-back ">
+          <div ref={backCardRef} className="flip-card-back">
             <div className="w-full h-full flex items-center justify-center text-white ticket-bg">
               <div className="ticket-bg-meteor w-full h-full place-content-center">
                 <div>
