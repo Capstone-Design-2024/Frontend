@@ -20,16 +20,12 @@ const NFTTicket = ({ project, fromManageProject }) => {
     const loadImage = async () => {
       const data = { s3_url: project.thumbnail };
       try {
-        const response = await axios.post(
-          `http://itm.suitestudy.com/project/s3-proxy`,
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            responseType: "blob",
-          }
-        );
+        const response = await axios.post(`${API.S3IMAGEPROXY}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob",
+        });
         const thumbnailUrl = URL.createObjectURL(response.data);
         setThumbnailFromProject(thumbnailUrl);
         setThumbnailLoaded(true);
