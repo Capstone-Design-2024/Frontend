@@ -49,7 +49,7 @@ const ProjectTabs = ({ project }) => {
             {value !== "ticket" && <Typography>{content}</Typography>}
             {value === "ticket" && (
               <div className="flex justify-center">
-                <NFTTicket project={project} />
+                <NFTTicket project={project} fromManageProject={false} />
               </div>
             )}
             {value === "reviews" && (

@@ -104,7 +104,6 @@ export default function ManageProject() {
   useEffect(() => {
     if (submitSuccess.img && submitSuccess.info) {
       handleSuccessDialogOpen();
-      // navigate("/fe/myprojects");
     }
   }, [submitSuccess, navigate]);
 
@@ -174,12 +173,14 @@ export default function ManageProject() {
           isOpen={isSuccessDialogOpen}
           handler={handleSuccessDialogOpen}
           project={{
+            id: projectId,
             title: projectForm.basicInfo.projectName,
             description: projectForm.storyLine.projectDescription,
             thumbnail: URL.createObjectURL(projectForm.basicInfo.projectImage),
             contactEmail: projectForm.createrInfo.createrEmail,
           }}
           isLoading={isLoading}
+          fromManageProject={true}
         />
       )}
     </>

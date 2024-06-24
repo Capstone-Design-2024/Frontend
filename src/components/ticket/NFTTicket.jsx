@@ -2,11 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import "./NFTTicket.css";
 import { Card, Typography } from "@material-tailwind/react";
 import html2canvas from "html2canvas";
+import axios from "axios";
+import { API } from "../../config";
 
-const NFTTicket = ({ project }) => {
+const NFTTicket = ({ project, fromManageProject }) => {
   const [frontImageUrl, setFrontImageUrl] = useState("");
   const [backImageUrl, setBackImageUrl] = useState("");
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+  const [nftInfo, setNftInfo] = useState({ makerAddress: "" });
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
 
@@ -28,8 +31,27 @@ const NFTTicket = ({ project }) => {
   }, [project.thumbnail]);
 
   useEffect(() => {
+    const fetchNftInfo = async () => {
+      const token = localStorage.getItem("token");
+      const data = { project_id: project.projectId };
+      try {
+        const response = await axios.post(`${API.GETPROJECT}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const makerAddress = response.data.project_meta_info.makerAddress;
+        setNftInfo({ makerAddress });
+      } catch (error) {}
+    };
+    if (!fromManageProject) {
+      fetchNftInfo();
+    }
+  }, [fromManageProject, project.projectId]);
+
+  useEffect(() => {
     const captureAsJpg = async () => {
-      if (thumbnailLoaded) {
+      if (thumbnailLoaded && nftInfo.makerAddress) {
         const frontCanvas = await html2canvas(frontCardRef.current, {
           logging: true,
           letterRendering: 1,
@@ -43,11 +65,49 @@ const NFTTicket = ({ project }) => {
         setBackImageUrl(backImgData);
       }
     };
-
     captureAsJpg();
-  }, []);
+  }, [thumbnailLoaded, nftInfo]);
 
-  console.log(frontImageUrl);
+  useEffect(() => {
+    if (frontImageUrl && fromManageProject) {
+      uploadImageHandler(frontImageUrl);
+    }
+  }, [fromManageProject, frontImageUrl]);
+
+  const uploadImageHandler = async (dataUrl) => {
+    const token = localStorage.getItem("token");
+    const blob = dataURLtoBlob(dataUrl);
+
+    try {
+      const formData = new FormData();
+      formData.append("image", blob, "image.jpg");
+      const response = await axios.post(
+        `${API.NFTREGISTRY}/${project.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("NFT Image uploaded successfully:", response);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const dataURLtoBlob = (dataUrl) => {
+    const arr = dataUrl.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  };
 
   return (
     <div className="flip-card my-6">
@@ -73,9 +133,12 @@ const NFTTicket = ({ project }) => {
                   className="w-full h-96 z-50 mb-3 object-cover rounded-lg"
                   onLoad={() => setThumbnailLoaded(true)}
                 />
-                <div className="w-full flex flex-col items-center justify-center mt-auto  bg-white/50 p-4 rounded-lg text-black">
+                <div className="w-full flex flex-col items-center mt-auto bg-white/50 p-4 rounded-lg text-black">
                   <Typography variant="h4" className="text-glow">
                     {project.title}
+                  </Typography>
+                  <Typography variant="small" className="text-glow ">
+                    {nftInfo.makerAddress}
                   </Typography>
                 </div>
               </div>
