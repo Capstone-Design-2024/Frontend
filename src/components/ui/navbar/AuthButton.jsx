@@ -8,13 +8,14 @@ export default function AuthButtons({
   debouncedNavigate,
   isMobile = false,
 }) {
+  const token = localStorage.getItem("token");
   return (
     <div
       className={`flex items-center gap-x-1 ${
         isMobile ? "w-full flex-col gap-y-2" : "gap-4"
       }`}
     >
-      {isLoggedIn ? (
+      {isLoggedIn && token ? (
         <>
           <Button
             variant="text"
