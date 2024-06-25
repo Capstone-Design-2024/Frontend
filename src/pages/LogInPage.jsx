@@ -44,6 +44,7 @@ const LogInPage = () => {
       if (response.status === 200) {
         const token = response.data.data.accessToken;
         localStorage.setItem("token", token);
+        localStorage.setItem("email", form.email);
         localStorage.setItem("pw", form.password);
         try {
           const walletResponse = await axios.get(`${API.GETWALLETADDRESS}`, {

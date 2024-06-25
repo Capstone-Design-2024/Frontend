@@ -19,17 +19,19 @@ const MainPage = ({ isLoggedIn }) => {
     () => [
       {
         title: "Airpods Pro",
-        price: "$299.99",
+        price: "299",
         description: "good earphone",
         status: 50,
         instruction: "Add to Cart",
+        deadLine: "",
       },
       {
         title: "Airpods Pro",
-        price: "$299.99",
+        price: "299",
         description: "good earphone",
         status: 50,
         instruction: "Add to Cart",
+        deadLine: "",
       },
     ],
     []
@@ -58,9 +60,12 @@ const MainPage = ({ isLoggedIn }) => {
                   Featured Project
                 </Typography>
                 <EcommerceCard
-                  title={"Test item"}
-                  price={"$300.00"}
-                  description={"test"}
+                  project={{
+                    title: "Test item",
+                    price: 300,
+                    description: "test",
+                  }}
+                  fullWidth={true}
                   status={70}
                 />
               </div>
@@ -72,11 +77,8 @@ const MainPage = ({ isLoggedIn }) => {
                   {products.map((product, index) => (
                     <EcommerceCard
                       key={index}
-                      title={product.title}
-                      price={product.price}
-                      description={product.description}
+                      project={product}
                       status={product.status}
-                      instruction={product.instruction}
                     />
                   ))}
                 </div>

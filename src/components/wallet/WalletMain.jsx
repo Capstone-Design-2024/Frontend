@@ -18,7 +18,6 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [balance, setBalance] = useState(initialBalance);
-  const [token, setToken] = useState("Click the contract button");
   const [loading, setLoading] = useState(false);
   const [freeChargeLeft, setFreeChargeLeft] = useState(2);
 
@@ -98,7 +97,6 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
         <WalletHeader
           address={address}
           balance={balance}
-          token={token}
           isCopied={isCopied}
           setIsCopied={setIsCopied}
           copyToClipboard={copyToClipboard}
