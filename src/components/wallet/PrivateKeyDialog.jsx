@@ -23,14 +23,14 @@ const PrivateKeyDialog = ({
 }) => (
   <Dialog open={open} handler={() => handleDialogToggle("pkOpen")} size="sm">
     <div className="p-4">
-      <DialogHeader>
-        Please enter your password to see your private key
-      </DialogHeader>
+      <DialogHeader>Please enter your password</DialogHeader>
       {showPrivateKey && (
         <div className="flex justify-between">
           <div className="px-4">
-            <Typography>Your private key is: </Typography>
-            <Typography variant="small" className="text-purple-700">
+            <Typography variant="small" className="font-semibold">
+              Your private key is:{" "}
+            </Typography>
+            <Typography variant="small" className="text-purple-700 font-medium">
               {prKey}
             </Typography>
           </div>
@@ -48,7 +48,7 @@ const PrivateKeyDialog = ({
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
-                stroke="#6c2dc7"
+                stroke="#000000"
                 className="w-6 h-6"
               >
                 <path
@@ -80,16 +80,20 @@ const PrivateKeyDialog = ({
       <DialogBody className="p-2">
         <div className="flex space-x-2">
           <button
-            className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
+            className="flex flex-col items-center justify-center transition delay-[25ms] bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
             onClick={validatePassword}
           >
-            Show
+            <Typography variant="small" className="font-medium">
+              Show
+            </Typography>
           </button>
           <button
-            className="bg-white hover:bg-red-600 text-red-600 border border-red-600 rounded-lg px-3 hover:text-white text-sm w-16 h-10"
+            className="flex flex-col items-center justify-center transition delay-[25ms] bg-white hover:bg-red-600 text-red-600 border border-red-600 rounded-lg px-3 hover:text-white text-sm w-16 h-10"
             onClick={() => handleDialogToggle("pkOpen")}
           >
-            Cancel
+            <Typography variant="small" className="font-medium">
+              Cancel
+            </Typography>
           </button>
         </div>
       </DialogBody>

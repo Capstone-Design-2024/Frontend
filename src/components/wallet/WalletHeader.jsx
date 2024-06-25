@@ -6,7 +6,6 @@ import keyIcon from "../../assets/icons/key.svg";
 const WalletHeader = ({
   address,
   balance,
-  token,
   isCopied,
   setIsCopied,
   copyToClipboard,

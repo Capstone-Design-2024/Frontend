@@ -29,6 +29,8 @@ const MyProjectsPage = ({ isLoggedIn }) => {
       });
   }, [token]);
 
+  console.log(projects);
+
   const createProjectHandler = async (e) => {
     const token = localStorage.getItem("token");
     e.preventDefault();
@@ -59,17 +61,18 @@ const MyProjectsPage = ({ isLoggedIn }) => {
             backgroundOrigin: "border-box",
             backgroundSize: "contain, contain",
             backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "-80% 70%, 130% 100%",
+            backgroundPosition: "-1900% , 130% ",
+            backgroundAttachment: "fixed",
           }}
           className="py-8"
         >
-          <div className="mt-10 mx-60 px-4 flex justify-start">
+          <div className="mt-10 mx-60 flex justify-start">
             <Typography variant="h5" className="text-gray-700">
               My Projects
             </Typography>
           </div>
-          <div className="mt-1 py-1 border-e-0 min-h-96">
-            <div className="mx-60 px-4">
+          <div className="mt-1 border-e-0 min-h-96">
+            <div className="mx-60 ">
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
                 <EcommerceCard type={"create"}>
                   <Button
@@ -96,20 +99,10 @@ const MyProjectsPage = ({ isLoggedIn }) => {
                   </Button>
                 </EcommerceCard>
                 {projects.map((project, idx) => {
-                  const today = new Date();
-                  const projectTimeLine = new Date(project.deadLine);
                   return (
                     <EcommerceCard
                       key={idx}
-                      title={project.title}
                       project={project}
-                      description={
-                        today > projectTimeLine
-                          ? "Closed"
-                          : "Funding in progress"
-                      }
-                      instruction={today > projectTimeLine}
-                      thumbnail={project.thumbnail}
                       onClick={() =>
                         navigate(`/createproject/${project.projectId}`)
                       }
