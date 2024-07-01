@@ -12,7 +12,6 @@ import Slider from "../components/ui/slider/Slider";
 const ProjectsListPage = ({ isLoggedIn }) => {
   const [projects, setProjects] = useState([]);
   const token = localStorage.getItem("token");
-  console.log(projects);
 
   useEffect(() => {
     axios
