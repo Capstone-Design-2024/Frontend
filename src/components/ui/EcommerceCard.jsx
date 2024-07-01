@@ -12,7 +12,7 @@ import "./statusBar.css";
 export default function EcommerceCard({
   project,
   status,
-  fullWidh,
+  fullWidth,
   type,
   children,
 }) {
@@ -50,7 +50,7 @@ export default function EcommerceCard({
         <>
           <Card
             className={`${
-              fullWidh && "w-full"
+              fullWidth && "w-[840px]"
             } max-h-[430px] bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
           >
             <CardHeader

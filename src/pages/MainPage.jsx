@@ -1,8 +1,11 @@
-import React, { useMemo, lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import { Typography } from "@material-tailwind/react";
 import bgBlurWebP from "../assets/bg-blur1.webp";
 import bgBlur2WebP from "../assets/bg-blur2.webp";
 import Loading from "../components/ui/loading/Loading";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API } from "../config";
 
 const StickyNavbar = lazy(() => import("../components/ui/navbar/StickyNavbar"));
 const CarouselWithContent = lazy(() =>
@@ -13,29 +16,26 @@ const EcommerceCard = lazy(() => import("../components/ui/EcommerceCard"));
 const FeatureBlock = lazy(() => import("../components/ui/FeatureBlock"));
 
 const MainPage = ({ isLoggedIn }) => {
+  const [featuredProject, setFeaturedProject] = useState([]);
+  const [recommendedProjects, setRecommendedProjects] = useState([]);
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log(token);
-  const products = useMemo(
-    () => [
-      {
-        title: "Airpods Pro",
-        price: "299",
-        description: "good earphone",
-        status: 50,
-        instruction: "Add to Cart",
-        deadLine: "",
-      },
-      {
-        title: "Airpods Pro",
-        price: "299",
-        description: "good earphone",
-        status: 50,
-        instruction: "Add to Cart",
-        deadLine: "",
-      },
-    ],
-    []
-  );
+
+  useEffect(() => {
+    axios
+      .get(API.READPROJECTS, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setFeaturedProject(response.data.data[0]);
+        setRecommendedProjects(response.data.data.slice(1, 3));
+      })
+      .catch((error) => {
+        console.log("Error fetching projects", error);
+      });
+  }, [token]);
 
   return (
     <Suspense fallback={<Loading />}>
@@ -60,12 +60,11 @@ const MainPage = ({ isLoggedIn }) => {
                   Featured Project
                 </Typography>
                 <EcommerceCard
-                  project={{
-                    title: "Test item",
-                    price: 300,
-                    description: "test",
-                  }}
+                  project={featuredProject}
                   fullWidth={true}
+                  onClick={() =>
+                    navigate(`/createproject/${featuredProject.projectId}`)
+                  }
                   status={70}
                 />
               </div>
@@ -74,11 +73,14 @@ const MainPage = ({ isLoggedIn }) => {
                   Recommended for you
                 </Typography>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {products.map((product, index) => (
+                  {recommendedProjects.map((project, index) => (
                     <EcommerceCard
                       key={index}
-                      project={product}
-                      status={product.status}
+                      project={project}
+                      status={70}
+                      onClick={() =>
+                        navigate(`/createproject/${project.projectId}`)
+                      }
                     />
                   ))}
                 </div>
