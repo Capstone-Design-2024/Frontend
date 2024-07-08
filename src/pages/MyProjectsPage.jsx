@@ -94,7 +94,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
                           d="M12 4.5v15m7.5-7.5h-15"
                         />
                       </svg>
-                      <span>Click to create project</span>
+                      <span>Create Project</span>
                     </div>
                   </Button>
                 </EcommerceCard>
