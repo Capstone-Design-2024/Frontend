@@ -1,30 +1,26 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Typography,
-  Button,
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from "@material-tailwind/react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Typography, Button } from "@material-tailwind/react";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import ProjectImage from "../components/details/ProjectImage";
 import ProjectTabs from "../components/details/ProjectTabs";
 import formatPrice from "../utils/formatPrice";
+import CheckoutModal from "../components/ui/CheckoutModal";
 
 export default function ProjectDetailPage({ isLoggedIn }) {
   const location = useLocation();
   const { project } = location.state;
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
 
   return (
     <StickyNavbar isLoggedIn={isLoggedIn}>
       <div className="flex flex-col min-h-screen container mx-auto mt-7">
         <div className="flex justify-between items-center mb-6">
           <ProjectImage thumbnail={project.thumbnail} />
-          <div className="">
+          <div>
             <Typography variant="h2" color="blue-gray">
               {project.title}
             </Typography>
@@ -57,7 +53,7 @@ export default function ProjectDetailPage({ isLoggedIn }) {
                 variant="text"
                 size="md"
                 className="flex justify-center space-x-2 !normal-case bg-purple-700 text-white hover:bg-purple-600"
-                onClick={() => navigate("/billing")}
+                onClick={handleOpen}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -83,6 +79,7 @@ export default function ProjectDetailPage({ isLoggedIn }) {
       <div className="mt-6 mx-40 px-4 ">
         <FooterWithLogo />
       </div>
+      <CheckoutModal open={open} handler={handleOpen} project={project} />
     </StickyNavbar>
   );
 }

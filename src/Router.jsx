@@ -10,7 +10,6 @@ import MyProjectsPage from "./pages/MyProjectsPage";
 import SignUpSucceedPage from "./pages/SignUpSucceedPage";
 import ManageProject from "./components/createProject/ManageProject";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import BillingPage from "./pages/BillingPage";
 import CartPage from "./pages/CartPage";
 import ProjectsListPage from "./pages/ProjectsListPage";
 
@@ -49,10 +48,7 @@ const Router = () => {
           path="/detail/:projectId"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
-        <Route
-          path="/billing"
-          element={<BillingPage isLoggedIn={isLoggedIn} />}
-        />
+
         <Route path="/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
         <Route
           path="/projectslist"

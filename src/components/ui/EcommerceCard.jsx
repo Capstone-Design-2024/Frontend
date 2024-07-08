@@ -51,7 +51,7 @@ export default function EcommerceCard({
           <Card
             className={`${
               fullWidth && "w-[840px]"
-            } max-h-[430px] bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
+            } max-h-[430px] bg-white/40 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
           >
             <CardHeader
               shadow={false}
