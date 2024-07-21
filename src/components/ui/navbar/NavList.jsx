@@ -11,7 +11,7 @@ export default function NavList({ isLoggedIn }) {
     []
   );
   const userEmail = localStorage.getItem("email");
-  const userName = userEmail.split("@");
+  const userName = userEmail ? userEmail.split("@") : "";
 
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
