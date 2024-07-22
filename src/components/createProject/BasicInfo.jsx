@@ -1,6 +1,7 @@
 import { Typography, Input, Alert, Button } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { BsAsterisk } from "react-icons/bs";
+import { FiTrash2, FiEdit2 } from "react-icons/fi";
 import "./styles.css";
 import imageIcon from "../../assets/icons/image.svg";
 
@@ -15,13 +16,56 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
     projectImage: true,
     projectPrice: true,
   });
+  const [imageError, setImageError] = useState("");
+  const [imagePreview, setImagePreview] = useState(
+    basicInfo.projectImage ? URL.createObjectURL(basicInfo.projectImage) : ""
+  );
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    if (file) {
+      const isValidFormat =
+        file.type === "image/png" || file.type === "image/jpeg";
+      const isValidSize = file.size <= 1 * 1024 * 1024; // 1MB
+
+      if (isValidFormat && isValidSize) {
+        setBasicInfoForm((prevProject) => ({
+          ...prevProject,
+          projectImage: file,
+        }));
+        setImagePreview(URL.createObjectURL(file));
+        setImageError("");
+        setInputValidity((prevValidity) => ({
+          ...prevValidity,
+          projectImage: true,
+        }));
+      } else {
+        setImageError(
+          !isValidFormat
+            ? "Invalid file format. Only PNG and JPG are allowed."
+            : "File size exceeds 1MB."
+        );
+        setInputValidity((prevValidity) => ({
+          ...prevValidity,
+          projectImage: false,
+        }));
+      }
+    }
+  };
+
+  const handleImageDelete = () => {
     setBasicInfoForm((prevProject) => ({
       ...prevProject,
-      projectImage: file,
+      projectImage: "",
+    }));
+    setImagePreview("");
+    setImageError("");
+    setInputValidity((prevValidity) => ({
+      ...prevValidity,
+      projectImage: false,
     }));
   };
+
   const validateAndSave = () => {
     const isValidProjectName = basicInfoForm.projectName !== "";
     const isValidProjectImage = basicInfoForm.projectImage !== "";
@@ -41,6 +85,7 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
       }));
     }
   };
+
   const handleSave = () => {
     setProject((prevProject) => ({
       ...prevProject,
@@ -135,26 +180,48 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
           Ensure that these requirements are met:
         </Typography>
         <ul className="mt-2 ml-2 list-inside list-disc text-white">
-          <li>At least 10 characters (and up to 100 characters)</li>
-          <li>At least one lowercase character</li>
-          <li>Inclusion of at least one special character, e.g., ! @ # ?</li>
+          <li>Smaller than 1MB</li>
+          <li>File format must be png or jpg</li>
         </ul>
       </Alert>
-      <div className="file-upload mt-2 border border-dashed border-gray-700 rounded-md ">
-        <div className="flex justify-center">
-          <img src={imageIcon} alt="upload" className="w-16 " />
-        </div>
-        <h3>{`${
-          basicInfoForm.projectImage
-            ? basicInfoForm.projectImage.name
-            : "Click box to upload"
-        }`}</h3>
-        <p>Maximun file size 10mb</p>
-        <input type="file" onChange={handleImageChange} />
+      <div className="file-upload mt-2 border border-gray-400 rounded-md relative">
+        {imagePreview ? (
+          <div className="w-full h-full">
+            <img
+              src={imagePreview}
+              alt="uploaded"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute top-0 right-0 flex p-2">
+              <Button
+                className="bg-white hover:bg-gray-200 w-10 h-10 p-1 rounded-sm shadow-lg flex flex-col items-center place-content-center"
+                onClick={handleImageDelete}
+              >
+                <FiTrash2 className="text-gray-700 w-28" />
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex justify-center">
+              <img src={imageIcon} alt="upload" className="w-16 " />
+            </div>
+            <h3>{`${
+              basicInfoForm.projectImage
+                ? basicInfoForm.projectImage.name
+                : "Click box to upload"
+            }`}</h3>
+            <p>Maximum file size 1MB</p>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              className="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
+            />
+          </>
+        )}
       </div>
-      {!inputValidity.projectImage && (
-        <p className="text-red-600 mt-2">Please upload project image</p>
-      )}
+
+      {imageError && <p className="text-red-600 mt-2">{imageError}</p>}
       <div className="mt-4">
         <Button
           variant="text"

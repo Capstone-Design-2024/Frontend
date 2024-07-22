@@ -43,7 +43,7 @@ export default function CheckoutDialog({ open, handler, project }) {
   }, [open]);
 
   return (
-    <Dialog open={open} handler={handler} size="sm" className="p-6">
+    <Dialog open={open} handler={handler} size="sm" className="p-6 bg-white/90">
       <DialogHeader className="text-center">
         <Typography variant="h4">Checkout</Typography>
       </DialogHeader>
