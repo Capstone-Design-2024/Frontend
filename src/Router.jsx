@@ -12,6 +12,7 @@ import ManageProject from "./components/createProject/ManageProject";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import CartPage from "./pages/CartPage";
 import ProjectsListPage from "./pages/ProjectsListPage";
+import TicketTransactionPage from "./pages/TicketTransactionPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,10 @@ const Router = () => {
           path="/projectslist"
           element={<ProjectsListPage isLoggedIn={isLoggedIn} />}
         />
+        <Route
+          path="/ticket/:projectId"
+          element={<TicketTransactionPage isLoggedIn={isLoggedIn} />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
