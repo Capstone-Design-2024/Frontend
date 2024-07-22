@@ -43,11 +43,11 @@ export default function CheckoutDialog({ open, handler, project }) {
   }, [open]);
 
   return (
-    <Dialog open={open} handler={handler} size="sm" className="p-6 bg-white/90">
-      <DialogHeader className="text-center">
+    <Dialog open={open} handler={handler} size="sm" className=" bg-white/90">
+      <DialogHeader className="text-center px-10 pt-10">
         <Typography variant="h4">Checkout</Typography>
       </DialogHeader>
-      <DialogBody>
+      <DialogBody className="px-10 ">
         <div className="flex justify-start w-full">
           <img
             src={project.thumbnail}
@@ -120,7 +120,7 @@ export default function CheckoutDialog({ open, handler, project }) {
           </div>
         </div>
       </DialogBody>
-      <DialogFooter className="flex justify-between">
+      <DialogFooter className="flex justify-between pb-10">
         <Button
           variant="text"
           color="red"
@@ -134,7 +134,7 @@ export default function CheckoutDialog({ open, handler, project }) {
         <Button
           variant="text"
           onClick={handler}
-          className="hover:bg-blue-gray-50"
+          className="hover:bg-blue-gray-100"
         >
           <Typography
             variant="small"

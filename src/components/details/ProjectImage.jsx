@@ -5,7 +5,7 @@ const ProjectImage = ({ thumbnail }) => {
     <img
       src={thumbnail}
       alt="Product"
-      className="w-8/12 h-96 rounded-lg shadow-lg object-scale-down"
+      className="w-full h-[30rem] rounded-lg shadow-lg object-scale-down"
     />
   );
 };

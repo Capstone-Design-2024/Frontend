@@ -17,11 +17,16 @@ export default function EcommerceCard({
   children,
 }) {
   const navigate = useNavigate();
-  const viewProjectDetails = (project) => {
-    navigate(`/detail/${project.projectId}`, { state: { project } });
+  const viewProjectDetails = (project, isClosed) => {
+    if (isClosed) {
+      navigate(`/ticket/${project.projectId}`, { state: { project } });
+    } else {
+      navigate(`/detail/${project.projectId}`, { state: { project } });
+    }
   };
 
   let timeLeft = null;
+  let isClosed = false;
 
   if (project && project.deadLine) {
     const today = new Date();
@@ -37,11 +42,12 @@ export default function EcommerceCard({
     );
 
     timeLeft = [daysLeft, hoursLeft, minutesLeft];
+    isClosed = daysLeft < 0;
   }
 
   return (
     <button
-      onClick={() => viewProjectDetails(project)}
+      onClick={() => viewProjectDetails(project, isClosed)}
       className="ease-in-out transition duration-300 transform hover:scale-105"
     >
       {type === "create" ? (
