@@ -1,7 +1,8 @@
 import React from "react";
+import ProjectDetailPage from "./ProjectDetailPage";
 
 const TicketTransactionPage = () => {
-  return <div>TicketTransactionPage</div>;
+  return <ProjectDetailPage isClosed={true} />;
 };
 
 export default TicketTransactionPage;
