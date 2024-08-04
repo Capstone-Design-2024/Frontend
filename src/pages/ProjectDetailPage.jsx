@@ -52,7 +52,7 @@ const intervals = {
   ],
 };
 
-export default function ProjectDetailPage({ isLoggedIn }) {
+export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
   const location = useLocation();
   const { project } = location.state;
   const [open, setOpen] = useState(false);
@@ -168,22 +168,24 @@ export default function ProjectDetailPage({ isLoggedIn }) {
                   </Button>
                 </div>
               </div>
-              <div className="mt-6">
-                <Tabs value={selectedInterval} className="mb-4">
-                  <TabsHeader>
-                    {Object.keys(intervals).map((interval) => (
-                      <Tab
-                        key={interval}
-                        value={interval}
-                        onClick={() => setSelectedInterval(interval)}
-                      >
-                        {interval}
-                      </Tab>
-                    ))}
-                  </TabsHeader>
-                </Tabs>
-                <Line data={data} options={options} />
-              </div>
+              {isClosed && (
+                <div className="mt-6">
+                  <Tabs value={selectedInterval} className="mb-4">
+                    <TabsHeader>
+                      {Object.keys(intervals).map((interval) => (
+                        <Tab
+                          key={interval}
+                          value={interval}
+                          onClick={() => setSelectedInterval(interval)}
+                        >
+                          {interval}
+                        </Tab>
+                      ))}
+                    </TabsHeader>
+                  </Tabs>
+                  <Line data={data} options={options} />
+                </div>
+              )}
             </div>
           </div>
         </div>
