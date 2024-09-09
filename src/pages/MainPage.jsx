@@ -20,6 +20,7 @@ const MainPage = ({ isLoggedIn }) => {
   const [recommendedProjects, setRecommendedProjects] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  console.log(token);
 
   useEffect(() => {
     axios

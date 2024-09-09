@@ -29,10 +29,10 @@ export default function NavbarHeader({
         <SearchBar visibility={false} />
         <div className="flex items-center gap-4">
           <div className="hidden lg:block">
-            <NavList isLoggedIn={isLoggedIn} />
+            <NavList isLoggedIn={true} />
           </div>
           <AuthButtons
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={true}
             handleOpen={handleOpen}
             handleSignOut={handleSignOut}
             debouncedNavigate={debouncedNavigate}

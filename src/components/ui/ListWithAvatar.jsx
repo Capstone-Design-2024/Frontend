@@ -6,61 +6,34 @@ import {
   Card,
   Typography,
 } from "@material-tailwind/react";
+import logo from "../../assets/itemizeLogo.png";
 
-export default function ListWithAvatar() {
+export default function ListWithAvatar({ project, walletAddress }) {
   return (
     <Card className="w-full p-2 bg-white/35 shadow-2xl">
       <List>
         <p className="text-xl text-gray-800 font-medium pl-4 mt-2">Tickets</p>
         <ListItem>
           <ListItemPrefix>
-            <Avatar
-              variant="circular"
-              alt="candice"
-              src="https://docs.material-tailwind.com/img/face-1.jpg"
-            />
+            <Avatar variant="circular" alt="logo" src={logo} />
           </ListItemPrefix>
           <div>
             <Typography variant="h6" color="blue-gray">
-              Tania Andrew
+              {project ? project.title : "Test Product"}
             </Typography>
-            <Typography variant="small" color="gray" className="font-normal">
-              Software Engineer @ Material Tailwind
-            </Typography>
-          </div>
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Avatar
-              variant="circular"
-              alt="alexander"
-              src="https://docs.material-tailwind.com/img/face-2.jpg"
-            />
-          </ListItemPrefix>
-          <div>
-            <Typography variant="h6" color="blue-gray">
-              Alexander
-            </Typography>
-            <Typography variant="small" color="gray" className="font-normal">
-              Backend Developer @ Material Tailwind
-            </Typography>
-          </div>
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Avatar
-              variant="circular"
-              alt="emma"
-              src="https://docs.material-tailwind.com/img/face-3.jpg"
-            />
-          </ListItemPrefix>
-          <div>
-            <Typography variant="h6" color="blue-gray">
-              Emma Willever
-            </Typography>
-            <Typography variant="small" color="gray" className="font-normal">
-              UI/UX Designer @ Material Tailwind
-            </Typography>
+            <div className="flex justify-start gap-1">
+              <Typography variant="small" color="gray" className="font-normal">
+                From
+              </Typography>
+              <Typography
+                variant="small"
+                className="font-normal text-purple-700"
+              >
+                {walletAddress
+                  ? walletAddress
+                  : "A94A8FE5CCB19BA61C4C0873D391E987982FBBD3"}
+              </Typography>
+            </div>
           </div>
         </ListItem>
       </List>

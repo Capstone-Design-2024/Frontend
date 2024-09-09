@@ -132,7 +132,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
       </div>
       <div className="px-4">
         <DialogBody>
-          <ListWithAvatar />
+          <ListWithAvatar walletAddress={address} />
         </DialogBody>
       </div>
       <ChargeDialog

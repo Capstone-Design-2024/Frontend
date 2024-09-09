@@ -47,7 +47,7 @@ const WalletHeader = ({
           </div>
         </div>
         <Typography variant="h6" className="text-gray-700 font-medium">
-          {`${address}`}
+          {`${address ? address : "A94A8FE5CCB19BA61C4C0873D391E987982FBBD3"}`}
         </Typography>
         <Typography variant="h6" className="font-medium text-gray-700">
           {balance !== null
