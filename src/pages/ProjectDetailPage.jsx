@@ -12,7 +12,6 @@ import FooterWithLogo from "../components/ui/FooterWithLogo";
 import ProjectImage from "../components/details/ProjectImage";
 import ProjectTabs from "../components/details/ProjectTabs";
 import formatPrice from "../utils/formatPrice";
-
 import CheckoutModal from "../components/ui/CheckoutModal";
 import { Line } from "react-chartjs-2";
 import {
@@ -25,6 +24,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import logo from "../assets/itemizeLogo.png";
 
 ChartJS.register(
   CategoryScale,
@@ -112,15 +112,17 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
         <div className="flex flex-col mb-6">
           <div className="flex justify-between gap-16 mt-8">
             <div className="w-1/2">
-              <ProjectImage thumbnail={project.thumbnail} />
+              <ProjectImage
+                thumbnail={project.thumbnail ? project.thumbnail : logo}
+              />
             </div>
             <div className="w-1/2 ml-4">
               <div>
                 <Typography variant="h3" color="blue-gray">
-                  {project.title}
+                  {project.title ? project.title : "Test Product"}
                 </Typography>
                 <Typography variant="h4" color="gray" className="mt-4">
-                  {formatPrice(project.price)}
+                  {project.price ? formatPrice(project.price) : "99.99 PNP"}
                 </Typography>
                 <div className="flex space-x-2 mt-4">
                   <Button

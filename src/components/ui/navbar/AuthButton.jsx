@@ -15,7 +15,7 @@ export default function AuthButtons({
         isMobile ? "w-full flex-col gap-y-2" : "gap-4"
       }`}
     >
-      {isLoggedIn && token ? (
+      {isLoggedIn ? (
         <>
           <Button
             variant="text"
