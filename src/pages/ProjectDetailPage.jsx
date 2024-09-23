@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -57,6 +57,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
   const { project } = location.state;
   const [open, setOpen] = useState(false);
   const [selectedInterval, setSelectedInterval] = useState("1주일");
+  const navigate = useNavigate();
 
   const handleOpen = () => setOpen(!open);
   console.log(selectedInterval);
@@ -118,59 +119,85 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
             </div>
             <div className="w-1/2 ml-4">
               <div>
-                <Typography variant="h3" color="blue-gray">
-                  {project.title ? project.title : "Test Product"}
-                </Typography>
-                <Typography variant="h4" color="gray" className="mt-4">
+                <Typography>{isClosed ? "Price" : "Lowest Ask"}</Typography>
+                <Typography variant="h4" color="gray" className="">
                   {project.price ? formatPrice(project.price) : "99.99 PNP"}
                 </Typography>
-                <div className="flex space-x-2 mt-4">
-                  <Button
-                    variant="text"
-                    size="md"
-                    className="w-1/2 !normal-case flex justify-center space-x-2 bg-white border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                <Typography variant="lead" color="blue-gray" className="mt-4">
+                  {project.title ? project.title : "Test Product"}
+                </Typography>
+                {!isClosed ? (
+                  <div className="flex space-x-2 mt-4">
+                    <Button
+                      variant="text"
+                      size="md"
+                      className="w-1/2 !normal-case flex justify-center space-x-2 bg-red-500 hover:bg-red-400"
+                      onClick={() => navigate(`/bid/${project.projectId}`)}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                      />
-                    </svg>
-                    <Typography className="font-bold">Add to Cart</Typography>
-                  </Button>
-                  <Button
-                    variant="text"
-                    size="md"
-                    className="w-1/2 flex justify-center space-x-2 !normal-case bg-purple-700 text-white hover:bg-purple-600"
-                    onClick={handleOpen}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                      <Typography className="font-bold text-white">
+                        Bid
+                      </Typography>
+                    </Button>
+                    <Button
+                      variant="text"
+                      size="md"
+                      className="w-1/2 flex justify-center space-x-2 !normal-case bg-green-500 hover:bg-green-400"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    <Typography className="font-bold">Buy Now</Typography>
-                  </Button>
-                </div>
+                      <Typography className="font-bold text-white">
+                        Ask
+                      </Typography>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex space-x-2 mt-4">
+                    <Button
+                      variant="text"
+                      size="md"
+                      className="w-1/2 !normal-case flex justify-center space-x-2 bg-white border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                        />
+                      </svg>
+                      <Typography className="font-bold">Add to Cart</Typography>
+                    </Button>
+                    <Button
+                      variant="text"
+                      size="md"
+                      className="w-1/2 flex justify-center space-x-2 !normal-case bg-purple-700 text-white hover:bg-purple-600"
+                      onClick={handleOpen}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                      <Typography className="font-bold">Buy Now</Typography>
+                    </Button>
+                  </div>
+                )}
               </div>
-              {isClosed && (
+              {/* isClosed 변수 사용 */}
+              {true && (
                 <div className="mt-6">
                   <Tabs value={selectedInterval} className="mb-4">
                     <TabsHeader>

@@ -33,6 +33,7 @@ export default function CheckoutSuccessDialog({ open, handler }) {
           variant="text"
           size="sm"
           className="bg-purple-700 w-full hover:bg-purple-600"
+          onClick={handler}
         >
           <Typography
             variant="small"
