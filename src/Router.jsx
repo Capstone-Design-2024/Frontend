@@ -13,6 +13,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage";
 import CartPage from "./pages/CartPage";
 import ProjectsListPage from "./pages/ProjectsListPage";
 import TicketTransactionPage from "./pages/TicketTransactionPage";
+import AskAndBidPage from "./pages/AskAndBidPage";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,6 @@ const Router = () => {
           path="/detail/:projectId"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
-
         <Route path="/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
         <Route
           path="/projectslist"
@@ -58,7 +58,15 @@ const Router = () => {
         <Route
           path="/ticket/:projectId"
           element={<TicketTransactionPage isLoggedIn={isLoggedIn} />}
-        ></Route>
+        />
+        <Route
+          path="/ask/:projectId"
+          element={<AskAndBidPage isLoggedIn={isLoggedIn} />}
+        />
+        <Route
+          path="/bid/:projectId"
+          element={<AskAndBidPage isLoggedIn={isLoggedIn} />}
+        />
       </Routes>
     </BrowserRouter>
   );
