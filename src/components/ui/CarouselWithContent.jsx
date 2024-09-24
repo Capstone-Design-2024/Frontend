@@ -8,7 +8,7 @@ export default function CarouselWithContent() {
     <Carousel className="h-[500px] overflow-hidden">
       <div className="relative h-full w-full">
         <img
-          src={carousel2}
+          src={carousel1}
           alt="image 1"
           className="h-full w-full object-cover"
         />

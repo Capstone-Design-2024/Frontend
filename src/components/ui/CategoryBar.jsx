@@ -31,7 +31,11 @@ export function CategoryBar() {
               <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {detail.map((cat, i) => (
                   <MenuItem key={i}>
-                    <Typography variant="h6" key={i}>
+                    <Typography
+                      variant="small"
+                      className="text-gray-900 font-normal"
+                      key={i}
+                    >
                       {cat}
                     </Typography>
                   </MenuItem>
