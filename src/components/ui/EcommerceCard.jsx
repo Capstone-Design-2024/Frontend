@@ -65,7 +65,7 @@ export default function EcommerceCard({
               className="mt-0 mx-0 overflow-hidden"
             >
               <img
-                src={project.thumbnail ? project.thumbnail : mainlogo}
+                src={project ? project.thumbnail : mainlogo}
                 alt="card-image"
                 className="h-60 w-full object-scale-down"
               />
@@ -81,19 +81,17 @@ export default function EcommerceCard({
             <CardBody className="!mb-0">
               <div className="mb-1 flex justify-start">
                 <Typography color="black" variant="h5" className="font-medium">
-                  {project.title}
+                  {project ? project.title : "Project title is null"}
                 </Typography>
               </div>
               <div className="flex justify-start mb-1">
-                {project.price && (
-                  <Typography
-                    variant="lead"
-                    color="blue-gray"
-                    className="font-medium"
-                  >
-                    ${project.price}.00
-                  </Typography>
-                )}
+                <Typography
+                  variant="lead"
+                  color="blue-gray"
+                  className="font-medium"
+                >
+                  ${project ? project.price : 0}.00
+                </Typography>
               </div>
               {timeLeft && (
                 <div className="flex justify-start">
@@ -128,7 +126,9 @@ export default function EcommerceCard({
                 </div>
               )}
               <div className="flex justify-start mt-1">
-                <Typography variant="small">{project.category}</Typography>
+                <Typography variant="small">
+                  {project ? project.category : "Project category is null"}
+                </Typography>
               </div>
             </CardBody>
           </Card>

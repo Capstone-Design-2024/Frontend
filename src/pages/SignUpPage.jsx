@@ -5,6 +5,8 @@ import Card from "../components/ui/Card";
 import MembershipBg from "../components/ui/MembershipBg";
 import { validation, passwordValidation } from "./validation";
 import { API } from "../config.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SignUpPage = () => {
   const [form, setForm] = useState({
@@ -32,6 +34,8 @@ const SignUpPage = () => {
   });
 
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorFeedback, setErrorFeedback] = useState("");
 
   const requiredFields = [
     { type: "email", placeholder: "Email", formType: "email" },
@@ -51,6 +55,7 @@ const SignUpPage = () => {
     e.preventDefault();
     const { value } = e.target;
     setForm((prevForm) => ({ ...prevForm, [formType]: value }));
+    setErrorFeedback("");
 
     if (formType === "password") {
       const newPasswordValidity = {
@@ -79,7 +84,7 @@ const SignUpPage = () => {
         formValidity.lastName &&
         formValidity.email &&
         formValidity.password &&
-        form.confirmPassword === form.password && // confirmPassword의 유효성 검사 추가
+        form.confirmPassword === form.password &&
         formValidity.agreeTerm
     );
   }, [formValidity, form.confirmPassword, form.password]);
@@ -96,6 +101,8 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isButtonActive) return;
+    setIsLoading(true);
+    setErrorFeedback("");
     try {
       const response = await fetch(`${API.SIGNUP}`, {
         method: "POST",
@@ -110,19 +117,22 @@ const SignUpPage = () => {
           address: form.address,
         }),
       });
-      console.log(response);
+      console.log("signup", response);
       const data = await response.json();
-
       if (response.ok) {
         console.log("Success:", data);
         navigate("/signupsucceed");
       } else {
         console.error("Error:", data);
+        setErrorFeedback(
+          data.message || "An error occurred. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error:", error);
+      setErrorFeedback("A network error occurred. Please try again.");
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -188,17 +198,31 @@ const SignUpPage = () => {
               I agree to the terms and conditions
             </label>
           </div>
+          {errorFeedback && (
+            <div className="text-red-600 text-sm text-center mt-2">
+              {errorFeedback}
+            </div>
+          )}
           <div>
             <button
               type="submit"
               className={`w-full flex justify-center ${
                 isButtonActive
-                  ? "bg-purple-800  hover:bg-purple-700 text-gray-100"
+                  ? "bg-purple-800 hover:bg-purple-700 text-gray-100"
                   : "bg-purple-300 text-gray-100"
-              } p-3  rounded-lg tracking-wide font-semibold transition ease-in duration-500`}
-              disabled={isButtonActive ? undefined : "disabled"}
+              } p-3 rounded-lg tracking-wide font-semibold transition ease-in duration-500 ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={!isButtonActive || isLoading}
             >
-              Continue to sign up
+              {isLoading ? (
+                <>
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />{" "}
+                  Loading...
+                </>
+              ) : (
+                "Continue to sign up"
+              )}
             </button>
           </div>
         </form>

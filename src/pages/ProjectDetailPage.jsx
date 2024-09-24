@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -25,6 +25,9 @@ import {
   Legend,
 } from "chart.js";
 import logo from "../assets/itemizeLogo.png";
+import { intervals, menus } from "./constants";
+import { chartOptions } from "./chartOptions";
+import { getChartData } from "./chartData";
 
 ChartJS.register(
   CategoryScale,
@@ -36,118 +39,73 @@ ChartJS.register(
   Legend
 );
 
-const intervals = {
-  "1주일": [65, 59, 80, 81, 56, 55, 40],
-  "1개월": [78, 68, 90, 85, 70, 65, 50, 60, 75, 80, 95, 100],
-  "3개월": [90, 85, 80, 78, 82, 88, 92, 95, 90, 85, 80, 75],
-  "6개월": [
-    75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150,
-    155, 160, 165, 170, 175, 180, 185, 190,
-  ],
-  전체: [
-    100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170,
-    175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245,
-    250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320,
-    325, 330, 335, 340, 345, 350, 355,
-  ],
-};
-
 export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
   const location = useLocation();
   const { project } = location.state;
   const [open, setOpen] = useState(false);
-  const [selectedInterval, setSelectedInterval] = useState("1주일");
+  const [selectedInterval, setSelectedInterval] = useState("1 Week");
+  const [selectedMenu, setSelectedMenu] = useState("Traded");
+
   const navigate = useNavigate();
-
   const handleOpen = () => setOpen(!open);
-  console.log(selectedInterval);
 
-  const data = {
-    labels: intervals[selectedInterval].map((_, index) => index + 1),
-    datasets: [
-      {
-        label: "",
-        data: intervals[selectedInterval],
-        borderColor: "#6600CC",
-        backgroundColor: "#6600CC",
-        fill: true,
-      },
-    ],
-  };
+  const data = getChartData(selectedInterval);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        display: false, // x축을 없앰
-      },
-      y: {
-        position: "right", // y축을 오른쪽으로 이동
-        grid: {
-          display: false, // y축의 격자를 없앰 (원한다면)
-        },
-        beginAtZero: false,
-        ticks: {
-          padding: 10, // y축과 그래프 사이의 여백을 추가
-        },
-      },
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10,
-      },
-    },
+  const viewTrading = (project, type) => {
+    if (type === "Bid") {
+      navigate(`/bid/${project.projectId}`, {
+        state: { project },
+      });
+    } else {
+      navigate(`/ask/${project.projectId}`, {
+        state: { project },
+      });
+    }
   };
 
   return (
     <StickyNavbar isLoggedIn={isLoggedIn}>
       <div className="flex flex-col min-h-screen container mx-auto mt-7">
         <div className="flex flex-col mb-6">
-          <div className="flex justify-between gap-16 mt-8">
-            <div className="w-1/2">
+          <div className="flex justify-between space-x-9 mt-8">
+            <div className="w-1/2 bg-gray-50">
               <ProjectImage
                 thumbnail={project.thumbnail ? project.thumbnail : logo}
               />
             </div>
-            <div className="w-1/2 ml-4">
+            <div className="w-1/2 border-l-[1px] pl-9">
               <div>
-                <Typography>{isClosed ? "Price" : "Lowest Ask"}</Typography>
-                <Typography variant="h4" color="gray" className="">
+                <Typography>{!isClosed ? "Price" : "Lowest Ask"}</Typography>
+                <Typography variant="h3" color="gray">
                   {project.price ? formatPrice(project.price) : "99.99 PNP"}
                 </Typography>
                 <Typography variant="lead" color="blue-gray" className="mt-4">
                   {project.title ? project.title : "Test Product"}
                 </Typography>
                 {isClosed ? (
-                  <div className="flex space-x-2 mt-4">
-                    <Button
-                      variant="text"
-                      size="md"
-                      className="w-1/2 !normal-case flex justify-center space-x-2 bg-red-500 hover:bg-red-400"
-                      onClick={() => navigate(`/bid/${project.projectId}`)}
-                    >
-                      <Typography className="font-bold text-white">
-                        Bid
-                      </Typography>
-                    </Button>
-                    <Button
-                      variant="text"
-                      size="md"
-                      className="w-1/2 flex justify-center space-x-2 !normal-case bg-green-500 hover:bg-green-400"
-                      onClick={() => navigate(`/ask/${project.projectId}`)}
-                    >
-                      <Typography className="font-bold text-white">
-                        Ask
-                      </Typography>
-                    </Button>
+                  <div>
+                    <div className="flex space-x-2 mt-4">
+                      <Button
+                        variant="text"
+                        size="md"
+                        className="w-1/2 !normal-case flex justify-center space-x-2 bg-red-500 hover:bg-red-400"
+                        onClick={() => viewTrading(project, "Bid")}
+                      >
+                        <Typography className="font-bold text-white">
+                          Buy
+                        </Typography>
+                      </Button>
+                      <Button
+                        variant="text"
+                        size="md"
+                        className="w-1/2 flex justify-center space-x-2 !normal-case bg-green-500 hover:bg-green-400"
+                        onClick={() => viewTrading(project, "Ask")}
+                      >
+                        <Typography className="font-bold text-white">
+                          Sell
+                        </Typography>
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex space-x-2 mt-4">
@@ -197,29 +155,72 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                   </div>
                 )}
               </div>
-              {/* isClosed 변수 사용 */}
               {isClosed && (
                 <div className="mt-6">
-                  <Tabs value={selectedInterval} className="mb-4">
+                  <Typography variant="lead" className="font-medium">
+                    Trading History
+                  </Typography>
+                  <Tabs value={selectedInterval} className="my-4">
                     <TabsHeader>
                       {Object.keys(intervals).map((interval) => (
                         <Tab
                           key={interval}
                           value={interval}
                           onClick={() => setSelectedInterval(interval)}
+                          className={`${
+                            selectedInterval === interval &&
+                            "font-medium text-black"
+                          } `}
                         >
                           {interval}
                         </Tab>
                       ))}
                     </TabsHeader>
                   </Tabs>
-                  <Line data={data} options={options} />
+                  <div style={{ height: "170px" }}>
+                    <Line data={data} options={chartOptions} />
+                  </div>
+                  <Tabs value={selectedMenu} className="mt-16 mb-4">
+                    <TabsHeader>
+                      {Object.keys(menus).map((menu) => (
+                        <Tab
+                          key={menu}
+                          value={menu}
+                          onClick={() => setSelectedMenu(menu)}
+                          className={`${
+                            selectedMenu === menu && "font-medium text-black"
+                          } `}
+                        >
+                          {menu}
+                        </Tab>
+                      ))}
+                    </TabsHeader>
+                  </Tabs>
+                  <div className="px-2">
+                    <div className="flex justify-between">
+                      <Typography className="font-medium">
+                        {selectedMenu + " Price"}
+                      </Typography>
+                      <Typography className="font-medium">Date</Typography>
+                    </div>
+                    <hr className="my-2" />
+                    {menus[selectedMenu].map((price, idx) => (
+                      <div className="flex justify-between" key={idx}>
+                        <Typography>
+                          {price[selectedMenu + " Price"]}
+                        </Typography>
+                        <Typography>{price["Date"]}</Typography>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
           </div>
         </div>
-        <ProjectTabs project={project} />
+        <div className="mt-10">
+          <ProjectTabs project={project} />
+        </div>
       </div>
       <div className="mt-6 mx-40 px-4 ">
         <FooterWithLogo />

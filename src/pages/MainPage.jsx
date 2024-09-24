@@ -20,7 +20,6 @@ const MainPage = ({ isLoggedIn }) => {
   const [recommendedProjects, setRecommendedProjects] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log(token);
 
   useEffect(() => {
     axios
@@ -44,16 +43,7 @@ const MainPage = ({ isLoggedIn }) => {
         <div className="mx-auto w-full flex justify-center">
           <CarouselWithContent />
         </div>
-        <div
-          style={{
-            backgroundImage: `url(${bgBlurWebP}), url(${bgBlur2WebP})`,
-            backgroundOrigin: "border-box",
-            backgroundSize: "contain, contain",
-            backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "-100% 70%, 130% 100%",
-          }}
-          className="py-8 h-auto lg:h-[680px] bg-cover bg-no-repeat"
-        >
+        <div className="py-8 h-auto lg:h-[680px] bg-cover bg-no-repeat">
           <div className="mx-4 lg:mx-40 px-4">
             <div className="flex flex-col lg:flex-row xl:justify-between">
               <div className="w-full xl:w-7/12">
@@ -107,18 +97,11 @@ const MainPage = ({ isLoggedIn }) => {
                 />
               </svg>
             </a>
+            <hr className="mt-10" />
           </div>
         </div>
-        <div
-          style={{
-            backgroundImage: `url(${bgBlur2WebP})`,
-            backgroundOrigin: "border-box",
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "40% 100%",
-          }}
-          className="bg-cover bg-no-repeat py-8"
-        >
+
+        <div className="bg-cover bg-no-repeat py-4">
           <div className="mx-4 lg:mx-40">
             <FeatureBlock />
           </div>
