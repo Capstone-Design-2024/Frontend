@@ -126,7 +126,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                 <Typography variant="lead" color="blue-gray" className="mt-4">
                   {project.title ? project.title : "Test Product"}
                 </Typography>
-                {!isClosed ? (
+                {isClosed ? (
                   <div className="flex space-x-2 mt-4">
                     <Button
                       variant="text"
@@ -142,6 +142,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                       variant="text"
                       size="md"
                       className="w-1/2 flex justify-center space-x-2 !normal-case bg-green-500 hover:bg-green-400"
+                      onClick={() => navigate(`/ask/${project.projectId}`)}
                     >
                       <Typography className="font-bold text-white">
                         Ask
@@ -197,7 +198,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                 )}
               </div>
               {/* isClosed 변수 사용 */}
-              {true && (
+              {isClosed && (
                 <div className="mt-6">
                   <Tabs value={selectedInterval} className="mb-4">
                     <TabsHeader>

@@ -61,11 +61,11 @@ const Router = () => {
         />
         <Route
           path="/ask/:projectId"
-          element={<AskAndBidPage isLoggedIn={isLoggedIn} />}
+          element={<AskAndBidPage isLoggedIn={isLoggedIn} type={"Ask"} />}
         />
         <Route
           path="/bid/:projectId"
-          element={<AskAndBidPage isLoggedIn={isLoggedIn} />}
+          element={<AskAndBidPage isLoggedIn={isLoggedIn} type={"Bid"} />}
         />
       </Routes>
     </BrowserRouter>
