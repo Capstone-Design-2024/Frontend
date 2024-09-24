@@ -35,7 +35,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
     } catch (error) {
       console.error("Error fetching data:", error);
       setOpenModal((cur) => !cur);
-      // navigate("/login");
+      navigate("/login");
     }
   }, [navigate]);
 

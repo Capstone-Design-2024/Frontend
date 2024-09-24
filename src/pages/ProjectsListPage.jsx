@@ -31,26 +31,7 @@ const ProjectsListPage = ({ isLoggedIn }) => {
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div
-          style={{
-            backgroundImage: `url(${bgBlur1}), url(${bgBlur2})`,
-            backgroundOrigin: "border-box",
-            backgroundSize: "contain, contain",
-            backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "-1900% , 130% ",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div className="flex justify-center mb-5 ">
-            <div className="mt-5 w-full mx-64">
-              <div className="flex flex-col p-8 border bg-white border-gray-300 rounded-lg">
-                <Typography className="font-medium text-black">
-                  Refine
-                </Typography>
-                <Slider className="w-full" min={0} max={1000} />
-              </div>
-            </div>
-          </div>
+        <div>
           <div>
             <div className="mt-10 mx-60 px-4 flex justify-start">
               <Typography variant="h5" className="text-gray-700">

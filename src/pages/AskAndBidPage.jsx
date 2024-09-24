@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { Button, Input, Typography } from "@material-tailwind/react";
+import { useLocation } from "react-router-dom";
+import { Typography, Button } from "@material-tailwind/react";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import logo from "../assets/itemizeLogo.png";
-import { useLocation, useNavigate } from "react-router-dom";
+import CustomButton from "../components/ui/CustomButton";
 
-const AskAndBidPage = ({ project, isLoggedIn, type }) => {
+const AskAndBidPage = ({ isLoggedIn, type }) => {
+  const location = useLocation();
+  const { project } = location.state;
+
+  console.log(project);
+
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [tradingType, setTradingType] = useState("Place " + type);
 
   const handleChange = (e) => {
     const value = e.target.value.replace(/,/g, ""); // 쉼표 제거
@@ -52,13 +59,15 @@ const AskAndBidPage = ({ project, isLoggedIn, type }) => {
                 <div className="flex justify-start">
                   <Typography className="font-normal">By&nbsp;</Typography>
                   <Typography className="font-normal text-deep-purple-600">
-                    {project ? project.creater : "Creater Name"}
+                    {project ? project.makerName : "Creater Name"}
                   </Typography>
                 </div>
                 <div className="flex justify-start">
                   <Typography className="font-normal">To&nbsp;</Typography>
                   <Typography className="font-normal text-deep-purple-600">
-                    {project ? project.creater : "Buyer Address"}
+                    {localStorage.getItem("email")
+                      ? localStorage.getItem("email")
+                      : "My Name"}
                   </Typography>
                 </div>
               </div>
@@ -72,7 +81,6 @@ const AskAndBidPage = ({ project, isLoggedIn, type }) => {
                     <Typography className="flex justify-center">-</Typography>
                   </div>
                 </div>
-
                 <div className="w-1/2 flex justify-center">
                   <div className="my-5">
                     <Typography>Lowest Ask</Typography>
@@ -81,7 +89,24 @@ const AskAndBidPage = ({ project, isLoggedIn, type }) => {
                 </div>
               </div>
             </div>
-            <hr className="mt-3" />
+            <div className="bg-gray-50 border border-gray-100 rounded-3xl p-1 mt-4 grid grid-cols-2 gap-1">
+              <CustomButton
+                label={`Place ${type}`}
+                active={tradingType === `Place ${type}`}
+                onClick={() => setTradingType(`Place ${type}`)}
+                type={type}
+              />
+              <CustomButton
+                label={type === "Bid" ? "Buy Now" : "Sell Now"}
+                active={
+                  tradingType === (type === "Bid" ? "Buy Now" : "Sell Now")
+                }
+                onClick={() =>
+                  setTradingType(type === "Bid" ? "Buy Now" : "Sell Now")
+                }
+                type={type}
+              />
+            </div>
             <div className="mt-6">
               <Typography className="font-bold">Name Your Price</Typography>
             </div>
@@ -96,7 +121,6 @@ const AskAndBidPage = ({ project, isLoggedIn, type }) => {
                 onFocus={handleFocus}
                 onBlur={handleBlur}
               />
-
               <Typography className="text-lg font-semibold">PNP</Typography>
             </div>
             <hr
