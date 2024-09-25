@@ -12,6 +12,7 @@ import CheckoutSuccessDialog from "./CheckoutSuccessDialog";
 import axios from "axios";
 import { API } from "../../config";
 import logo from "../../assets/itemizeLogo.png";
+import ERC20Contract from "../../contract/ERC20Contract";
 
 export default function CheckoutDialog({ open, handler, project }) {
   const [quantity, setQuantity] = useState(1);
@@ -20,6 +21,9 @@ export default function CheckoutDialog({ open, handler, project }) {
   const handleQuantityChange = (e) => setQuantity(e.target.value);
   const handleWalletAddressChange = (e) => setWalletAddress(e.target.value);
   const token = localStorage.getItem("token");
+
+  const getPrKey = () => localStorage.getItem("private_key");
+  // const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
 
   useEffect(() => {
     if (open) {
@@ -43,7 +47,19 @@ export default function CheckoutDialog({ open, handler, project }) {
     }
   }, [open]);
 
-  const handleSuccessOpen = () => {
+  const handleSuccessOpen = async () => {
+    console.log("handleSuccessOpen");
+    const erc20Contract = await ERC20Contract.getInstance();
+    console.log("wait for contract");
+
+    const project = await erc20Contract.projects(2); // mapping을 배열처럼 사용
+    console.log(project);
+    const result = await erc20Contract.buyProject(
+      getPrKey(),
+      project.projectId,
+      project.price
+    );
+    console.log(result);
     handler();
     setShowSuccess(true);
   };

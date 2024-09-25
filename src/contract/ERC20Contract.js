@@ -1,4 +1,4 @@
-import { provider } from "./provider/provider";
+import { provider, adminSign } from "./provider/provider";
 import { ethers } from "ethers";
 import { API } from "../config";
 import axios from "axios";
@@ -61,6 +61,77 @@ class ERC20Contract {
     const result = await this.contract.balanceOf(owner);
     console.log(`Address ${owner} balance is: ${result}`);
     return result.toString();
+  }
+
+  async projects(projectId) {
+    await this.ready;
+    const result = await this.contract.projects(projectId);
+
+    return result.toString();
+  }
+
+  async buyProject(clientPrKey, projectId, payment) {
+    await this.ready;
+    const clientWallet = new ethers.Wallet(clientPrKey, provider);
+    const clientSign = clientWallet.connect(provider);
+
+    const params = [projectId, payment];
+
+    const data = this.contract.interface.encodeFunctionData(
+      "buyProject",
+      params
+    );
+
+    const tx = {
+      to: this.contract.target,
+      data,
+    };
+
+    const gasAmount = await clientSign.estimateGas(tx);
+
+    const gasEstimate = await provider.getFeeData();
+    const maxPriorityFeePerGas = gasEstimate.maxPriorityFeePerGas;
+
+    const extraDonate = (maxPriorityFeePerGas * gasAmount) / 10n;
+
+    console.log(
+      `donation amount : ${maxPriorityFeePerGas * gasAmount + extraDonate}`
+    );
+    const donateTx = {
+      to: clientSign.address,
+      value: maxPriorityFeePerGas * gasAmount + extraDonate,
+    };
+    const receipt = await adminSign.sendTransaction(donateTx);
+    console.log(`수수료 사용자 전달 완료`);
+
+    console.log(receipt);
+  }
+
+  async estimateGasForClient(clientSign, data) {
+    const tx = {
+      to: this.contract.target,
+      data,
+    };
+
+    const gasAmount = await clientSign.estimateGas(tx);
+
+    const gasEstimate = await provider.getFeeData();
+    const maxPriorityFeePerGas = gasEstimate.maxPriorityFeePerGas;
+
+    const extraDonate = (maxPriorityFeePerGas * gasAmount) / 10n;
+
+    console.log(
+      `donation amount : ${maxPriorityFeePerGas * gasAmount + extraDonate}`
+    );
+
+    const donateTx = {
+      to: clientSign.address,
+      value: maxPriorityFeePerGas * gasAmount + extraDonate,
+    };
+    const receipt = await adminSign.sendTransaction(donateTx);
+    console.log(`수수료 사용자 전달 완료`);
+
+    return receipt;
   }
 }
 
