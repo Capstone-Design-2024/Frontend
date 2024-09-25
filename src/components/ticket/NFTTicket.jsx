@@ -14,6 +14,8 @@ const NFTTicket = ({ project, fromManageProject }) => {
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
 
+  console.log("project", project);
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -57,7 +59,8 @@ const NFTTicket = ({ project, fromManageProject }) => {
 
   useEffect(() => {
     const fetchNftInfo = async () => {
-      const data = { project_id: project.projectId };
+      const data = { project_id: +project.id };
+      console.log("Data being sent to API:", data);
       try {
         const response = await axios.post(`${API.GETPROJECT}`, data, {
           headers: {
@@ -100,6 +103,11 @@ const NFTTicket = ({ project, fromManageProject }) => {
       uploadImageHandler(frontImageUrl);
     }
   }, [fromManageProject, frontImageUrl]);
+
+  console.log("frontImageUrl:", frontImageUrl);
+  console.log("fromManageProject:", fromManageProject);
+  console.log("thumbnailLoaded:", thumbnailLoaded);
+  console.log("nftInfo.makerAddress:", nftInfo.makerAddress);
 
   const uploadImageHandler = async (dataUrl) => {
     const token = localStorage.getItem("token");
