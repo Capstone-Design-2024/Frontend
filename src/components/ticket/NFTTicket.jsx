@@ -116,6 +116,8 @@ const NFTTicket = ({ project, fromManageProject }) => {
     try {
       const formData = new FormData();
       formData.append("image", blob, "image.jpg");
+      console.log("fuck");
+      console.log(project.id);
       const response = await axios.post(
         `${API.NFTREGISTRY}/${project.id}`,
         formData,
