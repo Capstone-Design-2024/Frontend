@@ -23,7 +23,6 @@ export default function CheckoutDialog({ open, handler, project }) {
   const token = localStorage.getItem("token");
 
   const getPrKey = () => localStorage.getItem("private_key");
-  // const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
 
   useEffect(() => {
     if (open) {
