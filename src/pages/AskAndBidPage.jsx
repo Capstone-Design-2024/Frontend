@@ -221,7 +221,13 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
             <Button
               size="lg"
               className="w-full bg-purple-700 hover:bg-purple-600"
-              onClick={() => placePrice(type)}
+              onClick={() => {
+                if (!tradingType.includes("Place")) {
+                  console.log("Buy or SEll");
+                } else {
+                  placePrice(type);
+                }
+              }}
               disabled={tradingType.includes("Place") & !inputValue && true}
             >
               <Typography variant="h6" className="!normal-case ">

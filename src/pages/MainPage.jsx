@@ -43,10 +43,10 @@ const MainPage = ({ isLoggedIn }) => {
         <div className="mx-auto w-full flex justify-center">
           <CarouselWithContent />
         </div>
-        <div className="py-8 h-auto lg:h-[680px] bg-cover bg-no-repeat">
+        <div className="py-8">
           <div className="mx-4 lg:mx-40 px-4">
-            <div className="flex flex-col lg:flex-row xl:justify-between">
-              <div className="w-full xl:w-7/12">
+            <div className="grid  xl:grid-cols-2 gap-5">
+              <div className="w-full">
                 <Typography variant="h5" className="mb-5 ml-3 text-gray-700">
                   Featured Project
                 </Typography>
@@ -59,11 +59,11 @@ const MainPage = ({ isLoggedIn }) => {
                   status={70}
                 />
               </div>
-              <div className="w-full xl:w-5/12 xl:ml-5 mt-4 lg:mt-0">
+              <div className="w-full ">
                 <Typography variant="h5" className="mb-5 ml-1 text-gray-700">
                   Recommended for you
                 </Typography>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                   {recommendedProjects.map((project, index) => (
                     <EcommerceCard
                       key={index}

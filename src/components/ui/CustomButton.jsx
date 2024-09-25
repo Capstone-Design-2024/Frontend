@@ -6,10 +6,6 @@ const CustomButton = ({ label, active, onClick, type, availability }) => {
   const activeColor = type === "Bid" ? "red-600" : "green-600";
   const hoverColor = type === "Bid" ? "red-600" : "green-600";
 
-  console.log("label", label);
-  console.log("type", type);
-  console.log("availability", availability);
-
   return (
     <Button
       size="lg"

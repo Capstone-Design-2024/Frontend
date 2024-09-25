@@ -5,7 +5,6 @@ import {
   DialogBody,
   DialogFooter,
   Button,
-  Input,
   Typography,
 } from "@material-tailwind/react";
 import CheckoutSuccessDialog from "./CheckoutSuccessDialog";
@@ -47,12 +46,8 @@ export default function CheckoutDialog({ open, handler, project }) {
   }, [open]);
 
   const handleSuccessOpen = async () => {
-    console.log("handleSuccessOpen");
     const erc20Contract = await ERC20Contract.getInstance();
-    console.log("wait for contract");
-    console.log(project);
-
-    const projectEntity = await erc20Contract.projects(project.projectId); // mapping을 배열처럼 사용
+    const projectEntity = await erc20Contract.projects(project.projectId);
     console.log(projectEntity);
     const result = await erc20Contract.buyProject(
       getPrKey(),

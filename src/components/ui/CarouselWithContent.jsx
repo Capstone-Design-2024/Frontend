@@ -5,7 +5,7 @@ import carousel3 from "../../assets/carousel3.webp";
 
 export default function CarouselWithContent() {
   return (
-    <Carousel className="h-[500px] overflow-hidden">
+    <Carousel className="h-[500px] md:h-[750px] sm:h-[600px] lg:h-[560px] overflow-hidden">
       <div className="relative h-full w-full">
         <img
           src={carousel1}
