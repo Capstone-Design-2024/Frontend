@@ -51,9 +51,10 @@ export default function CheckoutDialog({ open, handler, project }) {
     console.log("handleSuccessOpen");
     const erc20Contract = await ERC20Contract.getInstance();
     console.log("wait for contract");
-
-    const project = await erc20Contract.projects(2); // mapping을 배열처럼 사용
     console.log(project);
+
+    const projectEntity = await erc20Contract.projects(project.projectId); // mapping을 배열처럼 사용
+    console.log(projectEntity);
     const result = await erc20Contract.buyProject(
       getPrKey(),
       project.projectId,
