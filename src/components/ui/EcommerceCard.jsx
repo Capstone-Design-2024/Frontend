@@ -9,13 +9,7 @@ import { useNavigate } from "react-router-dom";
 import mainlogo from "../../assets/itemizeLogo.png";
 import "./statusBar.css";
 
-export default function EcommerceCard({
-  project,
-  status,
-  fullWidth,
-  type,
-  children,
-}) {
+export default function EcommerceCard({ project, status, type, children }) {
   const navigate = useNavigate();
   const viewProjectDetails = (project, isClosed) => {
     if (isClosed) {
@@ -48,16 +42,14 @@ export default function EcommerceCard({
   return (
     <button
       onClick={() => viewProjectDetails(project, isClosed)}
-      className="ease-in-out transition duration-300 transform hover:scale-105"
+      className="min-w-72 w-full ease-in-out transition duration-300 transform hover:scale-105"
     >
       {type === "create" ? (
         children
       ) : (
         <>
           <Card
-            className={`${
-              fullWidth && "w-[840px]"
-            } max-h-[430px] bg-white/40 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
+            className={`max-h-[430px] bg-white/40 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
           >
             <CardHeader
               shadow={false}

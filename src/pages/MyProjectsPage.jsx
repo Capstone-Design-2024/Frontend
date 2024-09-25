@@ -55,53 +55,49 @@ const MyProjectsPage = ({ isLoggedIn }) => {
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div>
-          <div className="mt-10 mx-60 flex justify-start">
-            <Typography variant="h5" className="text-gray-700">
+        <div className="mx-14 md:mx-36 lg:mx-48">
+          <div className="mt-10 flex justify-center lg:justify-start">
+            <Typography variant="h5" className="text-black">
               My Projects
             </Typography>
           </div>
-          <div className="mt-1 border-e-0 min-h-96">
-            <div className="mx-60 ">
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                <EcommerceCard type={"create"}>
-                  <Button
-                    onClick={createProjectHandler}
-                    className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 mt-4">
+            <EcommerceCard type={"create"}>
+              <Button
+                onClick={createProjectHandler}
+                className="w-full h-full !normal-case text-md text-gray-600 flex flex-col items-center justify-center bg-white/80 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg"
+              >
+                <div className="flex flex-col items-center space-y-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
                   >
-                    <div className="flex flex-col items-center space-y-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 4.5v15m7.5-7.5h-15"
-                        />
-                      </svg>
-                      <span>Create Project</span>
-                    </div>
-                  </Button>
-                </EcommerceCard>
-                {projects.map((project, idx) => {
-                  return (
-                    <EcommerceCard
-                      key={idx}
-                      project={project}
-                      onClick={() =>
-                        navigate(`/createproject/${project.projectId}`)
-                      }
-                      className="xl:w-[265px] min-w-[211px] h-[441px] bg-white bg-opacity-10 place-content-center focus:bg-gray-600 hover:bg-gray-600"
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
                     />
-                  );
-                })}
-              </div>
-            </div>
+                  </svg>
+                  <span>Create Project</span>
+                </div>
+              </Button>
+            </EcommerceCard>
+            {projects.map((project, idx) => {
+              return (
+                <EcommerceCard
+                  key={idx}
+                  project={project}
+                  onClick={() =>
+                    navigate(`/createproject/${project.projectId}`)
+                  }
+                  className="bg-white bg-opacity-10 focus:bg-gray-600 hover:bg-gray-600"
+                />
+              );
+            })}
           </div>
         </div>
         <div className="mt-6 mx-40 px-4 ">

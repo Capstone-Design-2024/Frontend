@@ -12,7 +12,7 @@ import category from "../createProject/projectCategory.js";
 
 export function CategoryBar() {
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="flex flex-wrap gap-4 justify-center ">
       {category.map((item, index) => (
         <Menu key={index} allowHover>
           <MenuHandler>
@@ -26,9 +26,9 @@ export function CategoryBar() {
               <ChevronDownIcon className="h-4 w-4 transition-transform" />
             </Button>
           </MenuHandler>
-          <MenuList className="w-full sm:w-96">
+          <MenuList className="w-full sm:w-96 ">
             {Object.values(item).map((detail, idx) => (
-              <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-2 ">
                 {detail.map((cat, i) => (
                   <MenuItem key={i}>
                     <Typography
