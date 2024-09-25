@@ -105,7 +105,7 @@ class ERC20Contract {
     console.log(`수수료 사용자 전달 완료`);
 
     console.log(`========구매 서명 시작========`);
-    const signedTx = await adminSign.sendTransaction(tx);
+    const signedTx = await clientSign.sendTransaction(tx);
 
     const clientReceipt = await signedTx.wait();
     console.log(`========구매 완료========`);
