@@ -104,7 +104,13 @@ class ERC20Contract {
     const receipt = await adminSign.sendTransaction(donateTx);
     console.log(`수수료 사용자 전달 완료`);
 
-    console.log(receipt);
+    console.log(`========구매 서명 시작========`);
+    const signedTx = await adminSign.sendTransaction(tx);
+
+    const clientReceipt = await signedTx.wait();
+    console.log(`========구매 완료========`);
+
+    return clientReceipt;
   }
 
   async estimateGasForClient(clientSign, data) {
