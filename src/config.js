@@ -15,4 +15,6 @@ export const API = {
   NFTREGISTRY: `${BASE_URL}/project/nft/registration`,
   GETPROJECT: `${BASE_URL}/contract/project/meta`,
   S3IMAGEPROXY: `${BASE_URL}/project/s3-proxy`,
+  CREATEAUCTION: `${BASE_URL}/project/auction/`,
+  GETAUCTION: `${BASE_URL}/project/auction`,
 };

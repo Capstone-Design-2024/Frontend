@@ -1,25 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { Typography, Button } from "@material-tailwind/react";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import logo from "../assets/itemizeLogo.png";
 import CustomButton from "../components/ui/CustomButton";
+import { API } from "../config";
+import axios from "axios";
+import CheckoutSuccessDialog from "../components/ui/CheckoutSuccessDialog";
 
 const AskAndBidPage = ({ isLoggedIn, type }) => {
   const location = useLocation();
   const { project } = location.state;
 
-  console.log(project);
-
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [tradingType, setTradingType] = useState("Place " + type);
+  const [lowestAsk, setLowestAsk] = useState();
+  const [lowestBid, setLowestBid] = useState();
+  const [isSuccessDialogOpen, setisSuccessDialogOpen] = useState(false);
+
+  const fetchAuctionData = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `${API.GETAUCTION}/${project.projectId}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data) {
+        const bidPrices = response.data.data
+          .filter((item) => item.type === "BID")
+          .map((item) => item.priceForAuction);
+
+        const lowestBidPrice =
+          bidPrices.length > 0 ? Math.min(...bidPrices) : null;
+        setLowestBid(lowestBidPrice);
+
+        const askPrices = response.data.data
+          .filter((item) => item.type === "ASK")
+          .map((item) => item.priceForAuction);
+
+        const lowestAskPrice =
+          askPrices.length > 0 ? Math.min(...askPrices) : null;
+        setLowestAsk(lowestAskPrice);
+      }
+    } catch (error) {
+      console.log("Error fetching auction data:", error);
+    }
+  }, [project.projectId, type]);
+
+  useEffect(() => {
+    fetchAuctionData();
+  }, [fetchAuctionData]);
 
   const handleChange = (e) => {
-    const value = e.target.value.replace(/,/g, ""); // 쉼표 제거
+    const value = e.target.value.replace(/,/g, "");
     if (!isNaN(value) && value !== "") {
-      setInputValue(Number(value).toLocaleString()); // 1000단위로 쉼표 추가
+      setInputValue(Number(value).toLocaleString());
     } else {
       setInputValue("");
     }
@@ -33,6 +75,32 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
   const handleBlur = (e) => {
     e.target.placeholder = "Your Price";
     setIsFocused(false);
+  };
+
+  const handleDialogOpen = () => {
+    setisSuccessDialogOpen((origin) => !origin);
+  };
+
+  const placePrice = async (auctionType) => {
+    const price = Number(inputValue.replace(/,/g, ""));
+    const data = {
+      price: price,
+      type: auctionType.toUpperCase(),
+      projectId: project.projectId,
+    };
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(`${API.CREATEAUCTION}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setisSuccessDialogOpen(true);
+      fetchAuctionData();
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   return (
@@ -78,13 +146,17 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                 <div className="w-1/2 flex justify-center border-r-[1px]">
                   <div className="my-5">
                     <Typography>Lowest Bid</Typography>
-                    <Typography className="flex justify-center">-</Typography>
+                    <Typography className="flex justify-center">
+                      {lowestBid ? lowestBid.toLocaleString() + " PNP" : "-"}
+                    </Typography>
                   </div>
                 </div>
                 <div className="w-1/2 flex justify-center">
                   <div className="my-5">
                     <Typography>Lowest Ask</Typography>
-                    <Typography className="flex justify-center">-</Typography>
+                    <Typography className="flex justify-center">
+                      {lowestAsk ? lowestAsk.toLocaleString() + " PNP" : "-"}
+                    </Typography>
                   </div>
                 </div>
               </div>
@@ -95,6 +167,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                 active={tradingType === `Place ${type}`}
                 onClick={() => setTradingType(`Place ${type}`)}
                 type={type}
+                availability={1}
               />
               <CustomButton
                 label={type === "Bid" ? "Buy Now" : "Sell Now"}
@@ -105,35 +178,56 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                   setTradingType(type === "Bid" ? "Buy Now" : "Sell Now")
                 }
                 type={type}
+                availability={type === "Bid" ? lowestBid : lowestAsk}
               />
             </div>
             <div className="mt-6">
-              <Typography className="font-bold">Name Your Price</Typography>
+              <Typography className="font-bold">
+                {tradingType.includes("Place")
+                  ? "Name Your Price"
+                  : "Price Now"}
+              </Typography>
             </div>
             <div className="flex items-center space-x-2 w-full">
-              <input
-                variant="static"
-                type="text"
-                className="text-lg border-0 focus:outline-none focus:ring-0 text-right w-full"
-                placeholder="Your Price"
-                value={inputValue}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-              />
+              {tradingType.includes("Place") ? (
+                <input
+                  variant="static"
+                  type="text"
+                  className="text-lg border-0 focus:outline-none focus:ring-0 text-right w-full"
+                  placeholder="Your Price"
+                  value={inputValue}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                />
+              ) : (
+                <Typography className="text-lg font-medium border-0 focus:outline-none focus:ring-0 text-right w-full">
+                  {type === "Bid"
+                    ? lowestBid.toLocaleString()
+                    : lowestAsk.toLocaleString()}
+                </Typography>
+              )}
               <Typography className="text-lg font-semibold">PNP</Typography>
             </div>
-            <hr
-              className={`mt-2 mb-6 transition-colors duration-200 ${
-                isFocused ? "border-black" : "border-gray-200"
-              }`}
-            />
+            {tradingType.includes("Place") ? (
+              <hr
+                className={`mt-2 mb-6 transition-colors duration-200 ${
+                  isFocused ? "border-black" : "border-gray-200"
+                }`}
+              />
+            ) : (
+              <hr className="mt-2 mb-6 transition-colors duration-200" />
+            )}
             <Button
               size="lg"
               className="w-full bg-purple-700 hover:bg-purple-600"
+              onClick={() => placePrice(type)}
+              disabled={tradingType.includes("Place") & !inputValue && true}
             >
               <Typography variant="h6" className="!normal-case ">
-                Place {type}
+                {tradingType.includes("Place")
+                  ? `Place ${type}`
+                  : `${type === "Bid" ? "Buy" : "Sell"}`}
               </Typography>
             </Button>
           </div>
@@ -142,6 +236,13 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
           <FooterWithLogo />
         </div>
       </StickyNavbar>
+      {isSuccessDialogOpen && (
+        <CheckoutSuccessDialog
+          open={isSuccessDialogOpen}
+          handler={handleDialogOpen}
+          from={type}
+        />
+      )}
     </>
   );
 };

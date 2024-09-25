@@ -9,7 +9,9 @@ import {
 } from "@material-tailwind/react";
 import SuccessAnimation from "./animation/SuccessAnimation";
 
-export default function CheckoutSuccessDialog({ open, handler }) {
+export default function CheckoutSuccessDialog({ open, handler, from }) {
+  const description =
+    "Your price was successfully " + (from === "Bid" ? "bided" : "asked");
   return (
     <Dialog
       open={open}
@@ -25,7 +27,9 @@ export default function CheckoutSuccessDialog({ open, handler }) {
       </DialogHeader>
       <div className="flex justify-center">
         <Typography variant="paragraph" className="text-gray-800">
-          Your purchase has been successfully completed.
+          {from
+            ? description
+            : "Your purchase has been successfully completed."}
         </Typography>
       </div>
       <div className="flex justify-center pt-4 mx-10">

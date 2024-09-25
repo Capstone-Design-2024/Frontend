@@ -55,17 +55,7 @@ const MyProjectsPage = ({ isLoggedIn }) => {
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div
-          style={{
-            backgroundImage: `url(${bgBlur1}), url(${bgBlur2})`,
-            backgroundOrigin: "border-box",
-            backgroundSize: "contain, contain",
-            backgroundRepeat: "no-repeat, no-repeat",
-            backgroundPosition: "-1900% , 130% ",
-            backgroundAttachment: "fixed",
-          }}
-          className="py-8"
-        >
+        <div>
           <div className="mt-10 mx-60 flex justify-start">
             <Typography variant="h5" className="text-gray-700">
               My Projects

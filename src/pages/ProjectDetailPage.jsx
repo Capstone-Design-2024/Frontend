@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -25,9 +25,11 @@ import {
   Legend,
 } from "chart.js";
 import logo from "../assets/itemizeLogo.png";
-import { intervals, menus } from "./constants";
+import { intervals } from "./constants";
 import { chartOptions } from "./chartOptions";
 import { getChartData } from "./chartData";
+import axios from "axios";
+import { API } from "../config";
 
 ChartJS.register(
   CategoryScale,
@@ -45,6 +47,64 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
   const [open, setOpen] = useState(false);
   const [selectedInterval, setSelectedInterval] = useState("1 Week");
   const [selectedMenu, setSelectedMenu] = useState("Traded");
+  const [priceHistory, setPriceHistory] = useState({
+    Traded: [{ "Traded Price": "", Date: "" }],
+    Asked: [{ "Asked Price": "", Date: "" }],
+    Bided: [{ "Bided Price": "", Date: "" }],
+  });
+
+  useEffect(() => {
+    const fetchAuctionData = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get(
+          `${API.GETAUCTION}/${project.projectId}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const askedData = response.data.data
+          .map((item) =>
+            item.type === "ASK"
+              ? {
+                  "Asked Price": item.priceForAuction,
+                  Date: "2024/09/25",
+                }
+              : false
+          )
+          .filter(Boolean)
+          .slice(0, 8);
+
+        console.log("askedData", askedData);
+
+        const bidedData = response.data.data
+          .map((item) =>
+            item.type === "BID"
+              ? {
+                  "Bided Price": item.priceForAuction,
+                  Date: "2024/09/25",
+                }
+              : false
+          )
+          .filter(Boolean)
+          .slice(0, 8);
+
+        setPriceHistory((prevHistory) => ({
+          ...prevHistory,
+          Asked: askedData,
+          Bided: bidedData,
+        }));
+      } catch (error) {
+        console.log("Error fetching auction data:", error);
+      }
+    };
+
+    fetchAuctionData();
+  }, [project.projectId]);
 
   const navigate = useNavigate();
   const handleOpen = () => setOpen(!open);
@@ -68,7 +128,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
       <div className="flex flex-col min-h-screen container mx-auto mt-7">
         <div className="flex flex-col mb-6">
           <div className="flex justify-between space-x-9 mt-8">
-            <div className="w-1/2 bg-gray-50">
+            <div className="w-1/2 h-[500px] aspect-square bg-gray-50">
               <ProjectImage
                 thumbnail={project.thumbnail ? project.thumbnail : logo}
               />
@@ -182,7 +242,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                   </div>
                   <Tabs value={selectedMenu} className="mt-16 mb-4">
                     <TabsHeader>
-                      {Object.keys(menus).map((menu) => (
+                      {Object.keys(priceHistory).map((menu) => (
                         <Tab
                           key={menu}
                           value={menu}
@@ -204,12 +264,17 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                       <Typography className="font-medium">Date</Typography>
                     </div>
                     <hr className="my-2" />
-                    {menus[selectedMenu].map((price, idx) => (
+                    {priceHistory[selectedMenu].map((price, idx) => (
                       <div className="flex justify-between" key={idx}>
                         <Typography>
-                          {price[selectedMenu + " Price"]}
+                          {price[selectedMenu + " Price"]
+                            ? price[selectedMenu + " Price"].toLocaleString() +
+                              " PNP"
+                            : "-"}
                         </Typography>
-                        <Typography>{price["Date"]}</Typography>
+                        <Typography>
+                          {price["Date"] ? price["Date"] : "-"}
+                        </Typography>
                       </div>
                     ))}
                   </div>

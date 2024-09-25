@@ -5,7 +5,7 @@ const ProjectImage = ({ thumbnail }) => {
     <img
       src={thumbnail}
       alt="Product"
-      className="w-full h-full rounded-lg  object-cover"
+      className="w-full h-full rounded-lg  object-contain"
     />
   );
 };
