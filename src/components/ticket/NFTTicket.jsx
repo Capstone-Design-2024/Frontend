@@ -59,7 +59,7 @@ const NFTTicket = ({ project, fromManageProject }) => {
     const fetchNftInfo = async () => {
       const data = { project_id: project.projectId };
       try {
-        const response = await axios.post(`${API.GETPROJECT}`, data, {
+        const response = await axios.post(`${API.NFTREGISTRY}`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
