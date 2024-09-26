@@ -1,8 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import { Typography } from "@material-tailwind/react";
-import bgBlurWebP from "../assets/bg-blur1.webp";
-import bgBlur2WebP from "../assets/bg-blur2.webp";
-import Loading from "../components/ui/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API } from "../config";
@@ -16,7 +13,7 @@ const EcommerceCard = lazy(() => import("../components/ui/EcommerceCard"));
 const FeatureBlock = lazy(() => import("../components/ui/FeatureBlock"));
 
 const MainPage = ({ isLoggedIn }) => {
-  const [featuredProject, setFeaturedProject] = useState([]);
+  const [featuredProject, setFeaturedProject] = useState();
   const [recommendedProjects, setRecommendedProjects] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -38,16 +35,16 @@ const MainPage = ({ isLoggedIn }) => {
   }, [token]);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense>
       <StickyNavbar isLoggedIn={isLoggedIn}>
         <div className="mx-auto w-full flex justify-center">
           <CarouselWithContent />
         </div>
-        <div className="py-8">
+        <div className="py-8 bg-gray-50">
           <div className="mx-4 lg:mx-40 px-4">
             <div className="grid  xl:grid-cols-2 gap-5">
               <div className="w-full">
-                <Typography variant="h5" className="mb-5 ml-3 text-gray-700">
+                <Typography variant="h5" className="mb-3 ml-3 text-gray-700">
                   Featured Project
                 </Typography>
                 <EcommerceCard
@@ -59,8 +56,8 @@ const MainPage = ({ isLoggedIn }) => {
                   status={70}
                 />
               </div>
-              <div className="w-full ">
-                <Typography variant="h5" className="mb-5 ml-1 text-gray-700">
+              <div className="w-full">
+                <Typography variant="h5" className="mb-3 ml-1 text-gray-700">
                   Recommended for you
                 </Typography>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -72,6 +69,7 @@ const MainPage = ({ isLoggedIn }) => {
                       onClick={() =>
                         navigate(`/createproject/${project.projectId}`)
                       }
+                      isMain={true}
                     />
                   ))}
                 </div>
@@ -97,11 +95,10 @@ const MainPage = ({ isLoggedIn }) => {
                 />
               </svg>
             </a>
-            <hr className="mt-10" />
           </div>
         </div>
 
-        <div className="bg-cover bg-no-repeat py-4">
+        <div className="bg-cover bg-no-repeat py-4 mt-3">
           <div className="mx-4 lg:mx-40">
             <FeatureBlock />
           </div>

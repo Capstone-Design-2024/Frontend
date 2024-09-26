@@ -94,7 +94,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
 
   return (
     <>
-      <div className="bg-white/35 rounded-t-lg p-4 shadow-xl">
+      <div className="bg-white rounded-t-lg p-4 shadow-xl">
         <WalletHeader
           address={address}
           balance={balance}
@@ -102,34 +102,34 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           setIsCopied={setIsCopied}
           copyToClipboard={copyToClipboard}
           handleDialogToggle={handleDialogToggle}
-        />
-        <div className="flex justify-center space-x-2">
-          <Button
-            variant="text"
-            size="sm"
-            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
-            onClick={() => handleDialogToggle("open")}
-          >
-            Charge
-          </Button>
-          <Button
-            variant="text"
-            size="sm"
-            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
-            onClick={() => setPage(1)}
-          >
-            Swap
-          </Button>
-
-          <Button
-            variant="text"
-            size="sm"
-            className="shadow-xl shadow-gray-900/5 hidden !normal-case lg:inline-block border"
-            onClick={() => getBalance()}
-          >
-            Get Balance
-          </Button>
-        </div>
+        >
+          <div className="flex space-x-2">
+            <Button
+              variant="text"
+              size="sm"
+              className="shadow-xl bg-black hidden !normal-case lg:inline-block text-white hover:bg-black/80 "
+              onClick={() => handleDialogToggle("open")}
+            >
+              Charge
+            </Button>
+            <Button
+              variant="text"
+              size="sm"
+              className="shadow-xl bg-black hidden !normal-case lg:inline-block  text-white hover:bg-black/80"
+              onClick={() => setPage(1)}
+            >
+              Swap
+            </Button>
+            <Button
+              variant="text"
+              size="sm"
+              className="shadow-xl bg-black hidden !normal-case lg:inline-block  text-white hover:bg-black/80"
+              onClick={() => getBalance()}
+            >
+              Get Balance
+            </Button>
+          </div>
+        </WalletHeader>
       </div>
       <div className="px-4">
         <DialogBody>

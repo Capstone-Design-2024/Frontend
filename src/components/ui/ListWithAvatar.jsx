@@ -10,7 +10,7 @@ import logo from "../../assets/itemizeLogo.png";
 
 export default function ListWithAvatar({ project, walletAddress }) {
   return (
-    <Card className="w-full p-2 bg-white/35 shadow-2xl">
+    <Card className="w-full p-2 bg-white/85 shadow-2xl">
       <List>
         <p className="text-xl text-gray-800 font-medium pl-4 mt-2">Tickets</p>
         <ListItem>
