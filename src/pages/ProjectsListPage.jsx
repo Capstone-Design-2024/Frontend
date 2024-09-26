@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import { API } from "../config";
-import bgBlur1 from "../assets/bg-blur1.webp";
-import bgBlur2 from "../assets/bg-blur2.webp";
 import { Typography } from "@material-tailwind/react";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import EcommerceCard from "../components/ui/EcommerceCard";
-import Slider from "../components/ui/slider/Slider";
 
 const ProjectsListPage = ({ isLoggedIn }) => {
   const [projects, setProjects] = useState([]);
@@ -31,9 +28,9 @@ const ProjectsListPage = ({ isLoggedIn }) => {
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div>
-          <div>
-            <div className="mt-10 mx-60 px-4 flex justify-start">
+        <div className="bg-gray-50 mt-2 py-5">
+          <div className="mx-14 md:mx-36 lg:mx-60">
+            <div className="flex justify-center lg:justify-start pl-4">
               <Typography variant="h5" className="text-gray-700">
                 Explore{" "}
                 <span className="text-purple-700">
@@ -42,8 +39,8 @@ const ProjectsListPage = ({ isLoggedIn }) => {
               </Typography>
             </div>
             <div className="mt-1 border-e-0 min-h-96">
-              <div className="mx-60">
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-8 p-4">
+              <div className="">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                   {projects.map((project, idx) => {
                     return (
                       <EcommerceCard
@@ -61,9 +58,9 @@ const ProjectsListPage = ({ isLoggedIn }) => {
               </div>
             </div>
           </div>
-          <div className="mt-6 mx-40 px-4 ">
-            <FooterWithLogo />
-          </div>
+        </div>
+        <div className="mt-6 mx-40 px-4 ">
+          <FooterWithLogo />
         </div>
       </StickyNavbar>
     </>

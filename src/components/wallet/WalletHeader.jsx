@@ -10,14 +10,16 @@ const WalletHeader = ({
   setIsCopied,
   copyToClipboard,
   handleDialogToggle,
+  children, // Added children prop to accept buttons
 }) => (
   <div className="p-4">
     <div className="space-x-4 items-center">
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <Typography variant="h5" color="black">
             Wallet Address
           </Typography>
+          {children}
           <div className="flex justify-center space-x-2">
             <Tooltip
               content={isCopied ? "Copied" : "Copy address"}

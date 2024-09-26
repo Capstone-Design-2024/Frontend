@@ -9,7 +9,13 @@ import { useNavigate } from "react-router-dom";
 import mainlogo from "../../assets/itemizeLogo.png";
 import "./statusBar.css";
 
-export default function EcommerceCard({ project, status, type, children }) {
+export default function EcommerceCard({
+  project,
+  status,
+  type,
+  children,
+  isMain,
+}) {
   const navigate = useNavigate();
   const viewProjectDetails = (project, isClosed) => {
     if (isClosed) {
@@ -39,50 +45,65 @@ export default function EcommerceCard({ project, status, type, children }) {
     isClosed = daysLeft < 0;
   }
 
+  const shortenWords = (str, length = 10) => {
+    let result = "";
+    if (str.length > length) {
+      result = str.substr(0, length - 2) + "...";
+    } else {
+      result = str;
+    }
+    return result;
+  };
+
+  const projectTitle = project
+    ? project.title.charAt(0).toUpperCase() + project.title.slice(1)
+    : "Project title is null";
+
+  console.log(project);
   return (
     <button
       onClick={() => viewProjectDetails(project, isClosed)}
-      className="min-w-72 w-full ease-in-out transition duration-300 transform hover:scale-105"
+      className="min-w-72 w-full ease-in-out transition duration-300 transform p-3 rounded-lg hover:border-gray-300 border border-transparent hover:bg-white hover:shadow-xl"
     >
       {type === "create" ? (
         children
       ) : (
         <>
           <Card
-            className={`max-h-[430px] bg-white/40 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg transition delay-75 duration-100 ease-in-out`}
+            className={`shadow-none max-h-[430px] bg-transparent rounded-lg transition delay-75 duration-100 ease-in-out`}
           >
             <CardHeader
               shadow={false}
               floated={false}
-              className="mt-0 mx-0 overflow-hidden"
+              className="mt-0 mx-0 overflow-hidden rounded-lg p-0"
             >
               <img
                 src={project ? project.thumbnail : mainlogo}
                 alt="card-image"
-                className="h-60 w-full object-scale-down"
+                className="h-44 w-full object-cover"
               />
               {status && (
-                <div className="flex w-full h-5 overflow-hidden font-sans text-xs font-medium flex-start bg-white">
+                <div className="flex w-full overflow-hidden font-sans text-xs font-medium flex-start bg-white">
                   <div
-                    className="flex items-center h-full overflow-hidden bg-gradient-to-r from-pink-400 via-purple-600 to-deep-purple-700 rounded-b-lg animate-gradient-x"
+                    className="flex items-center h-3 overflow-hidden bg-gradient-to-r from-pink-400 via-purple-600 to-deep-purple-700 animate-gradient-x"
                     style={{ width: `${status}%` }}
                   ></div>
                 </div>
               )}
             </CardHeader>
-            <CardBody className="!mb-0">
+            <CardBody className="!mb-0 py-3">
               <div className="mb-1 flex justify-start">
                 <Typography color="black" variant="h5" className="font-medium">
-                  {project ? project.title : "Project title is null"}
+                  {projectTitle}
                 </Typography>
               </div>
               <div className="flex justify-start mb-1">
                 <Typography
-                  variant="lead"
+                  variant="small"
                   color="blue-gray"
                   className="font-medium"
                 >
-                  ${project ? project.price : 0}.00
+                  {project ? project.makerName : 0}
                 </Typography>
               </div>
               {timeLeft && (
@@ -104,24 +125,31 @@ export default function EcommerceCard({ project, status, type, children }) {
                   <Typography
                     variant="small"
                     color="gray"
-                    className="font-medium flex justify-start ml-1 text-gray-600"
+                    className="font-medium ml-1 text-gray-600"
                   >
                     {timeLeft[0] < 0 ? (
                       <>Closed</>
                     ) : (
                       <>
-                        {timeLeft[0]} days {timeLeft[1]} hours {timeLeft[2]}{" "}
-                        minutes left
+                        {isMain
+                          ? shortenWords(
+                              timeLeft[0] +
+                                "days left •" +
+                                +status +
+                                "% funded",
+                              35
+                            )
+                          : timeLeft[0] + "days • " + status + "% funded"}
                       </>
                     )}
                   </Typography>
                 </div>
               )}
-              <div className="flex justify-start mt-1">
+              {/* <div className="flex justify-start mt-1">
                 <Typography variant="small">
                   {project ? project.category : "Project category is null"}
                 </Typography>
-              </div>
+              </div> */}
             </CardBody>
           </Card>
         </>
