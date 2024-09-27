@@ -103,6 +103,14 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
     }
   };
 
+  const buyOrSellTicket = () => {
+    if (tradingType === "Buy Now") {
+      console.log("buy");
+    } else {
+      console.log("sell");
+    }
+  };
+
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
@@ -223,7 +231,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
               className="w-full bg-purple-700 hover:bg-purple-600"
               onClick={() => {
                 if (!tradingType.includes("Place")) {
-                  console.log("Buy or SEll");
+                  buyOrSellTicket();
                 } else {
                   placePrice(type);
                 }
