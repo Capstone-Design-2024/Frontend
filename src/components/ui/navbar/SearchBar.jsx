@@ -4,9 +4,9 @@ import { Input } from "@material-tailwind/react";
 export default function SearchBar({ visibility }) {
   return (
     <div
-      className={`items-center gap-x-2 ${
+      className={`items-center ${
         visibility ? "" : "hidden"
-      } w-full sm:block sm:w-[400px]`}
+      } lg:w-full sm:block w-[400px]`}
     >
       <div className="relative ">
         <Input

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Dialog } from "@material-tailwind/react";
+import { Dialog, Button } from "@material-tailwind/react";
 
 import WalletMain from "./WalletMain";
 import WalletSwap from "./WalletSwap";
@@ -23,7 +23,7 @@ export default function WalletModal({
         size="sm"
         open={open}
         handler={handleOpen}
-        className="h-4/6 w-[500px] bg-white/70 backdrop-blur-lg z-40 shadow-lg"
+        className={`h-4/6 bg-white/70 backdrop-blur-lg z-40 shadow-lg `}
       >
         {page === 0 && (
           <WalletMain
@@ -32,7 +32,9 @@ export default function WalletModal({
             initialBalance={initialBalance}
           />
         )}
-        {page === 1 && <WalletSwap setPage={setPage} />}
+        {page === 1 && (
+          <WalletSwap setPage={setPage} initialBalance={initialBalance} />
+        )}
       </Dialog>
     </>
   );

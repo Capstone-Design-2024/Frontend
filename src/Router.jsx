@@ -14,6 +14,8 @@ import CartPage from "./pages/CartPage";
 import ProjectsListPage from "./pages/ProjectsListPage";
 import TicketTransactionPage from "./pages/TicketTransactionPage";
 import AskAndBidPage from "./pages/AskAndBidPage";
+import axios from "axios";
+import { API } from "./config";
 
 const Router = () => {
   const [loading, setLoading] = useState(true);
@@ -21,17 +23,29 @@ const Router = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(loginSuccess());
-    } else {
-      dispatch(logoutSuccess());
-    }
+    const validateToken = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API.GETWALLETADDRESS}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        dispatch(loginSuccess());
+      } catch (e) {
+        console.log(e);
+        dispatch(logoutSuccess());
+        localStorage.removeItem("token");
+      }
+    };
+
+    validateToken(); // 비동기 함수 호출
     setLoading(false);
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="">Loading...</div>;
   }
   return (
     <BrowserRouter>

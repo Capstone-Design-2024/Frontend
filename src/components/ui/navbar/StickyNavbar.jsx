@@ -15,43 +15,42 @@ export default function StickyNavbar({ children, isLoggedIn }) {
   const [openModal, setOpenModal] = useState(false);
   const [walletAddress, setWalletAddress] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleOpen = useCallback(async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`${API.GETWALLETADDRESS}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const address = response.data.existingWallet.wallet_address;
-      setWalletAddress(address);
-      await getBalance(address);
-      setOpenModal((cur) => !cur);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setOpenModal((cur) => !cur);
-      navigate("/login");
-    }
-  }, [navigate]);
-
-  const handleSignOut = useCallback(() => {
-    localStorage.removeItem("token");
-    dispatch(logoutSuccess());
-    navigate("/");
-  }, [dispatch, navigate]);
+  const handleOpen = useCallback(() => {
+    setOpenModal((cur) => !cur); // Only toggle the modal state here
+  }, []);
 
   useEffect(() => {
-    const handleResize = () => window.innerWidth >= 960 && setOpenNav(false);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
+    const fetchWalletDetails = async () => {
+      if (openModal) {
+        try {
+          setLoading(true);
+          const token = localStorage.getItem("token");
+          const response = await axios.get(`${API.GETWALLETADDRESS}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const address = response.data.existingWallet.wallet_address;
+          setWalletAddress(address);
+          await getBalance(address);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setOpenModal(false); // Close the modal if there's an error
+          navigate("/login");
+        } finally {
+          setLoading(false);
+        }
+      }
     };
-  }, []);
+
+    fetchWalletDetails();
+  }, [openModal, navigate]);
 
   const getBalance = useCallback(async (address) => {
     if (!address) {
@@ -65,6 +64,20 @@ export default function StickyNavbar({ children, isLoggedIn }) {
     } catch (error) {
       console.error("Failed to get balance:", error);
     }
+  }, []);
+
+  const handleSignOut = useCallback(() => {
+    localStorage.removeItem("token");
+    dispatch(logoutSuccess());
+    navigate("/");
+  }, [dispatch, navigate]);
+
+  useEffect(() => {
+    const handleResize = () => window.innerWidth >= 960 && setOpenNav(false);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const debouncedNavigate = useCallback(
@@ -90,6 +103,7 @@ export default function StickyNavbar({ children, isLoggedIn }) {
           handleOpen={handleOpen}
           address={walletAddress}
           initialBalance={balance}
+          loading={loading}
         />
       </div>
     </div>
