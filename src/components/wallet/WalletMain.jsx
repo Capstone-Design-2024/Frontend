@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { DialogBody, Button } from "@material-tailwind/react";
 import { API } from "../../config";
 import axios from "axios";
@@ -92,9 +92,13 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
     return;
   };
 
+  useEffect(() => {
+    setBalance(initialBalance);
+  }, [initialBalance]);
+
   return (
     <>
-      <div className="bg-white rounded-t-lg p-4 shadow-xl">
+      <div className="bg-white rounded-t-lg p-4">
         <WalletHeader
           address={address}
           balance={balance}
@@ -102,34 +106,8 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           setIsCopied={setIsCopied}
           copyToClipboard={copyToClipboard}
           handleDialogToggle={handleDialogToggle}
-        >
-          <div className="flex space-x-2">
-            <Button
-              variant="text"
-              size="sm"
-              className="shadow-xl bg-black hidden !normal-case lg:inline-block text-white hover:bg-black/80 "
-              onClick={() => handleDialogToggle("open")}
-            >
-              Charge
-            </Button>
-            <Button
-              variant="text"
-              size="sm"
-              className="shadow-xl bg-black hidden !normal-case lg:inline-block  text-white hover:bg-black/80"
-              onClick={() => setPage(1)}
-            >
-              Swap
-            </Button>
-            <Button
-              variant="text"
-              size="sm"
-              className="shadow-xl bg-black hidden !normal-case lg:inline-block  text-white hover:bg-black/80"
-              onClick={() => getBalance()}
-            >
-              Get Balance
-            </Button>
-          </div>
-        </WalletHeader>
+          setPage={setPage}
+        ></WalletHeader>
       </div>
       <div className="px-4">
         <DialogBody>

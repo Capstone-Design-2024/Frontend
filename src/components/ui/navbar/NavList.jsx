@@ -17,8 +17,10 @@ export default function NavList({ isLoggedIn }) {
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {isLoggedIn && (
         <div className=" right-0 top-0 flex flex-col items-end">
-          <Typography variant="small">Welcome, </Typography>
-          <Typography variant="small" className="text-purple-700">
+          <Typography variant="small" className="font-normal">
+            Welcome,{" "}
+          </Typography>
+          <Typography variant="small" className="text-purple-700 font-medium">
             {userName[0]}
           </Typography>
         </div>
@@ -30,8 +32,7 @@ export default function NavList({ isLoggedIn }) {
             key={index}
             as="li"
             variant="small"
-            color="blue-gray"
-            className="p-1 font-normal transition-colors hover:text-purple-600 focus:text-purple-600 text-gray-600 flex justify-center"
+            className="p-1 font-normal hover:text-purple-600 focus:text-purple-600 flex justify-center"
           >
             <a href={`/${value}`} className="flex items-center">
               {key}

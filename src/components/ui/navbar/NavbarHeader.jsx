@@ -15,19 +15,22 @@ export default function NavbarHeader({
 }) {
   return (
     <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
-      <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 ">
-        <div className="flex">
-          <a href="/">
-            <img
-              src={logoWithName}
-              alt="main-logo"
-              className="mx-5 min-w-[150px]"
-              style={{ width: "150px" }}
-            />
-          </a>
+      <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 gap-x-10">
+        <div
+          className={`${isLoggedIn ? "w-7/12" : "w-2/3"} flex justify-start`}
+        >
+          <div className="">
+            <a href="/">
+              <img
+                src={logoWithName}
+                alt="main-logo"
+                className="mx-5 min-w-[150px] w-[150px]"
+              />
+            </a>
+          </div>
+          <SearchBar visibility={false} />
         </div>
-        <SearchBar visibility={false} />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className="hidden lg:block">
             <NavList isLoggedIn={isLoggedIn} />
           </div>

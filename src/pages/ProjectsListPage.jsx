@@ -7,7 +7,17 @@ import FooterWithLogo from "../components/ui/FooterWithLogo";
 import EcommerceCard from "../components/ui/EcommerceCard";
 
 const ProjectsListPage = ({ isLoggedIn }) => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+    { title: "" },
+  ]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -32,10 +42,16 @@ const ProjectsListPage = ({ isLoggedIn }) => {
           <div className="mx-14 md:mx-36 lg:mx-60">
             <div className="flex justify-center lg:justify-start pl-4">
               <Typography variant="h5" className="text-gray-700">
-                Explore{" "}
-                <span className="text-purple-700">
-                  {projects.length} projects
-                </span>
+                {projects[0].title ? (
+                  <>
+                    Explore{" "}
+                    <span className="text-purple-700">
+                      {projects.length} projects
+                    </span>
+                  </>
+                ) : (
+                  "Loading..."
+                )}
               </Typography>
             </div>
             <div className="mt-1 border-e-0 min-h-96">

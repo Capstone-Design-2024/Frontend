@@ -1,8 +1,8 @@
 import React from "react";
 import ProjectDetailPage from "./ProjectDetailPage";
 
-const TicketTransactionPage = () => {
-  return <ProjectDetailPage isClosed={true} />;
+const TicketTransactionPage = ({ isLoggedIn }) => {
+  return <ProjectDetailPage isClosed={true} isLoggedIn={isLoggedIn} />;
 };
 
 export default TicketTransactionPage;
