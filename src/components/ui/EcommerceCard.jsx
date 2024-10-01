@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -24,6 +25,7 @@ export default function EcommerceCard({
       navigate(`/detail/${project.projectId}`, { state: { project } });
     }
   };
+  const [showCategory, setShowCategory] = useState(false);
 
   let timeLeft = null;
   let isClosed = false;
@@ -62,11 +64,13 @@ export default function EcommerceCard({
   return (
     <button
       onClick={() => viewProjectDetails(project, isClosed)}
+      onMouseOver={() => setShowCategory(true)}
+      onMouseOut={() => setShowCategory(false)}
       disabled={!project.title && true}
       className={`${
         !project.title
           ? "animate-pulse "
-          : "hover:border-gray-300 hover:bg-white hover:shadow-xl"
+          : "hover:border-gray-300 hover:bg-white hover:shadow-xl hover:z-50"
       } min-w-72 w-full ease-in-out transition duration-300 transform p-3 rounded-lg  border border-transparent `}
     >
       {type === "create" ? (
@@ -171,11 +175,22 @@ export default function EcommerceCard({
                   <div className="bg-gray-300 w-56 h-4 rounded-md mt-2"></div>
                 </>
               )}
-              {/* <div className="flex justify-start mt-1">
-                <Typography variant="small">
-                  {project ? project.category : "Project category is null"}
-                </Typography>
-              </div> */}
+              <div className="flex justify-start mt-1">
+                <div
+                  className={`${
+                    showCategory ? "bg-gray-100" : "bg-transparent"
+                  } px-2 py-1 rounded-md`}
+                >
+                  <Typography
+                    variant="small"
+                    className={`${
+                      showCategory ? "text-purple-500" : "text-transparent"
+                    } font-normal`}
+                  >
+                    {project ? project.category : "Project category is null"}
+                  </Typography>
+                </div>
+              </div>
             </CardBody>
           </Card>
         </>

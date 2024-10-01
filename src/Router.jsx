@@ -66,7 +66,7 @@ const Router = () => {
         />
         <Route path="/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
         <Route
-          path="/projectslist"
+          path="/projectslist/:itemCategory"
           element={<ProjectsListPage isLoggedIn={isLoggedIn} />}
         />
         <Route
