@@ -215,8 +215,13 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                   </div>
                 )}
               </div>
-              {isClosed && (
-                <div className="mt-6">
+              <div className="relative">
+                {!isClosed && (
+                  <div className="bg-red absolute inset-0 flex items-center justify-center text-xl font-bold rounded-md py-7">
+                    Project is still in funding phase
+                  </div>
+                )}
+                <div className={`${!isClosed && "blur-sm"} mt-6`}>
                   <Typography variant="lead" className="font-medium">
                     Trading History
                   </Typography>
@@ -279,7 +284,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                     ))}
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
