@@ -20,7 +20,7 @@ export default function AuthButtons({
           <Button
             variant="text"
             size="md"
-            className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 flex justify-center  ${
+            className={`flex justify-center border !normal-case shadow-lg shadow-gray-900/5 lg:inline-block ${
               isMobile ? "w-full" : "hidden"
             }`}
             onClick={handleOpen}
@@ -30,7 +30,7 @@ export default function AuthButtons({
           <Button
             variant="text"
             size="md"
-            className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 ${
+            className={`border !normal-case shadow-lg shadow-gray-900/5 lg:inline-block ${
               isMobile ? "w-full" : "hidden"
             }`}
             onClick={handleSignOut}
@@ -43,7 +43,7 @@ export default function AuthButtons({
           <Button
             variant="text"
             size="md"
-            className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 flex justify-center ${
+            className={`flex justify-center border !normal-case shadow-lg shadow-gray-900/5 lg:inline-block ${
               isMobile ? "w-full" : "hidden"
             }`}
             onClick={() => debouncedNavigate("/login")}
@@ -53,7 +53,7 @@ export default function AuthButtons({
           <Button
             variant="text"
             size="md"
-            className={`!normal-case lg:inline-block border shadow-lg shadow-gray-900/5 ${
+            className={`border !normal-case shadow-lg shadow-gray-900/5 lg:inline-block ${
               isMobile ? "w-full" : "hidden"
             }`}
             onClick={() => debouncedNavigate("/signup")}

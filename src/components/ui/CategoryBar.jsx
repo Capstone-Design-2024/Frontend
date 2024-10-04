@@ -18,35 +18,35 @@ export function CategoryBar() {
     navigate(`/projectslist/${itemCategory}`);
   };
   return (
-    <div className="flex flex-wrap gap-4 justify-center ">
+    <div className="flex flex-wrap justify-center gap-4 bg-transparent">
       {category.map((item, index) => {
         return (
           <Menu key={index} allowHover>
             <MenuHandler>
               <Button
                 variant="text"
-                className="flex items-center gap-2 text-base font-normal capitalize tracking-normal"
+                className="flex items-center gap-2 text-base font-normal !normal-case hover:bg-gray-100"
               >
                 <Typography
                   variant="small"
-                  className="text-gray-900 font-normal"
+                  className="font-normal text-gray-900"
                 >
                   {Object.keys(item)}
                 </Typography>
                 <ChevronDownIcon className="h-4 w-4 transition-transform" />
               </Button>
             </MenuHandler>
-            <MenuList className="w-full sm:w-96 ">
+            <MenuList className="w-full sm:w-96">
               {Object.values(item).map((detail, idx) => (
                 <div
                   key={idx}
-                  className="grid grid-cols-1 sm:grid-cols-3 gap-2"
+                  className="grid grid-cols-1 gap-2 sm:grid-cols-3"
                 >
                   {detail.map((cat, i) => (
                     <MenuItem key={i}>
                       <Typography
                         variant="small"
-                        className="text-gray-900 font-normal"
+                        className="font-normal text-gray-900"
                         key={i}
                       >
                         {cat}
@@ -54,10 +54,10 @@ export function CategoryBar() {
                     </MenuItem>
                   ))}
                   <MenuItem onClick={() => navigateHandler(Object.keys(item))}>
-                    <div className="flex justify-start space-x-1 items-center">
+                    <div className="flex items-center justify-start space-x-1">
                       <Typography
                         variant="small"
-                        className="text-purple-700 font-bold"
+                        className="font-bold text-purple-700"
                       >
                         Show all
                       </Typography>

@@ -82,30 +82,28 @@ export default function StickyNavbar({ children, isLoggedIn }) {
 
   const debouncedNavigate = useCallback(
     debounce((path) => navigate(path), 300),
-    [navigate]
+    [navigate],
   );
 
   return (
-    <div className="grid min-h-[140px] w-full overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-      <div className="-m-6 max-h-screen overflow-scroll">
-        <NavbarHeader
-          openNav={openNav}
-          setOpenNav={setOpenNav}
-          handleOpen={handleOpen}
-          handleSignOut={handleSignOut}
-          isLoggedIn={isLoggedIn}
-          debouncedNavigate={debouncedNavigate}
-        />
-        <CategoryBar />
-        {children}
-        <WalletModal
-          open={openModal}
-          handleOpen={handleOpen}
-          address={walletAddress}
-          initialBalance={balance}
-          loading={loading}
-        />
-      </div>
+    <div className="-my-6 max-h-screen overflow-scroll pt-6">
+      <NavbarHeader
+        openNav={openNav}
+        setOpenNav={setOpenNav}
+        handleOpen={handleOpen}
+        handleSignOut={handleSignOut}
+        isLoggedIn={isLoggedIn}
+        debouncedNavigate={debouncedNavigate}
+      />
+      <CategoryBar />
+      {children}
+      <WalletModal
+        open={openModal}
+        handleOpen={handleOpen}
+        address={walletAddress}
+        initialBalance={balance}
+        loading={loading}
+      />
     </div>
   );
 }

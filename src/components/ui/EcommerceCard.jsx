@@ -37,10 +37,10 @@ export default function EcommerceCard({
 
     const daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hoursLeft = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
     const minutesLeft = Math.floor(
-      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+      (timeDifference % (1000 * 60 * 60)) / (1000 * 60),
     );
 
     timeLeft = [daysLeft, hoursLeft, minutesLeft];
@@ -69,38 +69,38 @@ export default function EcommerceCard({
       disabled={!project.title && true}
       className={`${
         !project.title
-          ? "animate-pulse "
-          : "hover:border-gray-300 hover:bg-white hover:shadow-xl hover:z-50"
-      } min-w-72 w-full ease-in-out transition duration-300 transform p-3 rounded-lg  border border-transparent `}
+          ? "animate-pulse"
+          : "hover:border-gray-300 hover:bg-white hover:shadow-xl"
+      } w-full min-w-72 transform rounded-lg border border-transparent p-3 transition duration-300 ease-in-out`}
     >
       {type === "create" ? (
         children
       ) : (
         <>
           <Card
-            className={`shadow-none max-h-[430px] bg-transparent rounded-lg transition delay-75 duration-100 ease-in-out`}
+            className={`max-h-[430px] rounded-lg bg-transparent shadow-none transition delay-75 duration-100 ease-in-out`}
           >
             <CardHeader
               shadow={false}
               floated={false}
-              className="mt-0 mx-0 overflow-hidden rounded-lg p-0"
+              className="mx-0 mt-0 overflow-hidden rounded-lg p-0"
             >
               {project.title ? (
                 <img
                   src={project.title ? project.thumbnail : mainlogo}
                   alt="card-image"
-                  className={` h-44 w-full object-cover`}
+                  className={`h-44 w-full object-cover`}
                 />
               ) : (
                 <div className="h-44 w-full bg-gray-300"></div>
               )}
 
               {status && (
-                <div className="flex w-full overflow-hidden font-sans text-xs font-medium flex-start bg-white">
+                <div className="flex-start flex w-full overflow-hidden bg-white font-sans text-xs font-medium">
                   <div
-                    className={`flex items-center h-3 overflow-hidden bg-gradient-to-r ${
+                    className={`flex h-3 items-center overflow-hidden bg-gradient-to-r ${
                       project.title
-                        ? "from-pink-400 via-purple-600 to-deep-purple-700"
+                        ? "from-purple-600 via-pink-400 to-deep-purple-600"
                         : "bg-gray-500"
                     } animate-gradient-x`}
                     style={{ width: `${status}%` }}
@@ -120,7 +120,7 @@ export default function EcommerceCard({
                       {projectTitle}
                     </Typography>
                   </div>
-                  <div className="flex justify-start mb-1">
+                  <div className="mb-1 flex justify-start">
                     <Typography
                       variant="small"
                       color="blue-gray"
@@ -137,7 +137,7 @@ export default function EcommerceCard({
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-5 h-5"
+                        className="h-5 w-5"
                       >
                         <path
                           strokeLinecap="round"
@@ -148,7 +148,7 @@ export default function EcommerceCard({
                       <Typography
                         variant="small"
                         color="gray"
-                        className="font-medium ml-1 text-gray-600"
+                        className="ml-1 font-medium text-gray-600"
                       >
                         {timeLeft[0] < 0 ? (
                           <>Closed</>
@@ -160,7 +160,7 @@ export default function EcommerceCard({
                                     "days left •" +
                                     +status +
                                     "% funded",
-                                  35
+                                  35,
                                 )
                               : timeLeft[0] + "days • " + status + "% funded"}
                           </>
@@ -171,15 +171,15 @@ export default function EcommerceCard({
                 </>
               ) : (
                 <>
-                  <div className="bg-gray-300 w-28 h-5 rounded-md"></div>
-                  <div className="bg-gray-300 w-56 h-4 rounded-md mt-2"></div>
+                  <div className="h-5 w-28 rounded-md bg-gray-300"></div>
+                  <div className="mt-2 h-4 w-56 rounded-md bg-gray-300"></div>
                 </>
               )}
-              <div className="flex justify-start mt-1">
+              <div className="mt-1 flex justify-start">
                 <div
                   className={`${
                     showCategory ? "bg-gray-100" : "bg-transparent"
-                  } px-2 py-1 rounded-md`}
+                  } rounded-md px-2 py-1`}
                 >
                   <Typography
                     variant="small"

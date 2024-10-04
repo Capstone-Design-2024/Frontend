@@ -5,7 +5,7 @@ export function ImageGallery() {
   return (
     <div className="relative flex items-center">
       <div
-        className="flex overflow-x-scroll gap-4 scrollbar-hide p-4"
+        className="scrollbar-hide flex gap-4 overflow-x-scroll p-4"
         style={{ scrollBehavior: "smooth" }}
       >
         <Card className="min-w-[300px]">

@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Navbar, IconButton, Collapse } from "@material-tailwind/react";
+import React from "react";
+import {
+  Navbar,
+  IconButton,
+  Collapse,
+  Typography,
+} from "@material-tailwind/react";
 import NavList from "./NavList";
 import SearchBar from "./SearchBar";
 import AuthButtons from "./AuthButton";
-import logoWithName from "../../../assets/LogoWithName.png";
+import logo from "../../../assets/itemizeLogo.png";
 
 export default function NavbarHeader({
   openNav,
@@ -14,20 +19,20 @@ export default function NavbarHeader({
   debouncedNavigate,
 }) {
   return (
-    <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
-      <div className="flex items-center justify-between text-blue-gray-900 lg:mx-40 gap-x-10">
+    <Navbar className="sticky top-0 z-30 h-max max-w-full rounded-none !bg-white px-6 py-2 shadow-none lg:px-4 lg:py-4">
+      <div className="flex items-center justify-between gap-x-10 text-blue-gray-900 lg:mx-64">
         <div
-          className={`${isLoggedIn ? "w-7/12" : "w-2/3"} flex justify-start`}
+          className={`${isLoggedIn ? "w-1/2" : "w-7/12"} flex items-center justify-start space-x-10`}
         >
-          <div className="">
-            <a href="/">
-              <img
-                src={logoWithName}
-                alt="main-logo"
-                className="mx-5 min-w-[150px] w-[150px]"
-              />
-            </a>
-          </div>
+          <a
+            href="/"
+            className="mr-5 flex items-center justify-start space-x-4"
+          >
+            <img src={logo} className="h-8 w-8" />
+            <Typography className="font-ubuntu mr-8 text-2xl font-bold">
+              itemize
+            </Typography>
+          </a>
           <SearchBar visibility={false} />
         </div>
         <div className="flex items-center gap-5">
@@ -80,9 +85,6 @@ export default function NavbarHeader({
         </div>
       </div>
       <Collapse open={openNav}>
-        <div className="mt-4">
-          <SearchBar visibility={true} />
-        </div>
         <div className="flex justify-center">
           <NavList />
         </div>

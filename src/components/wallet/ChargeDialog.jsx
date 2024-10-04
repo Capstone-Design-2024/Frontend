@@ -4,6 +4,8 @@ import {
   DialogHeader,
   DialogBody,
   Spinner,
+  Button,
+  Typography,
 } from "@material-tailwind/react";
 
 const ChargeDialog = ({
@@ -13,39 +15,40 @@ const ChargeDialog = ({
   loading,
   freeChargeLeft,
 }) => (
-  <Dialog open={open} handler={() => handleDialogToggle("open")} size="xs">
-    <DialogHeader className="p-2 justify-center">
-      Do you want to get token?
+  <Dialog
+    open={open}
+    handler={() => handleDialogToggle("open")}
+    size="xs"
+    className="p-4"
+  >
+    <DialogHeader className="flex justify-center">
+      Do you want to charge token?
     </DialogHeader>
-    <div className="flex justify-center">
-      <DialogBody className="p-2">
-        <p className="justify-center px-2">
-          {loading ? "Charging..." : `Free charge left: ${freeChargeLeft}`}
-        </p>
-        <div className="flex space-x-2 justify-center">
-          {loading ? (
-            <div className="mt-2">
-              <Spinner color="purple" className="h-10 w-10" />
-            </div>
-          ) : (
-            <>
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={chargeBalance}
-              >
-                Yes
-              </button>
-              <button
-                className="bg-purple-700 hover:bg-purple-500 rounded-lg px-3 text-white text-sm w-16 h-10"
-                onClick={() => handleDialogToggle("open")}
-              >
-                Cancel
-              </button>
-            </>
-          )}
+    <Typography className="flex justify-center px-2 font-medium text-gray-700">
+      {loading ? "Charging..." : `Free charge left: ${freeChargeLeft}`}
+    </Typography>
+    <DialogBody className="p-2">
+      {loading ? (
+        <div className="mt-2">
+          <Spinner color="purple" className="h-10 w-10" />
         </div>
-      </DialogBody>
-    </div>
+      ) : (
+        <div className="flex justify-between space-x-2">
+          <Button
+            className="h-10 w-full rounded-lg bg-purple-700 px-3 text-sm !normal-case text-white hover:bg-purple-500"
+            onClick={chargeBalance}
+          >
+            Yes
+          </Button>
+          <Button
+            className="h-10 w-full rounded-lg bg-purple-700 px-3 text-sm !normal-case text-white hover:bg-purple-500"
+            onClick={() => handleDialogToggle("open")}
+          >
+            No
+          </Button>
+        </div>
+      )}
+    </DialogBody>
   </Dialog>
 );
 

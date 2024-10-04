@@ -30,7 +30,7 @@ const ProjectTabs = ({ project }) => {
     {
       label: "Reviews",
       value: "reviews",
-      content: "Customer reviews will be displayed here.",
+      content: "",
     },
   ];
 
