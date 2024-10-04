@@ -1,4 +1,3 @@
-// components/CustomButton.js
 import React from "react";
 import { Button, Typography } from "@material-tailwind/react";
 
@@ -12,7 +11,7 @@ const CustomButton = ({ label, active, onClick, type, availability }) => {
       className={`rounded-3xl ${
         active
           ? `bg-${activeColor} border border-transparent`
-          : `bg-gray-50 hover:shadow-none shadow-none hover:border hover:border-${hoverColor}`
+          : `bg-gray-50 shadow-none hover:border hover:shadow-none hover:border-${hoverColor}`
       } `}
       onClick={onClick}
       disabled={!availability && true}

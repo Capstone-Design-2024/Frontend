@@ -17,7 +17,7 @@ export default function CheckoutSuccessDialog({ open, handler, from }) {
       open={open}
       handler={handler}
       size="xs"
-      className=" bg-green-50 py-10"
+      className="bg-green-50 py-10"
     >
       <SuccessAnimation />
       <DialogHeader className="flex justify-center">
@@ -32,11 +32,11 @@ export default function CheckoutSuccessDialog({ open, handler, from }) {
             : "Your purchase has been successfully completed."}
         </Typography>
       </div>
-      <div className="flex justify-center pt-4 mx-10">
+      <div className="mx-10 flex justify-center pt-4">
         <Button
           variant="text"
           size="sm"
-          className="bg-purple-700 w-full hover:bg-purple-600"
+          className="w-full bg-purple-700 hover:bg-purple-600"
           onClick={handler}
         >
           <Typography

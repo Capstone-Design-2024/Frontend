@@ -14,8 +14,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
   const frontCardRef = useRef(null);
   const backCardRef = useRef(null);
 
-  console.log("project", project);
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -104,10 +102,35 @@ const NFTTicket = ({ project, fromManageProject }) => {
     }
   }, [fromManageProject, frontImageUrl]);
 
-  console.log("frontImageUrl:", frontImageUrl);
-  console.log("fromManageProject:", fromManageProject);
-  console.log("thumbnailLoaded:", thumbnailLoaded);
-  console.log("nftInfo.makerAddress:", nftInfo.makerAddress);
+  useEffect(() => {
+    if (thumbnailLoaded && thumbnailFromProject) {
+      const img = new Image();
+      img.src = thumbnailFromProject;
+
+      img.onload = () => {
+        const degree = Math.floor(Math.random() * 360) + 1;
+        const rand1 = Math.random() + 0.5;
+        const rand2 = Math.random() + 0.5;
+        const rand3 = Math.random() + 0.5;
+        console.log(rand1, rand2);
+
+        const averageColor = getAverageColor(img);
+        const lighterColor = adjustBrightness(averageColor, rand1);
+        const lighterColor2 = adjustBrightness(averageColor, rand3);
+        const darkerColor = adjustBrightness(averageColor, rand2);
+
+        document.documentElement.style.setProperty(
+          "--ticket-bg-color",
+          `linear-gradient(${degree}deg, ${darkerColor}, ${lighterColor}, ${averageColor}, ${lighterColor2})`,
+        );
+      };
+    }
+  }, [thumbnailLoaded, thumbnailFromProject]);
+
+  const adjustBrightness = (color, factor) => {
+    const [r, g, b] = color.match(/\d+/g).map(Number);
+    return `rgb(${Math.min(Math.floor(r * factor), 255)}, ${Math.min(Math.floor(g * factor), 255)}, ${Math.min(Math.floor(b * factor), 255)})`;
+  };
 
   const uploadImageHandler = async (dataUrl) => {
     const token = localStorage.getItem("token");
@@ -124,7 +147,7 @@ const NFTTicket = ({ project, fromManageProject }) => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log("NFT Image uploaded successfully:", response);
     } catch (error) {
@@ -144,6 +167,33 @@ const NFTTicket = ({ project, fromManageProject }) => {
     return new Blob([u8arr], { type: mime });
   };
 
+  const getAverageColor = (image) => {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imageData.data;
+    let r = 0,
+      g = 0,
+      b = 0;
+
+    for (let i = 0; i < pixels.length; i += 4) {
+      r += pixels[i]; // Red
+      g += pixels[i + 1]; // Green
+      b += pixels[i + 2]; // Blue
+    }
+
+    const pixelCount = pixels.length / 4;
+    r = Math.floor(r / pixelCount);
+    g = Math.floor(g / pixelCount);
+    b = Math.floor(b / pixelCount);
+
+    return `rgb(${r},${g},${b})`;
+  };
+
   return (
     <div className="flip-card my-6">
       <div className="flip-card-inner">
@@ -155,17 +205,17 @@ const NFTTicket = ({ project, fromManageProject }) => {
           ) : (
             <div
               ref={frontCardRef}
-              className="w-full h-full flex items-center justify-center text-white ticket-bg"
+              className="ticket-bg flex h-full w-full items-center justify-center text-white"
             >
-              <div className="w-full h-full ticket-bg-meteor flex flex-col items-center p-4">
+              <div className="flex h-full w-full flex-col items-center p-4">
                 <img
                   src={thumbnailFromProject}
                   alt="project image"
-                  className="w-full h-96 z-50 mb-3 object-cover rounded-lg"
+                  className="z-50 mb-3 h-96 w-full rounded-lg object-cover"
                   onLoad={() => setThumbnailLoaded(true)}
                   onError={() => setThumbnailLoaded(false)}
                 />
-                <div className="w-full flex flex-col items-center mt-auto bg-white/50 p-4 rounded-lg text-black">
+                <div className="mt-auto flex w-full flex-col items-center rounded-lg bg-white/50 p-4 text-black">
                   <Typography variant="h4" className="text-glow">
                     {project.title}
                   </Typography>
@@ -183,8 +233,8 @@ const NFTTicket = ({ project, fromManageProject }) => {
           </div>
         ) : (
           <div ref={backCardRef} className="flip-card-back">
-            <div className="w-full h-full flex items-center justify-center text-white ticket-bg">
-              <div className="ticket-bg-meteor w-full h-full place-content-center">
+            <div className="ticket-bg flex h-full w-full items-center justify-center text-white">
+              <div className="ticket-bg-meteor h-full w-full place-content-center">
                 <div>
                   <Typography variant="h6" className="text-glow">
                     Project Name: {project.title}

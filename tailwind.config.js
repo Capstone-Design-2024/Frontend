@@ -8,6 +8,8 @@ module.exports = withMT({
   ],
   theme: {
     fontFamily: {
+      ubuntu: ["Ubuntu"],
+      montseratt: ["Montseratt"],
       sans: ["Ubuntu", "Open Sans", "sans-serif"],
       mono: ["ui-monospace", "SFMono-Regular"],
     },

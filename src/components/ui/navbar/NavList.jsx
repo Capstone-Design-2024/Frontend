@@ -8,19 +8,22 @@ export default function NavList({ isLoggedIn }) {
       { Cart: "cart" },
       { "My Projects": "myprojects" },
     ],
-    []
+    [],
   );
   const userEmail = localStorage.getItem("email");
   const userName = userEmail ? userEmail.split("@") : "";
 
   return (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {isLoggedIn && (
-        <div className=" right-0 top-0 flex flex-col items-end">
-          <Typography variant="small" className="font-normal">
+        <div className="right-0 top-0 flex flex-col items-end">
+          <Typography variant="small" className="font-montseratt font-medium">
             Welcome,{" "}
           </Typography>
-          <Typography variant="small" className="text-purple-700 font-medium">
+          <Typography
+            variant="small"
+            className="font-montseratt font-medium text-purple-700"
+          >
             {userName[0]}
           </Typography>
         </div>
@@ -32,7 +35,7 @@ export default function NavList({ isLoggedIn }) {
             key={index}
             as="li"
             variant="small"
-            className="p-1 font-normal hover:text-purple-600 focus:text-purple-600 flex justify-center"
+            className="flex justify-start p-1 font-normal hover:text-purple-600 focus:text-purple-600"
           >
             <a href={`/${value}`} className="flex items-center">
               {key}
