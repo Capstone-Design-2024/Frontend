@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from "react";
-import { DialogBody, Button } from "@material-tailwind/react";
+import { DialogBody, Button, Typography } from "@material-tailwind/react";
 import { API } from "../../config";
 import axios from "axios";
 import WalletHeader from "./WalletHeader";
@@ -7,9 +7,6 @@ import PrivateKeyDialog from "./PrivateKeyDialog";
 import ChargeDialog from "./ChargeDialog";
 import ListWithAvatar from "../ui/ListWithAvatar";
 import ERC20Contract from "../../contract/ERC20Contract";
-
-const getPrKey = () => localStorage.getItem("private_key");
-const token = localStorage.getItem("token");
 
 const WalletMain = ({ setPage, address, initialBalance }) => {
   const [dialogState, setDialogState] = useState({
@@ -25,10 +22,11 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   const [freeChargeLeft, setFreeChargeLeft] = useState(2);
   const [ownedTicket, setOwnedTicket] = useState([]);
   const [ticketLoading, setTicketLoading] = useState(true);
+  const [noTickets, setNoTickets] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
 
   const prKey = useMemo(() => localStorage.getItem("private_key"), []);
   const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
-
   const jwt = localStorage.getItem("token");
 
   const handleDialogToggle = useCallback(
@@ -59,24 +57,34 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   }, [password, storedPassword]);
 
   const getBalance = useCallback(async () => {
+    if (!address) {
+      console.error("Address is null or undefined");
+      return;
+    }
+
     try {
-      console.log("get balance function");
+      console.log("Fetching balance...");
       const erc20Contract = await ERC20Contract.getInstance();
-      console.log(address);
       const result = await erc20Contract.balanceOf(address);
-      console.log(result);
+      console.log("Fetched balance:", result);
       setBalance(result);
-      handleDialogToggle("balanceOpen");
     } catch (error) {
       console.error("Failed to get balance:", error);
     }
-  }, [address, handleDialogToggle]);
+  }, [address]);
+
+  useEffect(() => {
+    // Initial fetch of the balance when the component mounts, if address is valid
+    if (address) {
+      getBalance();
+    }
+  }, [address, getBalance]);
 
   const chargeBalance = async () => {
     console.log("PPT 발행을 시작합니다. 응답이 오기 전까지 기다려주세요.");
     setLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         `${API.CHARGEPNPTOKEN}`,
         { wallet_address: address },
         {
@@ -85,35 +93,38 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           },
         },
       );
-      console.log(response);
     } catch (error) {
       console.error("Failed to charge balance:", error);
     } finally {
       setLoading(false);
-      getBalance();
+      if (address) {
+        await getBalance(); // Ensure balance is updated after charging
+      }
       setFreeChargeLeft((cur) => cur - 1);
       handleDialogToggle("open");
     }
-    return;
   };
 
   const fetchTicket = async () => {
     try {
       const erc20Contract = await ERC20Contract.getInstance();
-      const result = await erc20Contract.getUserProjects(getPrKey());
+      const result = await erc20Contract.getUserProjects(prKey);
       const cards = [];
 
-      console.log(result);
+      if (!result) {
+        setNoTickets(true);
+        setTicketLoading(false);
+        return;
+      }
+
       for await (const pid of result.split(",")) {
         const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
-        const data = {
-          tokenURI: tokenURI,
-        };
+        const data = { tokenURI: tokenURI };
 
         const response = await axios.post(`${API.TOKENRESOLVE}`, data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${jwt}`,
           },
         });
 
@@ -131,14 +142,13 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
       }
       setOwnedTicket(cards);
       setTicketLoading(false);
+      setNoTickets(cards.length === 0);
     } catch (error) {
       console.error("Error fetching project cards:", error);
+      setFetchError(true);
+      setTicketLoading(false);
     }
   };
-
-  useEffect(() => {
-    setBalance(initialBalance);
-  }, [initialBalance]);
 
   useEffect(() => {
     fetchTicket();
@@ -155,15 +165,35 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           copyToClipboard={copyToClipboard}
           handleDialogToggle={handleDialogToggle}
           setPage={setPage}
-        ></WalletHeader>
+        />
       </div>
       <div className="px-4">
         <DialogBody>
-          <ListWithAvatar
-            walletAddress={address}
-            ticket={ownedTicket}
-            loading={ticketLoading}
-          />
+          <ListWithAvatar ticket={ownedTicket} loading={ticketLoading}>
+            {noTickets && (
+              <Typography variant="small" color="gray" className="pl-4">
+                You don't have any tickets yet!
+              </Typography>
+            )}
+            {fetchError && (
+              <>
+                <Typography variant="small" color="red" className="pl-4">
+                  Error fetching tickets. Would you like to try again?
+                </Typography>
+                <Button
+                  onClick={() => {
+                    setFetchError(false);
+                    setTicketLoading(true);
+                    fetchTicket();
+                  }}
+                  color="blue"
+                  className="ml-4 mt-2"
+                >
+                  Retry
+                </Button>
+              </>
+            )}
+          </ListWithAvatar>
         </DialogBody>
       </div>
       <ChargeDialog

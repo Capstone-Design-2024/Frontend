@@ -36,7 +36,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
 
     if (!fromManageProject) {
       loadImage();
-      console.log("load");
     } else {
       const img = new Image();
       img.src =
@@ -44,11 +43,9 @@ const NFTTicket = ({ project, fromManageProject }) => {
           ? project.thumbnail
           : URL.createObjectURL(project.thumbnail);
       img.onload = () => {
-        console.log("load");
         setThumbnailLoaded(true);
       };
       img.onerror = () => {
-        console.error("Error loading image");
         setThumbnailLoaded(false);
       };
       setThumbnailFromProject(img.src);
@@ -58,7 +55,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
   useEffect(() => {
     const fetchNftInfo = async () => {
       const data = { project_id: +project.id };
-      console.log("Data being sent to API:", data);
       try {
         const response = await axios.post(`${API.GETPROJECT}`, data, {
           headers: {
@@ -92,7 +88,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
         setBackImageUrl(backImgData);
       }
     };
-    console.log("capture");
     captureAsJpg();
   }, [thumbnailLoaded, nftInfo]);
 
@@ -112,7 +107,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
         const rand1 = Math.random() + 0.5;
         const rand2 = Math.random() + 0.5;
         const rand3 = Math.random() + 0.5;
-        console.log(rand1, rand2);
 
         const averageColor = getAverageColor(img);
         const lighterColor = adjustBrightness(averageColor, rand1);
@@ -149,7 +143,6 @@ const NFTTicket = ({ project, fromManageProject }) => {
           },
         },
       );
-      console.log("NFT Image uploaded successfully:", response);
     } catch (error) {
       console.error("Error uploading image:", error);
     }

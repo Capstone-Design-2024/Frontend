@@ -29,7 +29,7 @@ const ChargeDialog = ({
     </Typography>
     <DialogBody className="p-2">
       {loading ? (
-        <div className="mt-2">
+        <div className="mt-2 flex justify-center">
           <Spinner color="purple" className="h-10 w-10" />
         </div>
       ) : (

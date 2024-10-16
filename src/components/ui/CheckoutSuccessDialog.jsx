@@ -6,12 +6,11 @@ import {
   DialogFooter,
   Button,
   Typography,
-} from "@material-tailwind/react";
-import { ClipLoader } from "react-spinners"; // Import spinner
+  Spinner,
+} from "@material-tailwind/react"; // Import spinner
 import SuccessAnimation from "./animation/SuccessAnimation";
 
 export default function CheckoutSuccessDialog({
-  open,
   handler,
   success,
   from,
@@ -29,9 +28,14 @@ export default function CheckoutSuccessDialog({
           size="xs"
           className="bg-green-50 py-10"
         >
+          <DialogHeader className="flex justify-center">
+            <Spinner color="purple" className="h-10 w-10" />
+          </DialogHeader>
           <div className="flex flex-col items-center justify-center">
-            <ClipLoader color="#4A90E2" size={50} />
-            <Typography variant="small" className="mt-4 text-gray-800">
+            <Typography
+              variant="paragraph"
+              className="font-medium text-gray-800"
+            >
               Processing your purchase...
             </Typography>
           </div>
@@ -51,7 +55,10 @@ export default function CheckoutSuccessDialog({
             </Typography>
           </DialogHeader>
           <div className="flex justify-center">
-            <Typography variant="paragraph" className="text-gray-800">
+            <Typography
+              variant="paragraph"
+              className="font-medium text-gray-800"
+            >
               {from
                 ? description
                 : "Your purchase has been successfully completed."}

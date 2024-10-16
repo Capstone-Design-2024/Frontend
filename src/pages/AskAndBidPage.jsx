@@ -30,7 +30,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (response.data) {
         const bidPrices = response.data.data
@@ -103,24 +103,37 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
     }
   };
 
-  const buyOrSellTicket = () => {
+  const buyOrSellTicket = async () => {
+    let url;
     if (tradingType === "Buy Now") {
-      console.log("buy");
+      url = `${API.PURCHASEBID}`;
     } else {
-      console.log("sell");
+      url = `${API.PURCHASEASK}`;
+    }
+    const token = localStorage.getItem("token");
+    console.log(project.projectId);
+    const data = { auctionId: project.projectId };
+    try {
+      const response = await axios.post(url, data, {
+        "Content-Type": "application/json",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(`Error progressing ${tradingType}: `, error);
     }
   };
 
   return (
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
-        <div className="flex justify-center bg-white my-6">
+        <div className="my-6 flex justify-center bg-white">
           <Typography variant="h4">Place {type}</Typography>
         </div>
-        <div className="bg-gray-100 flex justify-center py-10">
-          <div className="bg-white w-1/2 rounded-md p-6">
+        <div className="flex justify-center bg-gray-100 py-10">
+          <div className="w-1/2 rounded-md bg-white p-6">
             <div className="flex justify-start">
-              <div className="bg-gray-100 flex justify-center p-2 rounded-md mr-6">
+              <div className="mr-6 flex justify-center rounded-md bg-gray-100 p-2">
                 <img
                   src={project ? project.thumbnail : logo}
                   alt="Product"
@@ -149,9 +162,9 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
               </div>
             </div>
             <hr className="mt-6" />
-            <div className="flex flex-col mt-3">
+            <div className="mt-3 flex flex-col">
               <div className="flex justify-center">
-                <div className="w-1/2 flex justify-center border-r-[1px]">
+                <div className="flex w-1/2 justify-center border-r-[1px]">
                   <div className="my-5">
                     <Typography>Lowest Bid</Typography>
                     <Typography className="flex justify-center">
@@ -159,7 +172,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                     </Typography>
                   </div>
                 </div>
-                <div className="w-1/2 flex justify-center">
+                <div className="flex w-1/2 justify-center">
                   <div className="my-5">
                     <Typography>Lowest Ask</Typography>
                     <Typography className="flex justify-center">
@@ -169,7 +182,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 border border-gray-100 rounded-3xl p-1 mt-4 grid grid-cols-2 gap-1">
+            <div className="mt-4 grid grid-cols-2 gap-1 rounded-3xl border border-gray-100 bg-gray-50 p-1">
               <CustomButton
                 label={`Place ${type}`}
                 active={tradingType === `Place ${type}`}
@@ -196,12 +209,12 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                   : "Price Now"}
               </Typography>
             </div>
-            <div className="flex items-center space-x-2 w-full">
+            <div className="flex w-full items-center space-x-2">
               {tradingType.includes("Place") ? (
                 <input
                   variant="static"
                   type="text"
-                  className="text-lg border-0 focus:outline-none focus:ring-0 text-right w-full"
+                  className="w-full border-0 text-right text-lg focus:outline-none focus:ring-0"
                   placeholder="Your Price"
                   value={inputValue}
                   onChange={handleChange}
@@ -209,7 +222,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
                   onBlur={handleBlur}
                 />
               ) : (
-                <Typography className="text-lg font-medium border-0 focus:outline-none focus:ring-0 text-right w-full">
+                <Typography className="w-full border-0 text-right text-lg font-medium focus:outline-none focus:ring-0">
                   {type === "Bid"
                     ? lowestBid.toLocaleString()
                     : lowestAsk.toLocaleString()}
@@ -219,12 +232,12 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
             </div>
             {tradingType.includes("Place") ? (
               <hr
-                className={`mt-2 mb-6 transition-colors duration-200 ${
+                className={`mb-6 mt-2 transition-colors duration-200 ${
                   isFocused ? "border-black" : "border-gray-200"
                 }`}
               />
             ) : (
-              <hr className="mt-2 mb-6 transition-colors duration-200" />
+              <hr className="mb-6 mt-2 transition-colors duration-200" />
             )}
             <Button
               size="lg"
@@ -238,7 +251,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
               }}
               disabled={tradingType.includes("Place") & !inputValue && true}
             >
-              <Typography variant="h6" className="!normal-case ">
+              <Typography variant="h6" className="!normal-case">
                 {tradingType.includes("Place")
                   ? `Place ${type}`
                   : `${type === "Bid" ? "Buy" : "Sell"}`}
@@ -246,7 +259,7 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
             </Button>
           </div>
         </div>
-        <div className="mt-6 mx-40 px-4 ">
+        <div className="mx-40 mt-6 px-4">
           <FooterWithLogo />
         </div>
       </StickyNavbar>

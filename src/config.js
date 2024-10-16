@@ -17,5 +17,10 @@ export const API = {
   S3IMAGEPROXY: `${BASE_URL}/project/s3-proxy`,
   CREATEAUCTION: `${BASE_URL}/project/auction/`,
   GETAUCTION: `${BASE_URL}/project/auction`,
-  TOKENRESOLVE:`${BASE_URL}/project/token-resolve`,
+  TOKENRESOLVE: `${BASE_URL}/project/token-resolve`,
+  ISMYPROJECT: `${BASE_URL}/project/is-own`,
+  PROJECTBUYER: `${BASE_URL}/contract/project/buyer-list`,
+  PURCHASEBID: `${BASE_URL}/project/auction/buy`,
+  PURCHASEASK: `${BASE_URL}/project/auction/sell`,
+  CHECKBALANCE: `${BASE_URL}/project/auction/balance`,
 };

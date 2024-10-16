@@ -12,6 +12,7 @@ import axios from "axios";
 import SuccessDialog from "./SuccessDialog";
 
 export default function ManageProject() {
+  const userEmail = localStorage.getItem("email");
   const { projectId } = useParams();
   const [current, setCurrent] = useState("Project Information");
   const [projectForm, setProjectForm] = useState({
@@ -23,7 +24,11 @@ export default function ManageProject() {
     },
     basicInfo: { projectName: "", projectImage: "", projectPrice: "" },
     storyLine: { projectDescription: "" },
-    createrInfo: { createrName: "", createrEmail: "", createrPhoneNumber: "" },
+    createrInfo: {
+      createrName: "",
+      createrEmail: userEmail,
+      createrPhoneNumber: "",
+    },
   });
   const [pageDisable, setPageDisable] = useState({
     projectInfo: false,
@@ -62,7 +67,7 @@ export default function ManageProject() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log("Success:", response);
       setSubmitSuccess((prev) => ({ ...prev, info: true }));
@@ -84,7 +89,7 @@ export default function ManageProject() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log("Image uploaded successfully:", response);
       setSubmitSuccess((prev) => ({ ...prev, img: true }));
@@ -156,7 +161,7 @@ export default function ManageProject() {
           buttonAvailability={buttonAvailability}
           onSubmit={submitHandler}
         />
-        <div className="mx-auto mt-10 max-w-screen-xl w-full">
+        <div className="mx-auto mt-10 w-full max-w-screen-xl">
           <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
           <div className="flex justify-between">
             <Typography variant="h2" className="mt-2">

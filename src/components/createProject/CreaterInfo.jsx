@@ -45,13 +45,12 @@ const CreaterInfo = ({
   };
   return (
     <>
-      <div className="flex justify-start mt-4">
+      <div className="mt-4 flex justify-start">
         <Typography variant="h3">Creater Name</Typography>
         <div className="pt-2">
           <BsAsterisk color="red" fontSize={"0.7rem"} />
         </div>
       </div>
-      <p className="text-gray-600">Please enter your name</p>
       <div className="mt-2">
         <Input
           label="name"
@@ -66,33 +65,24 @@ const CreaterInfo = ({
         ></Input>
       </div>
       {!inputValidity.createrName && (
-        <p className="text-red-600 mt-2">Please enter your name</p>
+        <p className="mt-2 text-red-600">Please enter your name</p>
       )}
-      <div className="flex justify-start mt-4">
+      <div className="mt-4 flex justify-start">
         <Typography variant="h3">Creater Email</Typography>
-        <div className="pt-2">
-          <BsAsterisk color="red" fontSize={"0.7rem"} />
-        </div>
       </div>
-      <p className="text-gray-600">Please enter your email</p>
       <div className="mt-2">
         <Input
           label="email"
           type="email"
           size="md"
           value={createrInfoForm.createrEmail}
-          onChange={(event) =>
-            setCreaterInfoForm((prevProject) => ({
-              ...prevProject,
-              createrEmail: event.target.value,
-            }))
-          }
+          disabled
         ></Input>
       </div>
       {!inputValidity.createrEmail && (
-        <p className="text-red-600 mt-2">Please enter your email</p>
+        <p className="mt-2 text-red-600">Please enter your email</p>
       )}
-      <div className="flex justify-start mt-4">
+      <div className="mt-4 flex justify-start">
         <Typography variant="h3">Creater Phone Number</Typography>
         <div className="pt-2">
           <BsAsterisk color="red" fontSize={"0.7rem"} />
@@ -113,13 +103,13 @@ const CreaterInfo = ({
         ></Input>
       </div>
       {!inputValidity.createrPhoneNumber && (
-        <p className="text-red-600 mt-2">Please enter your phone number</p>
+        <p className="mt-2 text-red-600">Please enter your phone number</p>
       )}
       <div className="mt-4">
         <Button
           variant="text"
           size="md"
-          className="w-24 !normal-case text-sm mt-1 bg-white text-gray-700 border border-gray-200 shadow-lg shadow-gray-900/5"
+          className="mt-1 w-24 border border-gray-200 bg-white text-sm !normal-case text-gray-700 shadow-lg shadow-gray-900/5"
           onClick={() => {
             validateAndSave();
           }}

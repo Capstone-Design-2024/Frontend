@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
 import StickyNavbar from "../components/ui/navbar/StickyNavbar";
 import { API } from "../config";
 import { Typography } from "@material-tailwind/react";
 import FooterWithLogo from "../components/ui/FooterWithLogo";
 import EcommerceCard from "../components/ui/EcommerceCard";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { emptyProjects } from "./emptyProjects";
 import TabsComponent from "../components/ui/TabsComponent";
 
@@ -19,80 +19,86 @@ const ProjectsListPage = ({ isLoggedIn }) => {
     "On Funding": {},
     Closed: {},
   });
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get(API.READPROJECTS, {
+  // Fetch projects data
+  const fetchProjects = useCallback(async () => {
+    setUserFeedback("Loading...");
+    try {
+      const response = await axios.get(API.READPROJECTS, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        const fetchedProjects = response.data.data;
-
-        if (fetchedProjects.length > 0) {
-          const currentDate = new Date();
-          const onFundingProjects = {};
-          const closedProjects = {};
-
-          fetchedProjects.forEach((project) => {
-            const deadline = new Date(project.deadLine);
-            const isOnFunding = deadline > currentDate;
-            const category = project.category || "Uncategorized";
-
-            if (isOnFunding) {
-              if (!onFundingProjects[category]) {
-                onFundingProjects[category] = [];
-              }
-              onFundingProjects[category].push(project);
-            } else {
-              if (!closedProjects[category]) {
-                closedProjects[category] = [];
-              }
-              closedProjects[category].push(project);
-            }
-          });
-
-          setProjectType({
-            "On Funding": onFundingProjects,
-            Closed: closedProjects,
-          });
-        } else {
-          setUserFeedback("Oops! there is no project yet");
-          setProjects(emptyProjects);
-        }
-      })
-      .catch((error) => {
-        console.log("Error fetching projects", error);
-        setUserFeedback("An error occurred while fetching projects");
-        setProjects(emptyProjects);
       });
+      const fetchedProjects = response.data.data;
+
+      if (fetchedProjects.length > 0) {
+        const currentDate = new Date();
+        const onFundingProjects = {};
+        const closedProjects = {};
+
+        // Categorize projects based on their funding status
+        fetchedProjects.forEach((project) => {
+          const deadline = new Date(project.deadLine);
+          const isOnFunding = deadline > currentDate;
+          const category = project.category || "Uncategorized";
+
+          if (isOnFunding) {
+            if (!onFundingProjects[category]) {
+              onFundingProjects[category] = [];
+            }
+            onFundingProjects[category].push(project);
+          } else {
+            if (!closedProjects[category]) {
+              closedProjects[category] = [];
+            }
+            closedProjects[category].push(project);
+          }
+        });
+
+        setProjectType({
+          "On Funding": onFundingProjects,
+          Closed: closedProjects,
+        });
+        setUserFeedback(""); // Clear feedback if projects are available
+      } else {
+        setUserFeedback("Oops! there is no project yet");
+      }
+    } catch (error) {
+      console.log("Error fetching projects", error);
+      setUserFeedback("An error occurred while fetching projects");
+    }
   }, [token]);
 
   useEffect(() => {
-    let currentProjects = [];
+    fetchProjects();
+  }, [fetchProjects]);
+
+  // Determine the projects to be displayed based on selected category and type
+  const currentProjects = useMemo(() => {
+    let projectsList = [];
     if (itemCategory === "all") {
       Object.keys(projectType[selectedType]).forEach((category) => {
-        currentProjects = currentProjects.concat(
-          projectType[selectedType][category],
-        );
+        projectsList = projectsList.concat(projectType[selectedType][category]);
       });
     } else {
-      currentProjects = projectType[selectedType][itemCategory] || [];
+      projectsList = projectType[selectedType][itemCategory] || [];
     }
 
-    if (currentProjects.length === 0) {
+    if (projectsList.length === 0 && userFeedback === "") {
       setUserFeedback(
         `No projects available in the ${selectedType} tab${
-          itemCategory !== "all" ? ` for the "${itemCategory}" category` : ""
+          itemCategory !== "all" ? ` for the \"${itemCategory}\" category` : ""
         }.`,
       );
-      setProjects(emptyProjects);
-    } else {
-      setUserFeedback("");
-      setProjects(currentProjects);
     }
-  }, [projectType, selectedType, itemCategory]);
+
+    return projectsList.length > 0 ? projectsList : emptyProjects;
+  }, [projectType, selectedType, itemCategory, userFeedback]);
+
+  useEffect(() => {
+    setProjects(currentProjects);
+  }, [currentProjects]);
 
   return (
     <>
@@ -129,19 +135,17 @@ const ProjectsListPage = ({ isLoggedIn }) => {
             <div className="mt-1 min-h-96 border-e-0">
               <div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  {projects.map((project, idx) => {
-                    return (
-                      <EcommerceCard
-                        key={idx}
-                        project={project}
-                        status={70}
-                        onClick={() =>
-                          navigate(`/createproject/${project.projectId}`)
-                        }
-                        className="h-[441px] min-w-[211px] place-content-center bg-white bg-opacity-10 hover:bg-gray-600 focus:bg-gray-600 xl:w-[265px]"
-                      />
-                    );
-                  })}
+                  {projects.map((project, idx) => (
+                    <EcommerceCard
+                      key={project.projectId}
+                      project={project}
+                      status={70}
+                      onClick={() =>
+                        navigate(`/createproject/${project.projectId}`)
+                      }
+                      className="h-[441px] min-w-[211px] place-content-center bg-white bg-opacity-10 hover:bg-gray-600 focus:bg-gray-600 xl:w-[265px]"
+                    />
+                  ))}
                 </div>
               </div>
             </div>
