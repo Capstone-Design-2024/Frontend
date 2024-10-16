@@ -98,7 +98,7 @@ const ProjectsListPage = ({ isLoggedIn }) => {
     <>
       <StickyNavbar isLoggedIn={isLoggedIn}>
         <div className="mt-2 py-5">
-          <div className="mx-14 md:mx-36 lg:mx-72">
+          <div className="mx-14 lg:mx-60 xl:mx-72">
             <div className="pl-4">
               <Typography className="text-2xl font-semibold">
                 {itemCategory === "all" ? "All" : itemCategory}

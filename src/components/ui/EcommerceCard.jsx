@@ -199,7 +199,6 @@
 //   );
 // }
 
-
 import { useState } from "react";
 import {
   Card,
@@ -259,9 +258,10 @@ export default function EcommerceCard({
     return result;
   };
 
-  const projectTitle = project && project.title 
-    ? project.title.charAt(0).toUpperCase() + project.title.slice(1) 
-    : "Project title is null";
+  const projectTitle =
+    project && project.title
+      ? project.title.charAt(0).toUpperCase() + project.title.slice(1)
+      : "Project title is null";
 
   return (
     <button
@@ -377,22 +377,24 @@ export default function EcommerceCard({
                   <div className="mt-2 h-4 w-56 rounded-md bg-gray-300"></div>
                 </>
               )}
-              <div className="mt-1 flex justify-start">
-                <div
-                  className={`${
-                    showCategory ? "bg-gray-100" : "bg-transparent"
-                  } rounded-md px-2 py-1`}
-                >
-                  <Typography
-                    variant="small"
+              {project.title && (
+                <div className="mt-1 flex justify-start">
+                  <div
                     className={`${
-                      showCategory ? "text-purple-500" : "text-transparent"
-                    } font-normal`}
+                      showCategory ? "bg-gray-100" : "bg-transparent"
+                    } rounded-md px-2 py-1`}
                   >
-                    {project?.category || "Project category is null"}
-                  </Typography>
+                    <Typography
+                      variant="small"
+                      className={`${
+                        showCategory ? "text-purple-500" : "text-transparent"
+                      } font-normal`}
+                    >
+                      {project?.category || "Project category is null"}
+                    </Typography>
+                  </div>
                 </div>
-              </div>
+              )}
             </CardBody>
           </Card>
         </>
