@@ -92,7 +92,7 @@ export default function ListWithAvatar({ project, walletAddress }) {
       const erc20Contract = await ERC20Contract.getInstance();
       const result = await erc20Contract.getUserProjects(getPrKey());
       const cards = []; 
-
+      console.log(result)
       for await (const pid of result.split(",")) {
         const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
         const data = {
