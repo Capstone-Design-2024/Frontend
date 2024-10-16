@@ -102,37 +102,34 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
       const erc20Contract = await ERC20Contract.getInstance();
       const result = await erc20Contract.getUserProjects(getPrKey());
       const cards = [];
-      if (result.split(",").length != 0) {
-        console.log(result);
-        for await (const pid of result.split(",")) {
-          const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
-          const data = {
-            tokenURI: tokenURI,
-          };
 
-          const response = await axios.post(`${API.TOKENRESOLVE}`, data, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+      console.log(result);
+      for await (const pid of result.split(",")) {
+        const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
+        const data = {
+          tokenURI: tokenURI,
+        };
 
-          const responseData = response.data.data;
+        const response = await axios.post(`${API.TOKENRESOLVE}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          const cardData = {
-            name: responseData.name,
-            image: responseData.image,
-            description: responseData.description,
-            price: responseData.attributes[0]["value"],
-            uri: tokenURI,
-          };
+        const responseData = response.data.data;
 
-          cards.push(cardData);
-        }
-        setOwnedTicket(cards);
-      } else {
-        setOwnedTicket(cards);
+        const cardData = {
+          name: responseData.name,
+          image: responseData.image,
+          description: responseData.description,
+          price: responseData.attributes[0]["value"],
+          uri: tokenURI,
+        };
+
+        cards.push(cardData);
       }
+      setOwnedTicket(cards);
       setTicketLoading(false);
     } catch (error) {
       console.error("Error fetching project cards:", error);
