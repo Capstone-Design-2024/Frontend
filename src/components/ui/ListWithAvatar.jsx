@@ -72,53 +72,11 @@ import {
   Button, // 버튼 추가
 } from "@material-tailwind/react";
 import logo from "../../assets/itemizeLogo.png";
+
 import React, { useState } from "react"; // useEffect 제거
 
 export default function ListWithAvatar({ walletAddress, ticket, loading }) {
   console.log(ticket);
-
-  // const fetchProjectCard = async () => {
-  //   try {
-
-  //     const erc20Contract = await ERC20Contract.getInstance();
-  //     const result = await erc20Contract.getUserProjects(getPrKey());
-  //     const cards = [];
-  //     if (result.split(",").length != 0) {
-  //       console.log(result)
-  //       for await (const pid of result.split(",")) {
-  //         const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
-  //         const data = {
-  //           tokenURI: tokenURI
-  //         };
-
-  //         const response = await axios.post(`${API.TOKENRESOLVE}`, data, {
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             'Authorization': `Bearer ${token}`,
-  //           }
-  //         });
-
-  //         const responseData = response.data.data
-
-  //         const cardData = {
-  //           name: responseData.name,
-  //           image: responseData.image,
-  //           description: responseData.description,
-  //           price: responseData.attributes[0]["value"],
-  //           uri: tokenURI
-  //         };
-
-  //         cards.push(cardData);
-  //       }
-  //       setProjectCard(cards);
-  //     } else {
-  //       setProjectCard(cards);
-  //     }
-
-  //   } catch (error) {
-  //     console.error("Error fetching project cards:", error);
-  //   }
-  // };
 
   return (
     <Card className="w-full bg-white/85 p-4 shadow-2xl">
