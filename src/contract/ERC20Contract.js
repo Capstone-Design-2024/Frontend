@@ -139,6 +139,24 @@ class ERC20Contract {
 
     return receipt;
   }
+
+  async getUserProjects(clientPrKey) {
+    await this.ready;
+    const clientWallet = new ethers.Wallet(clientPrKey, provider);
+    const clientSign = clientWallet.connect(provider);
+    const result = await this.contract.getUserProjects(clientSign.address);
+
+    return result.toString();
+  }
+
+  async getTokenURI(projectId) {
+    await this.ready;
+    // const clientWallet = new ethers.Wallet(clientPrKey, provider);
+    // const clientSign = clientWallet.connect(provider);
+    const result = await this.contract.getTokenURI(projectId);
+    return result.toString();
+
+  }
 }
 
 export default ERC20Contract;
