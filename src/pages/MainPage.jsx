@@ -42,8 +42,8 @@ const MainPage = ({ isLoggedIn, isLoading }) => {
         <StickyNavbar isLoggedIn={isLoggedIn}>
           <CarouselWithContent />
           <div className="py-8">
-            <div className="mx-4 lg:mx-64">
-              <div className="lg:grid lg:grid-cols-2 lg:space-x-5">
+            <div className="mx-4 lg:mx-40 xl:mx-64">
+              <div className="lg:grid lg:grid-cols-1 xl:grid-cols-2 xl:space-x-5">
                 <div className="w-full">
                   <Typography variant="h6" className="mb-2 ml-4 text-black">
                     FEATURED PROJECT

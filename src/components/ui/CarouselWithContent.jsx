@@ -25,7 +25,7 @@ export default function CarouselWithContent() {
     },
   ];
   return (
-    <div className="mt-5 lg:mx-64">
+    <div className="mt-5 lg:mx-24 xl:mx-64">
       <Carousel
         className="h-[400px] overflow-hidden rounded-lg sm:h-[500px] md:h-[650px] lg:h-[400px]"
         navigation={({ setActiveIndex, activeIndex, length }) => (

@@ -8,6 +8,9 @@ import ChargeDialog from "./ChargeDialog";
 import ListWithAvatar from "../ui/ListWithAvatar";
 import ERC20Contract from "../../contract/ERC20Contract";
 
+const getPrKey = () => localStorage.getItem("private_key");
+const token = localStorage.getItem("token");
+
 const WalletMain = ({ setPage, address, initialBalance }) => {
   const [dialogState, setDialogState] = useState({
     open: false,
@@ -20,6 +23,8 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   const [balance, setBalance] = useState(initialBalance);
   const [loading, setLoading] = useState(false);
   const [freeChargeLeft, setFreeChargeLeft] = useState(2);
+  const [ownedTicket, setOwnedTicket] = useState([]);
+  const [ticketLoading, setTicketLoading] = useState(true);
 
   const prKey = useMemo(() => localStorage.getItem("private_key"), []);
   const storedPassword = useMemo(() => localStorage.getItem("pw"), []);
@@ -28,7 +33,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
 
   const handleDialogToggle = useCallback(
     (key) => setDialogState((prev) => ({ ...prev, [key]: !prev[key] })),
-    []
+    [],
   );
 
   const copyToClipboard = useCallback((text) => {
@@ -78,7 +83,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
-        }
+        },
       );
       console.log(response);
     } catch (error) {
@@ -92,13 +97,56 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
     return;
   };
 
+  const fetchTicket = async () => {
+    try {
+      const erc20Contract = await ERC20Contract.getInstance();
+      const result = await erc20Contract.getUserProjects(getPrKey());
+      const cards = [];
+
+      console.log(result);
+      for await (const pid of result.split(",")) {
+        const tokenURI = await erc20Contract.getTokenURI(parseInt(pid));
+        const data = {
+          tokenURI: tokenURI,
+        };
+
+        const response = await axios.post(`${API.TOKENRESOLVE}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const responseData = response.data.data;
+
+        const cardData = {
+          name: responseData.name,
+          image: responseData.image,
+          description: responseData.description,
+          price: responseData.attributes[0]["value"],
+          uri: tokenURI,
+        };
+
+        cards.push(cardData);
+      }
+      setOwnedTicket(cards);
+      setTicketLoading(false);
+    } catch (error) {
+      console.error("Error fetching project cards:", error);
+    }
+  };
+
   useEffect(() => {
     setBalance(initialBalance);
   }, [initialBalance]);
 
+  useEffect(() => {
+    fetchTicket();
+  }, []);
+
   return (
     <>
-      <div className="bg-white rounded-t-lg p-4">
+      <div className="rounded-t-lg bg-white p-4">
         <WalletHeader
           address={address}
           balance={balance}
@@ -111,7 +159,11 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
       </div>
       <div className="px-4">
         <DialogBody>
-          <ListWithAvatar walletAddress={address} />
+          <ListWithAvatar
+            walletAddress={address}
+            ticket={ownedTicket}
+            loading={ticketLoading}
+          />
         </DialogBody>
       </div>
       <ChargeDialog
