@@ -85,7 +85,7 @@ const SignUpPage = () => {
         formValidity.email &&
         formValidity.password &&
         form.confirmPassword === form.password &&
-        formValidity.agreeTerm
+        formValidity.agreeTerm,
     );
   }, [formValidity, form.confirmPassword, form.password]);
 
@@ -125,7 +125,7 @@ const SignUpPage = () => {
       } else {
         console.error("Error:", data);
         setErrorFeedback(
-          data.message || "An error occurred. Please try again."
+          data.message || "An error occurred. Please try again.",
         );
       }
     } catch (error) {
@@ -139,95 +139,101 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MembershipBg type={"Sign Up"}>
-      <Card title={"Sign Up"} width={"w-500px"}>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex justify-between">
-            {firstLastName.map((name) => (
+    <div className="flex justify-between">
+      <div className="w-1/2">
+        <MembershipBg />
+      </div>
+      <div className="flex w-1/2 items-center justify-center">
+        <Card title={"Sign Up"}>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex justify-between">
+              {firstLastName.map((name) => (
+                <div className="w-1/2" key={name.placeholder}>
+                  <CustomInput
+                    type={name.type}
+                    placeholder={name.placeholder}
+                    value={form.name}
+                    onChange={(e) => handleInputChange(e, name.formType)}
+                    validity={formValidity[name.formType]}
+                    message={
+                      formValidity[name.formType]
+                        ? ""
+                        : `Invalid ${name.placeholder}.`
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+            {requiredFields.map((field) => (
               <CustomInput
-                key={name.placeholder}
-                type={name.type}
-                placeholder={name.placeholder}
-                value={form.name}
-                onChange={(e) => handleInputChange(e, name.formType)}
-                validity={formValidity[name.formType]}
+                key={field.placeholder}
+                type={field.type}
+                placeholder={field.placeholder}
+                value={form.field}
+                onChange={(e) => handleInputChange(e, field.formType)}
+                validity={formValidity[field.formType]}
+                passwordValidity={
+                  field.formType === "password" ? passwordValidity : undefined
+                }
                 message={
-                  formValidity[name.formType]
+                  formValidity[field.formType]
                     ? ""
-                    : `Invalid ${name.placeholder}.`
+                    : field.formType === "confirmPassword"
+                      ? "Please provide same input as your password"
+                      : `Please provide valid ${field.placeholder.toLowerCase()}.`
                 }
               />
             ))}
-          </div>
-          {requiredFields.map((field) => (
             <CustomInput
-              key={field.placeholder}
-              type={field.type}
-              placeholder={field.placeholder}
-              value={form.field}
-              onChange={(e) => handleInputChange(e, field.formType)}
-              validity={formValidity[field.formType]}
-              passwordValidity={
-                field.formType === "password" ? passwordValidity : undefined
-              }
-              message={
-                formValidity[field.formType]
-                  ? ""
-                  : field.formType === "confirmPassword"
-                  ? "Please provide same input as your password"
-                  : `Please provide valid ${field.placeholder.toLowerCase()}.`
-              }
+              type="text"
+              placeholder="Address (Optional)"
+              value={form.address}
+              onChange={(e) => handleInputChange(e, "address")}
             />
-          ))}
-          <CustomInput
-            type="text"
-            placeholder="Address (Optional)"
-            value={form.address}
-            onChange={(e) => handleInputChange(e, "address")}
-          />
-          <div className="flex items-center mt-2">
-            <input
-              type="checkbox"
-              id="terms"
-              name="terms"
-              className="h-4 w-4 text-purple-600 focus:ring-purple-400 border-gray-700 rounded"
-              checked={form.agreeTerm}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
-              I agree to the terms and conditions
-            </label>
-          </div>
-          {errorFeedback && (
-            <div className="text-red-600 text-sm text-center mt-2">
-              {errorFeedback}
+            <div className="mt-2 flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                className="h-4 w-4 rounded border-gray-700 text-purple-600 focus:ring-purple-400"
+                checked={form.agreeTerm}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="terms" className="ml-2 text-sm text-gray-700">
+                I agree to the terms and conditions
+              </label>
             </div>
-          )}
-          <div>
-            <button
-              type="submit"
-              className={`w-full flex justify-center ${
-                isButtonActive
-                  ? "bg-purple-800 hover:bg-purple-700 text-gray-100"
-                  : "bg-purple-300 text-gray-100"
-              } p-3 rounded-lg tracking-wide font-semibold transition ease-in duration-500 ${
-                isLoading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={!isButtonActive || isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />{" "}
-                  Loading...
-                </>
-              ) : (
-                "Continue to sign up"
-              )}
-            </button>
-          </div>
-        </form>
-      </Card>
-    </MembershipBg>
+            {errorFeedback && (
+              <div className="mt-2 text-center text-sm text-red-600">
+                {errorFeedback}
+              </div>
+            )}
+            <div>
+              <button
+                type="submit"
+                className={`flex w-full justify-center ${
+                  isButtonActive
+                    ? "bg-purple-800 text-gray-100 hover:bg-purple-700"
+                    : "bg-purple-300 text-gray-100"
+                } rounded-lg p-3 font-semibold tracking-wide transition duration-500 ease-in ${
+                  isLoading ? "cursor-not-allowed opacity-50" : ""
+                }`}
+                disabled={!isButtonActive || isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />{" "}
+                    Loading...
+                  </>
+                ) : (
+                  "Continue to sign up"
+                )}
+              </button>
+            </div>
+          </form>
+        </Card>
+      </div>
+    </div>
   );
 };
 

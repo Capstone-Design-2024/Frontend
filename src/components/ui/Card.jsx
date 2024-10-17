@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ title, width, children }) => {
+const Card = ({ title, children }) => {
   const noAccount = (
     <p className="text-gray-700">
       Don't have an account?{" "}
@@ -13,22 +13,20 @@ const Card = ({ title, width, children }) => {
     </p>
   );
   return (
-    <div className="flex justify-center self-center z-10 ">
-      <div
-        className={`p-12 mx-auto rounded-3xl ${width}  bg-white/80 backdrop-blur-lg border border-white/10 shadow-lg`}
-      >
+    <div className="flex w-full justify-center self-center">
+      <div className={`mx-auto w-2/3 rounded-3xl bg-white/80 p-12`}>
         <div className="mb-7">
-          <h3 className="font-semibold text-2xl text-gray-800">{title}</h3>
+          <h3 className="text-2xl font-semibold text-gray-800">{title}</h3>
           {title === "Log In" && noAccount}
         </div>
         {children}
-        <div className="mt-7 text-center text-gray-800 text-xs">
+        <div className="mt-7 text-center text-xs text-gray-800">
           <span>
             {"Copyright © 2024 "}
             <a
               href="/"
               target="_blank"
-              className="text-purple-700 hover:text-purple-600 "
+              className="text-purple-700 hover:text-purple-600"
             >
               Itemize
             </a>
