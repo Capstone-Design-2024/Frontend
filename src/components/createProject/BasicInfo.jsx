@@ -18,7 +18,7 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
   });
   const [imageError, setImageError] = useState("");
   const [imagePreview, setImagePreview] = useState(
-    basicInfo.projectImage ? URL.createObjectURL(basicInfo.projectImage) : ""
+    basicInfo.projectImage ? URL.createObjectURL(basicInfo.projectImage) : "",
   );
 
   const handleImageChange = (event) => {
@@ -43,7 +43,7 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
         setImageError(
           !isValidFormat
             ? "Invalid file format. Only PNG and JPG are allowed."
-            : "File size exceeds 1MB."
+            : "File size exceeds 1MB.",
         );
         setInputValidity((prevValidity) => ({
           ...prevValidity,
@@ -94,11 +94,11 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
   };
 
   return (
-    <>
+    <d>
       <p className="text-gray-600">
         Please enter required explanations for your project
       </p>
-      <div className="flex justify-start mt-4">
+      <div className="mt-4 flex justify-start">
         <Typography variant="h3">Project Name</Typography>
         <div className="pt-2">
           <BsAsterisk color="red" fontSize={"0.7rem"} />
@@ -117,16 +117,16 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
           }
         ></Input>
         {!inputValidity.projectName && (
-          <p className="text-red-600 mt-2">Please enter project name</p>
+          <p className="mt-2 text-red-600">Please enter project name</p>
         )}
       </div>
-      <div className="flex justify-start mt-5">
+      <div className="mt-5 flex justify-start">
         <Typography variant="h3">Project Price</Typography>
         <div className="pt-2">
           <BsAsterisk color="red" fontSize={"0.7rem"} />
         </div>
       </div>
-      <p className="text-gray-600 mt-2">
+      <p className="mt-2 text-gray-600">
         Please set your target funds between $500 to $1M.
       </p>
       <div className="mt-2">
@@ -145,9 +145,9 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
         ></Input>
       </div>
       {!inputValidity.projectPrice && (
-        <p className="text-red-600 mt-2">Please enter project price</p>
+        <p className="mt-2 text-red-600">Please enter project price</p>
       )}
-      <div className="flex justify-start mt-4">
+      <div className="mt-4 flex justify-start">
         <Typography variant="h3">Representative Image</Typography>
         <div className="pt-2">
           <BsAsterisk color="red" fontSize={"0.7rem"} />
@@ -179,32 +179,32 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
         <Typography className="font-medium text-white">
           Ensure that these requirements are met:
         </Typography>
-        <ul className="mt-2 ml-2 list-inside list-disc text-white">
+        <ul className="ml-2 mt-2 list-inside list-disc text-white">
           <li>Smaller than 1MB</li>
           <li>File format must be png or jpg</li>
         </ul>
       </Alert>
-      <div className="file-upload mt-2 border border-gray-400 rounded-md relative">
+      <div className="file-upload relative mt-2 rounded-md border border-gray-400">
         {imagePreview ? (
-          <div className="w-full h-full">
+          <div className="h-full w-full">
             <img
               src={imagePreview}
               alt="uploaded"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
-            <div className="absolute top-0 right-0 flex p-2">
+            <div className="absolute right-0 top-0 flex p-2">
               <Button
-                className="bg-white hover:bg-gray-200 w-10 h-10 p-1 rounded-sm shadow-lg flex flex-col items-center place-content-center"
+                className="flex h-10 w-10 flex-col place-content-center items-center rounded-sm bg-white p-1 shadow-lg hover:bg-gray-200"
                 onClick={handleImageDelete}
               >
-                <FiTrash2 className="text-gray-700 w-28" />
+                <FiTrash2 className="w-28 text-gray-700" />
               </Button>
             </div>
           </div>
         ) : (
           <>
             <div className="flex justify-center">
-              <img src={imageIcon} alt="upload" className="w-16 " />
+              <img src={imageIcon} alt="upload" className="w-16" />
             </div>
             <h3>{`${
               basicInfoForm.projectImage
@@ -215,18 +215,18 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
             <input
               type="file"
               onChange={handleImageChange}
-              className="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer"
+              className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
             />
           </>
         )}
       </div>
 
-      {imageError && <p className="text-red-600 mt-2">{imageError}</p>}
+      {imageError && <p className="mt-2 text-red-600">{imageError}</p>}
       <div className="mt-4">
         <Button
           variant="text"
           size="md"
-          className="w-24 !normal-case text-sm mt-1 bg-white text-gray-700 border border-gray-200 shadow-lg shadow-gray-900/5"
+          className="mt-1 w-24 border border-gray-200 bg-white text-sm !normal-case text-gray-700 shadow-lg shadow-gray-900/5"
           onClick={() => {
             validateAndSave();
           }}
@@ -234,7 +234,7 @@ const BasicInfo = ({ basicInfo, setProject, setCurrent, setAvailability }) => {
           next
         </Button>
       </div>
-    </>
+    </d>
   );
 };
 

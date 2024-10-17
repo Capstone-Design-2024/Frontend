@@ -154,14 +154,16 @@ export default function ManageProject() {
 
   return (
     <>
-      <div className="flex justify-start">
-        <DefaultSidebar
-          setCurrent={setCurrent}
-          availability={pageDisable}
-          buttonAvailability={buttonAvailability}
-          onSubmit={submitHandler}
-        />
-        <div className="mx-auto mt-10 w-full max-w-screen-xl">
+      <div className="flex max-h-lvh justify-start space-x-16">
+        <div className="w-1/4">
+          <DefaultSidebar
+            setCurrent={setCurrent}
+            availability={pageDisable}
+            buttonAvailability={buttonAvailability}
+            onSubmit={submitHandler}
+          />
+        </div>
+        <div className="mt-10 w-full overflow-y-auto pb-16 pr-16">
           <BreadcrumbsDefault current={current}></BreadcrumbsDefault>
           <div className="flex justify-between">
             <Typography variant="h2" className="mt-2">

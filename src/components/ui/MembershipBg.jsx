@@ -1,23 +1,21 @@
 import React from "react";
 import mainlogo from "../../assets/itemizeLogo.png";
+import { Typography } from "@material-tailwind/react";
 
-const MembershipBg = ({ children, type, padding }) => {
+const MembershipBg = () => {
   return (
     <>
-      <div className="bg-purple-900 top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-100vh w-full overflow-hidden ">
-        <div>
-          <div className="items-center relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent rounded-3xl shadow-xl">
-            <div>
-              <a className="flex justify-center" href="/">
-                <img src={mainlogo} alt="home logo" className="w-20 mb-8" />
-              </a>
-              <div
-                className={`flex-col flex self-center ${padding} sm:max-w-4xl xl:max-w-md  z-10`}
-              >
-                {children}
-              </div>
-            </div>
-          </div>
+      <div className="h-lvh w-full overflow-hidden bg-gradient-to-br from-purple-100 via-pink-400 to-purple-600 p-16 leading-5">
+        <a className="flex items-center justify-start space-x-4" href="/">
+          <img src={mainlogo} alt="home logo" className="w-10" />
+          <Typography className="mr-8 font-ubuntu text-3xl font-bold">
+            itemize
+          </Typography>
+        </a>
+        <div className="fixed bottom-0 mb-10 text-center text-white">
+          <Typography className="font-ubuntu text-2xl font-normal">
+            "Empowering Innovative Ideas Worldwide"
+          </Typography>
         </div>
       </div>
     </>

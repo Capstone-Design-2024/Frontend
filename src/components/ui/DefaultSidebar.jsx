@@ -14,13 +14,13 @@ export function DefaultSidebar({
   onSubmit,
 }) {
   return (
-    <Card className="h-[100vh] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-lvh w-full p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
         <a href="/">
           <img
             src={logoWithName}
             alt="Itemize Logo"
-            className="w-40 mb-4 ml-1"
+            className="mb-4 ml-1 w-40"
           />
         </a>
         <Typography variant="h5" color="blue-gray">
@@ -54,7 +54,7 @@ export function DefaultSidebar({
         </ListItem>
       </List>
       <Button
-        className="border border-purple-700 bg-white text-purple-700 hover:bg-purple-700 hover:text-white !normal-case text-sm"
+        className="border border-purple-700 bg-white text-sm !normal-case text-purple-700 hover:bg-purple-700 hover:text-white"
         disabled={buttonAvailability}
         onClick={onSubmit}
       >
