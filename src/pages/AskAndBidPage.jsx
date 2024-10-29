@@ -11,14 +11,20 @@ import CheckoutSuccessDialog from "../components/ui/CheckoutSuccessDialog";
 
 const AskAndBidPage = ({ isLoggedIn, type }) => {
   const location = useLocation();
-  const { project } = location.state;
+  const { project } = location.state || {};
 
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [tradingType, setTradingType] = useState("Place " + type);
   const [lowestAsk, setLowestAsk] = useState();
   const [lowestBid, setLowestBid] = useState();
+  const [lowestAuctionId, setLowestAuctionId] = useState({
+    lowestBidAuctionId: "",
+    lowestAskAuctionId: "",
+  });
   const [isSuccessDialogOpen, setisSuccessDialogOpen] = useState(false);
+  const [openTradingSuccessDialog, setOpenTradingSuccessDialog] =
+    useState(false);
 
   const fetchAuctionData = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -33,26 +39,53 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
         },
       );
       if (response.data) {
-        const bidPrices = response.data.data
-          .filter((item) => item.type === "BID")
-          .map((item) => item.priceForAuction);
+        const bidItems = response.data.data.filter(
+          (item) => item.type === "BID",
+        );
+        const bidPrices = bidItems.map((item) => item.priceForAuction);
 
         const lowestBidPrice =
           bidPrices.length > 0 ? Math.min(...bidPrices) : null;
         setLowestBid(lowestBidPrice);
 
-        const askPrices = response.data.data
-          .filter((item) => item.type === "ASK")
-          .map((item) => item.priceForAuction);
+        if (lowestBidPrice !== null) {
+          const lowestBidItem = bidItems.find(
+            (item) => item.priceForAuction === lowestBidPrice,
+          );
+          setLowestAuctionId((prevId) => ({
+            ...prevId,
+            lowestBidAuctionId: lowestBidItem ? lowestBidItem.auctionId : null,
+          }));
+        }
+        console.log(lowestAuctionId);
+
+        const askItems = response.data.data.filter(
+          (item) => item.type === "ASK",
+        );
+        const askPrices = askItems.map((item) => item.priceForAuction);
 
         const lowestAskPrice =
           askPrices.length > 0 ? Math.min(...askPrices) : null;
         setLowestAsk(lowestAskPrice);
+
+        if (lowestAskPrice !== null) {
+          const lowestAskItem = askItems.find(
+            (item) => item.priceForAuction === lowestAskPrice,
+          );
+          setLowestAuctionId((prevId) => ({
+            ...prevId,
+            lowestAskAuctionId: lowestAskItem ? lowestAskItem.auctionId : null,
+          }));
+        }
       }
     } catch (error) {
       console.log("Error fetching auction data:", error);
     }
   }, [project.projectId, type]);
+
+  useEffect(() => {
+    console.log("Updated lowestAuctionId:", lowestAuctionId);
+  }, [lowestAuctionId]);
 
   useEffect(() => {
     fetchAuctionData();
@@ -81,6 +114,10 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
     setisSuccessDialogOpen((origin) => !origin);
   };
 
+  const handleTradingDialogOpen = () => {
+    setOpenTradingSuccessDialog((origin) => !origin);
+  };
+
   const placePrice = async (auctionType) => {
     const price = Number(inputValue.replace(/,/g, ""));
     const data = {
@@ -105,23 +142,31 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
 
   const buyOrSellTicket = async () => {
     let url;
+    let auctionId;
     if (tradingType === "Buy Now") {
       url = `${API.PURCHASEBID}`;
+      auctionId = lowestAuctionId.lowestBidAuctionId;
     } else {
       url = `${API.PURCHASEASK}`;
+      auctionId = lowestAuctionId.lowestAskAuctionId;
     }
     const token = localStorage.getItem("token");
-    console.log(project.projectId);
-    const data = { auctionId: project.projectId };
+    const data = { auctionId: auctionId };
+    console.log(data);
+
     try {
-      const response = await axios.post(url, data, {
+      await axios.post(url, data, {
         "Content-Type": "application/json",
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response);
+      setOpenTradingSuccessDialog(true);
     } catch (error) {
       console.log(`Error progressing ${tradingType}: `, error);
     }
+  };
+
+  const handleDialogClose = () => {
+    setSuccess(false);
   };
 
   return (
@@ -263,13 +308,20 @@ const AskAndBidPage = ({ isLoggedIn, type }) => {
           <FooterWithLogo />
         </div>
       </StickyNavbar>
-      {isSuccessDialogOpen && (
+      {isSuccessDialogOpen ? (
         <CheckoutSuccessDialog
-          open={isSuccessDialogOpen}
           handler={handleDialogOpen}
+          success={isSuccessDialogOpen}
           from={type}
         />
-      )}
+      ) : null}
+      {openTradingSuccessDialog ? (
+        <CheckoutSuccessDialog
+          handler={handleTradingDialogOpen}
+          success={openTradingSuccessDialog}
+          from={"traded"}
+        />
+      ) : null}
     </>
   );
 };

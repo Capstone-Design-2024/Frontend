@@ -17,7 +17,8 @@ export default function CheckoutSuccessDialog({
   loading,
 }) {
   const description =
-    "Your price was successfully " + (from === "Bid" ? "bided" : "asked");
+    "Your price was successfully " +
+    (from === "traded" ? "traded" : from === "Bid" ? "bided" : "asked");
 
   return (
     <>

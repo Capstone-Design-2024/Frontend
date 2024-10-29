@@ -5,7 +5,7 @@ import {
   ListItem,
   Button,
 } from "@material-tailwind/react";
-import logoWithName from "../../assets/LogoWithName.png";
+import logoWithName from "../../assets/itemizeLogo.png";
 
 export function DefaultSidebar({
   setCurrent,
@@ -16,12 +16,11 @@ export function DefaultSidebar({
   return (
     <Card className="h-lvh w-full p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 p-4">
-        <a href="/">
-          <img
-            src={logoWithName}
-            alt="Itemize Logo"
-            className="mb-4 ml-1 w-40"
-          />
+        <a href="/" className="mb-3 flex items-center justify-start space-x-4">
+          <img src={logoWithName} alt="Itemize Logo" className="w-8" />
+          <Typography className="mr-8 font-ubuntu text-2xl font-bold">
+            itemize
+          </Typography>
         </a>
         <Typography variant="h5" color="blue-gray">
           Project Management
