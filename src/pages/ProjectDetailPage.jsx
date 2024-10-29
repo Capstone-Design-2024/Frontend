@@ -14,35 +14,11 @@ import TabsComponent from "../components/ui/TabsComponent";
 import SteppedLineChart from "../components/SteppedLineChart"; // Adjust the path accordingly
 
 export const intervals = {
-  "1 Week": [65, 59, 80, 81, 56, 55, 40],
-  "1 Month": [78, 68, 90, 85, 70, 65, 50, 60, 75, 80, 95, 100],
-  "3 Months": [90, 85, 80, 78, 82, 88, 92, 95, 90, 85, 80, 75],
-  "6 Months": [
-    75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150,
-    155, 160, 165, 170, 175, 180, 185, 190,
-  ],
-  All: [
-    100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170,
-    175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245,
-    250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320,
-    325, 330, 335, 340, 345, 350, 355,
-  ],
-};
-
-// Common API request function to reduce redundancy
-const fetchData = async (url, data, token) => {
-  try {
-    const response = await axios.post(url, data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data: ", error);
-    return null;
-  }
+  "1 Week": [],
+  "1 Month": [],
+  "3 Months": [],
+  "6 Months": [],
+  All: [],
 };
 
 export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
@@ -61,22 +37,24 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  // Fetch investors data
   useEffect(() => {
     const fetchInvestors = async () => {
-      const data = await fetchData(
-        `${API.PROJECTBUYER}`,
-        { project_id: project.projectId },
-        token,
-      );
-      if (data?.result?.length !== 0) {
-        setInvestors(data.result);
+      try {
+        const data = { project_id: project.projectId };
+        console.log(data);
+        const response = await axios.post(`${API.PROJECTBUYER}`, data, {});
+        console.log(response);
+        if (response.data?.result?.length !== 0) {
+          setInvestors(response.data.result);
+        }
+        console.log(investors);
+      } catch (e) {
+        console.log("Error fetching investors:", e);
       }
     };
     fetchInvestors();
   }, [project.projectId, token]);
 
-  // Fetch auction data and check ownership
   useEffect(() => {
     const fetchAuctionData = async () => {
       try {
@@ -117,13 +95,19 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
     };
 
     const checkIsMine = async () => {
-      const data = await fetchData(
-        `${API.ISMYPROJECT}/${project.projectId}`,
-        {},
-        token,
-      );
-      if (data) {
-        setIsMyProject(data.data);
+      try {
+        const data = await axios.get(
+          `${API.ISMYPROJECT}/${project.projectId}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setIsMyProject(true);
+      } catch (e) {
+        console.log("check Is Mine:", e);
       }
     };
 
@@ -184,7 +168,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                   </svg>
                   <Typography className="text-sm font-semibold">5.0</Typography>
                   <Typography className="text-sm font-medium text-gray-500">
-                    (2)
+                    (29)
                   </Typography>
                 </div>
                 <div className="flex justify-start space-x-1">
@@ -202,7 +186,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                     <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
                   </svg>
                   <Typography className="text-sm font-medium text-gray-600">
-                    {investors.length} Users are funding
+                    {investors?.length ? investors.length : 0} Users are funding
                   </Typography>
                 </div>
               </div>
@@ -318,7 +302,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                     <Typography className="font-medium">Address</Typography>
                   </div>
                   <hr className="my-2" />
-                  {investors.map((investor, idx) => (
+                  {investors?.map((investor, idx) => (
                     <div className="flex justify-between" key={idx}>
                       <Typography className="font-medium">
                         {investor["name"] ? investor["name"] : "-"}
