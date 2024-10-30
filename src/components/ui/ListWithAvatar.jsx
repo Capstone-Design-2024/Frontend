@@ -38,7 +38,10 @@ export default function ListWithAvatar({ ticket, loading, children }) {
           ticket.map((proj, index) => (
             <ListItem
               key={index}
-              onClick={() => window.open(`${proj.uri}`, "_blank")}
+              onClick={() => {
+                window.open(`${proj.uri}`, "_blank");
+              }}
+              className="min-h-24"
             >
               <ListItemPrefix>
                 <div className="rounded-md bg-gray-300 p-0.5">
