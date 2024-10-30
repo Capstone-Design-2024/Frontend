@@ -21,54 +21,40 @@ export const intervals = {
   All: [],
 };
 
-export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
-  const location = useLocation();
-  const { project } = location.state;
-  const [open, setOpen] = useState(false);
-  const [selectedInterval, setSelectedInterval] = useState("All");
-  const [selectedMenu, setSelectedMenu] = useState("Traded");
+const useProjectData = (projectId, token) => {
+  const [investors, setInvestors] = useState([]);
   const [priceHistory, setPriceHistory] = useState({
     Traded: [{ "Traded Price": "", Date: "" }],
     Asked: [{ "Asked Price": "", Date: "" }],
     Bided: [{ "Bided Price": "", Date: "" }],
   });
   const [isMyProject, setIsMyProject] = useState(false);
-  const [investors, setInvestors] = useState([]);
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchInvestors = async () => {
+    const fetchData = async () => {
       try {
-        const data = { project_id: project.projectId };
-        console.log(data);
-        const response = await axios.post(`${API.PROJECTBUYER}`, data, {});
-        console.log(response);
-        if (response.data?.result?.length !== 0) {
-          setInvestors(response.data.result);
+        const [investorsResponse, auctionResponse, myProjectResponse] =
+          await Promise.all([
+            axios.post(`${API.PROJECTBUYER}`, { project_id: projectId }),
+            axios.get(`${API.GETAUCTION}/${projectId}`, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+              },
+            }),
+            axios.get(`${API.ISMYPROJECT}/${projectId}`, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+              },
+            }),
+          ]);
+
+        if (investorsResponse.data?.result?.length !== 0) {
+          setInvestors(investorsResponse.data.result);
         }
-        console.log(investors);
-      } catch (e) {
-        console.log("Error fetching investors:", e);
-      }
-    };
-    fetchInvestors();
-  }, [project.projectId, token]);
 
-  useEffect(() => {
-    const fetchAuctionData = async () => {
-      try {
-        const response = await axios.get(
-          `${API.GETAUCTION}/${project.projectId}`,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        const askedData = response.data.data
+        const askedData = auctionResponse.data.data
           .filter((item) => item.type === "ASK")
           .map((item) => ({
             "Asked Price": item.priceForAuction,
@@ -76,7 +62,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
           }))
           .slice(0, 8);
 
-        const bidedData = response.data.data
+        const bidedData = auctionResponse.data.data
           .filter((item) => item.type === "BID")
           .map((item) => ({
             "Bided Price": item.priceForAuction,
@@ -89,45 +75,47 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
           Asked: askedData.length > 0 ? askedData : prevHistory.Asked,
           Bided: bidedData.length > 0 ? bidedData : prevHistory.Bided,
         }));
+
+        setIsMyProject(myProjectResponse.data.data);
       } catch (error) {
-        console.log("Error fetching auction data:", error);
+        console.error("Error fetching project data:", error);
       }
     };
+    fetchData();
+  }, [projectId, token]);
 
-    const checkIsMine = async () => {
-      try {
-        const response = await axios.get(
-          `${API.ISMYPROJECT}/${project.projectId}`,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        setIsMyProject(response.data.data);
-      } catch (e) {
-        console.log("check Is Mine:", e);
+  return { investors, priceHistory, isMyProject };
+};
+
+export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
+  const location = useLocation();
+  const { project } = location.state;
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const { investors, priceHistory, isMyProject } = useProjectData(
+    project.projectId,
+    token,
+  );
+  const [open, setOpen] = useState(false);
+  const [selectedInterval, setSelectedInterval] = useState("All");
+  const [selectedMenu, setSelectedMenu] = useState("Traded");
+
+  const handleOpen = useCallback(() => setOpen((prevOpen) => !prevOpen), []);
+
+  const viewTrading = useCallback(
+    (project, type) => {
+      if (type === "Bid") {
+        navigate(`/bid/${project.projectId}`, {
+          state: { project },
+        });
+      } else {
+        navigate(`/ask/${project.projectId}`, {
+          state: { project },
+        });
       }
-    };
-
-    fetchAuctionData();
-    checkIsMine();
-  }, [project.projectId, token]);
-
-  const handleOpen = () => setOpen(!open);
-
-  const viewTrading = (project, type) => {
-    if (type === "Bid") {
-      navigate(`/bid/${project.projectId}`, {
-        state: { project },
-      });
-    } else {
-      navigate(`/ask/${project.projectId}`, {
-        state: { project },
-      });
-    }
-  };
+    },
+    [navigate],
+  );
 
   return (
     <StickyNavbar isLoggedIn={isLoggedIn}>
