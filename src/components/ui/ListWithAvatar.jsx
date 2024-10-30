@@ -41,11 +41,12 @@ export default function ListWithAvatar({ ticket, loading, children }) {
               onClick={() => window.open(`${proj.uri}`, "_blank")}
             >
               <ListItemPrefix>
-                <Avatar
-                  variant="circular"
-                  alt="logo"
-                  src={proj.image ? proj.image : logo}
-                />
+                <div className="rounded-md bg-gray-300 p-0.5">
+                  <img
+                    className="h-16 w-12 rounded-md"
+                    src={proj.image ? proj.image : logo}
+                  />
+                </div>
               </ListItemPrefix>
               <div>
                 <Typography variant="h6" color="blue-gray">

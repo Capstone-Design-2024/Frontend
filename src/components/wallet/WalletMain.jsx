@@ -135,10 +135,6 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
           "https://gateway.pinata.cloud/ipfs/",
         );
 
-        if (responseData.name === "aws") {
-          console.log(ipfsGatewayUrl);
-        }
-
         const cardData = {
           name: responseData.name,
           image: ipfsGatewayUrl,
