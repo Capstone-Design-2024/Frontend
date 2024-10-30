@@ -2,14 +2,7 @@ import React, { useMemo } from "react";
 import { Typography } from "@material-tailwind/react";
 
 export default function NavList({ isLoggedIn }) {
-  const navContent = useMemo(
-    () => [
-      { Account: "account" },
-      { Cart: "cart" },
-      { "My Projects": "myprojects" },
-    ],
-    [],
-  );
+  const navContent = useMemo(() => [{ "My Projects": "myprojects" }], []);
   const userEmail = localStorage.getItem("email");
   const userName = userEmail ? userEmail.split("@") : "";
 

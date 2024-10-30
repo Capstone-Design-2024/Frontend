@@ -14,7 +14,7 @@ export default function ListWithAvatar({ ticket, loading, children }) {
   return (
     <Card className="w-full bg-white/85 p-4 shadow-2xl">
       <List className="max-h-[300px] overflow-y-auto">
-        <p className="mt-2 pl-4 text-xl font-medium text-gray-800">NFTs</p>
+        <p className="mt-2 pl-4 text-xl font-medium text-gray-800">Asset</p>
         {loading ? (
           <ListItem>
             <ListItemPrefix>

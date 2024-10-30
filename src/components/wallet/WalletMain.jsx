@@ -74,7 +74,6 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
   }, [address]);
 
   useEffect(() => {
-    // Initial fetch of the balance when the component mounts, if address is valid
     if (address) {
       getBalance();
     }
@@ -153,10 +152,22 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
       setFetchError(true);
       setTicketLoading(false);
     }
+    try {
+      const response = await axios.get(`${API.CHECKBALANCE}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      setOwnedTicket((prevTickets) => [...prevTickets, ...response.data.data]);
+    } catch (error) {
+      console.log("Error fetching traded ticket: ", error);
+    }
   };
 
   useEffect(() => {
     fetchTicket();
+    console.log(ownedTicket);
   }, []);
 
   return (

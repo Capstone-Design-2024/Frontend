@@ -10,7 +10,6 @@ import MyProjectsPage from "./pages/MyProjectsPage";
 import SignUpSucceedPage from "./pages/SignUpSucceedPage";
 import ManageProject from "./components/createProject/ManageProject";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import CartPage from "./pages/CartPage";
 import ProjectsListPage from "./pages/ProjectsListPage";
 import TicketTransactionPage from "./pages/TicketTransactionPage";
 import AskAndBidPage from "./pages/AskAndBidPage";
@@ -64,7 +63,6 @@ const Router = () => {
           path="/detail/:projectId"
           element={<ProjectDetailPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/cart" element={<CartPage isLoggedIn={isLoggedIn} />} />
         <Route
           path="/projectslist/:itemCategory"
           element={<ProjectsListPage isLoggedIn={isLoggedIn} />}
