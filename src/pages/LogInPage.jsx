@@ -7,13 +7,14 @@ import Card from "../components/ui/Card";
 import MembershipBg from "../components/ui/MembershipBg";
 import axios from "axios";
 import { API } from "../config";
-import { Button } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 
 const LogInPage = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [logInErrorMessage, setLogInErrorMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -64,7 +65,11 @@ const LogInPage = () => {
         console.error("Sign in failed");
       }
     } catch (error) {
-      console.error("Error occurred during sign in:", error);
+      console.error("Error occurred during log in:", error);
+      if (error.response.data.statusCode === 404) {
+        setLogInErrorMessage("Please enter valid log in information");
+        console.log("Please enter valid log in information");
+      }
     }
   };
   return (
@@ -73,7 +78,16 @@ const LogInPage = () => {
         <MembershipBg></MembershipBg>
       </div>
       <div className="flex w-1/2 items-center justify-center">
-        <Card title={"Log In"} width={"w-96"}>
+        <Card
+          title={"Log In"}
+          width={"w-96"}
+          msg={logInErrorMessage && logInErrorMessage}
+        >
+          {/* {logInErrorMessage && (
+            <Typography className="text-md font-normal text-red-700">
+              {logInErrorMessage}
+            </Typography>
+          )} */}
           <form className="space-y-4" onSubmit={handleSubmit}>
             {requiredFields.map((field, index) => (
               <CustomInput
