@@ -33,7 +33,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
     Bided: [{ "Bided Price": "", Date: "" }],
   });
   const [isMyProject, setIsMyProject] = useState(false);
-  const [investors, setInvestors] = useState([{ name: "", date: "" }]);
+  const [investors, setInvestors] = useState([]);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -96,7 +96,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
 
     const checkIsMine = async () => {
       try {
-        const data = await axios.get(
+        const response = await axios.get(
           `${API.ISMYPROJECT}/${project.projectId}`,
           {
             headers: {
@@ -105,7 +105,7 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
             },
           },
         );
-        setIsMyProject(true);
+        setIsMyProject(response.data.data);
       } catch (e) {
         console.log("check Is Mine:", e);
       }
@@ -302,16 +302,23 @@ export default function ProjectDetailPage({ isLoggedIn, isClosed }) {
                     <Typography className="font-medium">Address</Typography>
                   </div>
                   <hr className="my-2" />
-                  {investors?.map((investor, idx) => (
-                    <div className="flex justify-between" key={idx}>
-                      <Typography className="font-medium">
-                        {investor["name"] ? investor["name"] : "-"}
-                      </Typography>
-                      <Typography className="font-medium">
-                        {investor["address"] ? investor["address"] : "-"}
-                      </Typography>
+                  {investors?.length ? (
+                    investors?.map((investor, idx) => (
+                      <div className="flex justify-between" key={idx}>
+                        <Typography className="font-medium">
+                          {investor["name"] ? investor["name"] : "-"}
+                        </Typography>
+                        <Typography className="font-medium">
+                          {investor["address"] ? investor["address"] : "-"}
+                        </Typography>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex justify-between">
+                      <Typography className="font-medium">{"-"}</Typography>
+                      <Typography className="font-medium">{"-"}</Typography>
                     </div>
-                  ))}
+                  )}
                   <hr className="my-2" />
                 </div>
               )}

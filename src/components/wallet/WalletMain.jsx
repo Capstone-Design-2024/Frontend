@@ -98,7 +98,7 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
     } finally {
       setLoading(false);
       if (address) {
-        await getBalance(); // Ensure balance is updated after charging
+        await getBalance();
       }
       setFreeChargeLeft((cur) => cur - 1);
       handleDialogToggle("open");
@@ -130,9 +130,18 @@ const WalletMain = ({ setPage, address, initialBalance }) => {
 
         const responseData = response.data.data;
 
+        const ipfsGatewayUrl = responseData.image.replace(
+          "ipfs://",
+          "https://gateway.pinata.cloud/ipfs/",
+        );
+
+        if (responseData.name === "aws") {
+          console.log(ipfsGatewayUrl);
+        }
+
         const cardData = {
           name: responseData.name,
-          image: responseData.image,
+          image: ipfsGatewayUrl,
           description: responseData.description,
           price: responseData.attributes[0]["value"],
           uri: tokenURI,
