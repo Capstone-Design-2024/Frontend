@@ -155,22 +155,23 @@ export default function EcommerceCard({ project, type, children, isMain }) {
                 </>
               ) : (
                 <>
-                  <div className="mb-1 flex justify-start">
+                  <div className="flex justify-start">
                     <Typography
                       color="black"
-                      variant="h6"
-                      className="font-semibold"
+                      variant="small"
+                      className="font-normal"
                     >
                       {projectTitle}
                     </Typography>
                   </div>
-                  <div className="mb-1 flex justify-start">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
+                  {/* <div className="mb-1 flex justify-start">
+                    <Typography variant="small" className="font-normal">
                       {project?.makerName || "Unknown Maker"}
+                    </Typography>
+                  </div> */}
+                  <div className="mb-1 flex justify-start">
+                    <Typography variant="h5" className="font-medium text-black">
+                      {project?.price || "Unknown Maker"}.00 PNP
                     </Typography>
                   </div>
                   {timeLeft && (
