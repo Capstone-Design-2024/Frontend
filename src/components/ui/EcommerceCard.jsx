@@ -158,8 +158,8 @@ export default function EcommerceCard({ project, type, children, isMain }) {
                   <div className="mb-1 flex justify-start">
                     <Typography
                       color="black"
-                      variant="h5"
-                      className="font-medium"
+                      variant="h6"
+                      className="font-semibold"
                     >
                       {projectTitle}
                     </Typography>
@@ -168,7 +168,7 @@ export default function EcommerceCard({ project, type, children, isMain }) {
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-medium"
+                      className="font-normal"
                     >
                       {project?.makerName || "Unknown Maker"}
                     </Typography>
