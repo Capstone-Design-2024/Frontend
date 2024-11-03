@@ -51,8 +51,8 @@ export default function EcommerceCard({ project, type, children, isMain }) {
 
   // Memoized progress calculation
   const progress = useMemo(() => {
-    return ((investorLength * project.price) / project.goalAmount) * 100;
-  }, [investorLength, project.price, project.goalAmount]);
+    return ((investorLength * project?.price) / project?.goalAmount) * 100;
+  }, [investorLength, project?.price, project?.goalAmount]);
 
   // Memoized timeLeft and isClosed calculations
   const { timeLeft, isClosed } = useMemo(() => {

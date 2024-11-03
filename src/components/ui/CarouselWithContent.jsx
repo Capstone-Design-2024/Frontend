@@ -1,7 +1,7 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import carousel1 from "../../assets/carousel1.webp";
-import carousel2 from "../../assets/carousel2.webp";
-import carousel3 from "../../assets/carousel3.webp";
+import carousel2 from "../../assets/gradientCarousel2.png";
+import carousel1 from "../../assets/gradientCarousel1.png";
+import carousel3 from "../../assets/gradientCarousel3.png";
 
 export default function CarouselWithContent() {
   const contents = [
@@ -49,7 +49,7 @@ export default function CarouselWithContent() {
               alt="image 1"
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/30">
+            <div className="absolute inset-0 grid h-full w-full place-items-center bg-black/10">
               <div className="w-3/4 text-center md:w-2/4">
                 <Typography
                   variant="h6"
@@ -65,23 +65,6 @@ export default function CarouselWithContent() {
                 >
                   {content.description}
                 </Typography>
-                <div className="flex justify-center gap-2">
-                  <Button
-                    size="lg"
-                    color="white"
-                    className="bg-gradient-to-br from-deep-purple-700 to-deep-purple-900 !normal-case text-white"
-                  >
-                    Explore
-                  </Button>
-                  <Button
-                    size="lg"
-                    color="white"
-                    variant="text"
-                    className="!normal-case"
-                  >
-                    Gallery
-                  </Button>
-                </div>
               </div>
             </div>
           </div>
